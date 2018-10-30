@@ -79,17 +79,27 @@
 
 
 
-<meta name="description" content="SAP&amp;Salesforce学习">
+<meta name="description" content="title: SAP IV SAP Integration Validation方法论五大维度： Data consistency management  系统时间，订单以时间戳追踪，外围，内部系统，Head（列）和item（行）需要同步commit。外围系统同步订单到中央系统，中央系统不会同步到所有的外围系统。直接改中央系统，会发生问题。解决方法，每晚后台作业，抽出A,B系统数据进行对比。更新完">
 <meta name="keywords" content="java web">
-<meta property="og:type" content="website">
-<meta property="og:title" content="周尧尧的博客">
-<meta property="og:url" content="http://yoursite.com/index.html">
-<meta property="og:site_name" content="周尧尧的博客">
-<meta property="og:description" content="SAP&amp;Salesforce学习">
+<meta property="og:type" content="article">
+<meta property="og:title" content="zeusyao">
+<meta property="og:url" content="http://yoursite.com/2018/10/30/SAP IV/index.html">
+<meta property="og:site_name" content="zeusyao">
+<meta property="og:description" content="title: SAP IV SAP Integration Validation方法论五大维度： Data consistency management  系统时间，订单以时间戳追踪，外围，内部系统，Head（列）和item（行）需要同步commit。外围系统同步订单到中央系统，中央系统不会同步到所有的外围系统。直接改中央系统，会发生问题。解决方法，每晚后台作业，抽出A,B系统数据进行对比。更新完">
 <meta property="og:locale" content="中文">
+<meta property="og:image" content="c:/Users/i356057/AppData/Roaming/Typora/typora-user-images/1540893170597.png">
+<meta property="og:image" content="c:/Users/i356057/AppData/Roaming/Typora/typora-user-images/1540893130676.png">
+<meta property="og:image" content="c:/Users/i356057/AppData/Roaming/Typora/typora-user-images/1540893153343.png">
+<meta property="og:image" content="c:/Users/i356057/AppData/Roaming/Typora/typora-user-images/1540893189615.png">
+<meta property="og:image" content="file:///C:/Users/i356057/AppData/Local/Temp/msohtmlclip1/01/clip_image002.jpg">
+<meta property="og:image" content="file:///C:/Users/i356057/AppData/Local/Temp/msohtmlclip1/01/clip_image004.jpg">
+<meta property="og:image" content="file:///C:/Users/i356057/AppData/Local/Temp/msohtmlclip1/01/clip_image006.jpg">
+<meta property="og:image" content="c:/Users/i356057/AppData/Roaming/Typora/typora-user-images/1540893220991.png">
+<meta property="og:updated_time" content="2018-10-30T11:54:03.005Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="周尧尧的博客">
-<meta name="twitter:description" content="SAP&amp;Salesforce学习">
+<meta name="twitter:title" content="zeusyao">
+<meta name="twitter:description" content="title: SAP IV SAP Integration Validation方法论五大维度： Data consistency management  系统时间，订单以时间戳追踪，外围，内部系统，Head（列）和item（行）需要同步commit。外围系统同步订单到中央系统，中央系统不会同步到所有的外围系统。直接改中央系统，会发生问题。解决方法，每晚后台作业，抽出A,B系统数据进行对比。更新完">
+<meta name="twitter:image" content="c:/Users/i356057/AppData/Roaming/Typora/typora-user-images/1540893170597.png">
 
 
 
@@ -119,13 +129,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/10/30/SAP IV/"/>
 
 
 
 
 
-  <title>周尧尧的博客</title>
+  <title> | zeusyao</title>
   
 
 
@@ -144,8 +154,7 @@
     
   
 
-  <div class="container sidebar-position-left 
-  page-home">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -156,12 +165,12 @@
     <div class="custom-logo-site-title">
       <a href="/"  class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
-        <span class="site-title">周尧尧的博客</span>
+        <span class="site-title">zeusyao</span>
         <span class="logo-line-after"><i></i></span>
       </a>
     </div>
       
-        <p class="site-subtitle">已识乾坤大，犹怜草木青</p>
+        <p class="site-subtitle">learn more</p>
       
   </div>
 
@@ -218,9 +227,9 @@
         <div class="content-wrap">
           <div id="content" class="content">
             
-  <section id="posts" class="posts-expand">
+
+  <div id="posts" class="posts-expand">
     
-      
 
   
 
@@ -233,7 +242,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/10/30/IV/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/10/30/SAP IV/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="zeusyao">
@@ -242,7 +251,7 @@
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="周尧尧的博客">
+      <meta itemprop="name" content="zeusyao">
     </span>
 
     
@@ -250,9 +259,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/10/30/IV/" itemprop="url">IV</a></h1>
+          <h1 class="post-title" itemprop="name headline"></h1>
         
 
         <div class="post-meta">
@@ -264,7 +271,7 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-10-30T20:25:33+08:00">
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-10-30T17:53:54+08:00">
                 2018-10-30
               </time>
             
@@ -302,22 +309,25 @@
       
 
       
-        
-          
-            <h1 id="SAP-Integration-Validation"><a href="#SAP-Integration-Validation" class="headerlink" title="SAP Integration Validation"></a>SAP Integration Validation</h1><h2 id="方法论"><a href="#方法论" class="headerlink" title="方法论"></a>方法论</h2><h5 id="五大维度："><a href="#五大维度：" class="headerlink" title="五大维度："></a>五大维度：</h5><ul>
-<li>Data consistency management  系统时间，订单以时间戳追踪，外围，内部系统，Head（列）和item（行）需要同步commit。外围系统同步订单到中央系统，中央系统不会同步到所有的外围系统。直接改中央系统，会发生问题。解决方法，每晚后台作业，抽出A,B系统数据进行对比。更新完整的信息块，logic unit of work。</li>
-<li>Exception management 提示要到位，提供引导性步骤。定位异常位置，5个小灯，哪里红了一目了然。创建instance追踪issue。SAP非常重要的问题：back office有三个时区，中国，欧洲，美国。无缝连接，不加班，晚上下班欧洲的接班，早上起来接美国的班。一般和运维的人打电话。Incident resolution 就是便利贴，需要解释清楚自己做了什么，还有什么问题，才可以接着做。</li>
-<li>System integration and queues 系统集成，队列问题，接口问题，同步异步，两个系统信息如何传达，完整信息块，先后逻辑正常，RFC call。系统集成，设计模块很多，很多是外部系统，sap不能cover，只能进行监控。业务性能用KPI来定义，有一个阈值，光看客户主观感受不能判断，KPI就是一把尺子，超过了这个阈值找SAP才有用。</li>
-<li>Performance and scalability 客户问题百分之80在这里，快与不快，网络问题，数据多，业务数据并发，用户量大，性能下降，订单有10个行项目，10个的时候1s，100个的时候就是10s，这就叫好的延展性，差的可能要一分钟，反应慢，按回车等很久（这种情况很多），代码，数据库，业务逻辑。</li>
-<li>End-of-Day and Volume Processing 批量处理，日结流程（工程，超市等），货架，材料消耗盘点，月结保驾护航，很多企业年底买sap这个服务，平安稳定的月结或年结，后台作业，有依赖关系，先后逻辑，正常时候没问题，8个小时一个订单2小时，但异常情况，重新开始，从哪里开始，断点续传，好的程序前54成功，55失败，则做56，银行部门，后台作业没跑完问题很大。报错后能不能重启的能力。</li>
+        <p>title: SAP IV</p>
+<h1 id="SAP-Integration-Validation"><a href="#SAP-Integration-Validation" class="headerlink" title="SAP Integration Validation"></a>SAP Integration Validation</h1><h2 id="方法论"><a href="#方法论" class="headerlink" title="方法论"></a>方法论</h2><h5 id="五大维度："><a href="#五大维度：" class="headerlink" title="五大维度："></a>五大维度：</h5><ul>
+<li><p>Data consistency management  系统时间，订单以时间戳追踪，外围，内部系统，Head（列）和item（行）需要同步commit。外围系统同步订单到中央系统，中央系统不会同步到所有的外围系统。直接改中央系统，会发生问题。解决方法，每晚后台作业，抽出A,B系统数据进行对比。更新完整的信息块，logic unit of work。</p>
+</li>
+<li><p>Exception management 提示要到位，提供引导性步骤。定位异常位置，5个小灯，哪里红了一目了然。创建instance追踪issue。SAP非常重要的问题：back office有三个时区，中国，欧洲，美国。无缝连接，不加班，晚上下班欧洲的接班，早上起来接美国的班。一般和运维的人打电话。Incident resolution 就是便利贴，需要解释清楚自己做了什么，还有什么问题，才可以接着做。</p>
+</li>
+<li><p>System integration and queues 系统集成，队列问题，接口问题，同步异步，两个系统信息如何传达，完整信息块，先后逻辑正常，RFC call。系统集成，设计模块很多，很多是外部系统，sap不能cover，只能进行监控。业务性能用KPI来定义，有一个阈值，光看客户主观感受不能判断，KPI就是一把尺子，超过了这个阈值找SAP才有用。</p>
+</li>
+<li><p>Performance and scalability 客户问题百分之80在这里，快与不快，网络问题，数据多，业务数据并发，用户量大，性能下降，订单有10个行项目，10个的时候1s，100个的时候就是10s，这就叫好的延展性，差的可能要一分钟，反应慢，按回车等很久（这种情况很多），代码，数据库，业务逻辑。</p>
+</li>
+<li><p>End-of-Day and Volume Processing 批量处理，日结流程（工程，超市等），货架，材料消耗盘点，月结保驾护航，很多企业年底买sap这个服务，平安稳定的月结或年结，后台作业，有依赖关系，先后逻辑，正常时候没问题，8个小时一个订单2小时，但异常情况，重新开始，从哪里开始，断点续传，好的程序前54成功，55失败，则做56，银行部门，后台作业没跑完问题很大。报错后能不能重启的能力。</p>
+</li>
 </ul>
 <h5 id="知识点："><a href="#知识点：" class="headerlink" title="知识点："></a>知识点：</h5><ol>
 <li><p>IV的顺序：先从这五个维度测量，分析，给建议，改好，验证，不对就循环往复。</p>
 </li>
 <li><p>End-to-end：业务上面讲，一个人买你的东西，给你钱，拿到货，开发票，运货，开始使用，后期维护质保，整个循环；IV系统也一样，完整的服务业务。</p>
 </li>
-<li><p>准备（定义scope）-蓝图-实施（定制化，配置，开发等）-测试（单元，集成，用户等）-切换（数据迁移）-运维（改进），IV从集成测试开始，因为系统间已经可以联通。合作伙伴做的项目，IV不一定可以做成这样，看客户是否强势，强势的话会要求实施方配合sap的工作，否则要一起协商进行。店大欺客，客大欺店。</p>
-</li>
+<li>准备（定义scope）-蓝图-实施（定制化，配置，开发等）-测试（单元，集成，用户等）-切换（数据迁移）-运维（改进），IV从集成测试开始，因为系统间已经可以联通。合作伙伴做的项目，IV不一定可以做成这样，看客户是否强势，强势的话会要求实施方配合sap的工作，否则要一起协商进行。店大欺客，客大欺店。</li>
 <li><p>SAP自己实施项目或者合作伙伴（IBM, AC, 汉德等）。新产品，推广产品，倾向于自己做。</p>
 </li>
 <li><p>主营业务判定：进销存，制造，订单，报销</p>
@@ -337,18 +347,18 @@
 <li><p>客制化的稳定性，优化程度，性能，数据一致性，异常处理等等不如标准程序好，千锤百炼，进化的比较好。但要考虑实施方的利益，如果都标准化了，单子就变小了，人天变少了，甚至不需要开发，利益就减少了。但从sap的角度，当然希望客户系统干净稳定，持续运行。</p>
 </li>
 <li><p>IV Dashboard：全是绿灯最好，红骷髅头是very high，红色是high，不至于影响到业务发展不下去，灰色表示还没做，或者out of scope，不需要考虑。打绿灯需要勇气，sap最难的是发现不了任何问题，这意味着得打绿灯，意味着出了问题就打脸了。</p>
-<p><img src="/2018/10/30/IV/1.1.png" alt="示例图片" title="示例图片"></p>
+<p><img src="C:\Users\i356057\AppData\Roaming\Typora\typora-user-images\1540893170597.png" alt="1540893170597"></p>
 </li>
 <li><p>但打绿灯需要各部门的同意，需要商量，团队作业，比如back office，不用担心，都需要验证的，Senior的同事带junior的同事。一个绿灯，表示包含的step全是绿灯，有一个step红，最终就是红灯。</p>
 </li>
 <li><p>IV人员分配以及计划表格：</p>
-<p><img src="/2018/10/30/IV/1.2.png" alt="示例图片" title="示例图片"></p>
+<p><img src="C:\Users\i356057\AppData\Roaming\Typora\typora-user-images\1540893130676.png" alt="1540893130676"></p>
 </li>
 <li><p>这个图有时候自己画，有时候运气好是客户给的。跟业务leader访谈问出来的</p>
-<p><img src="/2018/10/30/IV/1.3.png" alt="示例图片" title="示例图片"></p>
+<p><img src="C:\Users\i356057\AppData\Roaming\Typora\typora-user-images\1540893153343.png" alt="1540893153343"></p>
 </li>
 <li><p>灰色的是第三方的，黄的是sap的，外部红点是接口，里面是步骤。需要行业相关的知识。</p>
-<p><img src="/2018/10/30/IV/1.4.png" alt="示例图片" title="示例图片"></p>
+<p><img src="C:\Users\i356057\AppData\Roaming\Typora\typora-user-images\1540893189615.png" alt="1540893189615"></p>
 </li>
 <li><p>Management summary：各个地方的服务都要这个。第一段这个客户是谁，用了我们什么产品，想达到什么目的，现在什么状态，核心业务。第二段IV服务什么时候开始，关注了哪些问题，做了哪些检查，有什么进展，目前什么状态，如果有关键问题，下面罗列出来。第三段后面还有什么东西需要注意的。SAP的经典行文八股文，为了让别人迅速理解，便于对接和交付。</p>
 </li>
@@ -367,8 +377,10 @@
 <li><p>跑过几十万次的语句也很常见，因为是公用的，累积出来</p>
 </li>
 <li><p>Gross指货物净重，net指的是包装的箱子重量。这个箱子整个就是function，function是空的，net就指function本身的时间，gross% = 1 – net%。最上面的语句就是最大的箱子，就像俄罗斯套娃，下面慢慢变小</p>
-<p><img src="/2018/10/30/IV/1.5.png" alt="示例图片" title="示例图片"></p>
 </li>
+</ol>
+<p><img src="file:///C:/Users/i356057/AppData/Local/Temp/msohtmlclip1/01/clip_image002.jpg" alt="img"></p>
+<ol start="7">
 <li><p>Gross = net，比如select语句，因为不可再分了，没有壳，最里面的套娃</p>
 </li>
 <li><p>没标type的都是abap语句，还有sys，db，都会标出来</p>
@@ -382,7 +394,7 @@
 <li><p>可以切换为per module，module里面的module按照顺序排列，外面还是按时间量排列，第一个module是最大的套娃，里面包括其他套娃</p>
 </li>
 </ol>
-<p><img src="/2018/10/30/IV/1.6.png" alt="示例图片" title="示例图片"></p>
+<p><img src="file:///C:/Users/i356057/AppData/Local/Temp/msohtmlclip1/01/clip_image004.jpg" alt="img"></p>
 <ol start="13">
 <li><p>Server一般都选all server，选指定实例的情况也有，就是出了玄学，其他实例都行，就这个不行的时候</p>
 </li>
@@ -411,11 +423,9 @@
 <li><p>Statistical records不需要trace，就可以看的到response time，wait time，cpu time等等，默认就是开的。T code：STAD，有些公司甚至可以用这个看谁谁谁今天有没有干活，可以看到今天多少人登陆系统，什么时候上班的，最后一次操作什么时候，干了什么事情。但是时间有限，只能保存48小时，平时做服务没问题，跨周末的时候，周五的事到周一就没了，这就很尴尬。</p>
 </li>
 </ol>
-<p><img src="/2018/10/30/IV/1.7.png" alt="示例图片" title="示例图片"></p>
-<p><img src="/2018/10/30/IV/1.8.png" alt="示例图片" title="示例图片"></p>
+<p><img src="file:///C:/Users/i356057/AppData/Local/Temp/msohtmlclip1/01/clip_image006.jpg" alt="img"></p>
+<p><img src="C:\Users\i356057\AppData\Roaming\Typora\typora-user-images\1540893220991.png" alt="1540893220991"></p>
 
-          
-        
       
     </div>
     
@@ -432,12 +442,12 @@
       
 
       
+      
+      
 
       
 
       
-      
-        <div class="post-eof"></div>
       
     </footer>
   </div>
@@ -447,10 +457,11 @@
   </article>
 
 
-    
-  </section>
 
-  
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -458,6 +469,10 @@
 
 
           
+
+  
+
+
 
         </div>
         
@@ -478,13 +493,22 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
               <p class="site-author-name" itemprop="name">zeusyao</p>
-              <p class="site-description motion-element" itemprop="description">SAP&Salesforce学习</p>
+              <p class="site-description motion-element" itemprop="description">zeusyao‘s blog</p>
           </div>
 
           <nav class="site-state motion-element">
@@ -502,15 +526,6 @@
 
             
 
-            
-              
-              
-              <div class="site-state-item site-state-tags">
-                
-                  <span class="site-state-item-count">1</span>
-                  <span class="site-state-item-name">tags</span>
-                
-              </div>
             
 
           </nav>
@@ -530,6 +545,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#SAP-Integration-Validation"><span class="nav-number">1.</span> <span class="nav-text">SAP Integration Validation</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#方法论"><span class="nav-number">1.1.</span> <span class="nav-text">方法论</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#五大维度："><span class="nav-number">1.1.0.0.1.</span> <span class="nav-text">五大维度：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#知识点："><span class="nav-number">1.1.0.0.2.</span> <span class="nav-text">知识点：</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#技术分析-ST12"><span class="nav-number">1.2.</span> <span class="nav-text">技术分析 ST12</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#知识点：-1"><span class="nav-number">1.2.0.0.1.</span> <span class="nav-text">知识点：</span></a></li></ol></li></ol></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -663,6 +694,10 @@
   
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 
