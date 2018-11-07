@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2018-11-05T13:02:42.441Z</updated>
+  <updated>2018-11-06T15:49:05.021Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,31 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>SAP PI（2）</title>
+    <link href="http://yoursite.com/2018/11/06/PI2/"/>
+    <id>http://yoursite.com/2018/11/06/PI2/</id>
+    <published>2018-11-06T15:48:01.000Z</published>
+    <updated>2018-11-06T15:49:05.021Z</updated>
+    
+    <content type="html"><![CDATA[<ol><li>BPE：message correlation and deals with the processing of messages in ccBPM.</li><li>IE：routing and mapping and provides central integration server services，handles messages in XML and SOAP protocol</li><li>AAE：adapters</li><li>大多数adapter在JAVA栈上，只有2个在abap栈上，IDOC，HTTP</li><li>Service Repository：UDDI，还有一些web service</li><li>ESR：objects 比如 mapping，interface，process definition</li><li>SLD：landscape，software component version，business system，technical system</li><li>ID：配置场景</li><li>以前是双栈结构，IE，BPE，IB在abap。ESR，SLD，ID在java；7.5之后java单栈</li><li>一个service interface对应一个message mapping对应一个message type对应多个data type</li><li>operation mapping是用来把原始结构转为目标结构，使用message mapping来简化</li><li>message mapping有图形化mapping，java mapping，XSLT mapping 和 ABAP Mapping</li><li>Communication channel determines inbound and outbound processing of messages by converting external native messages to SOAP XML format using Adapter Engine。Two types of communication Channel — Sender Channel and Receiver Channel.</li><li>The Configuration and Monitoring option on SAP PI tools Home Page allows you to monitor the functions of the integration engine, CCMS integration and process monitoring infrastructure in SAP system.</li><li>Using Configuration and Monitoring, you can monitor the following functions −<ol><li><strong>Component Monitoring</strong> − To monitor different Java and ABAP components of SAP PI.</li><li><strong>Message Monitoring</strong> − To monitor the status of message processing in a SAP PI component.</li><li><strong>Performance Monitoring</strong> − Using runtime workbench, you can monitor different performance measures in a SAP PI system. You can create various aggregation reports.</li><li><strong>End to End Monitoring</strong> − To monitor end to end lifecycle in SAP PI system for a scenario.</li><li><strong>Message Index Search</strong> − You can perform Index-based message search in message monitoring and you can also search based on adapter specific selection, etc.</li><li><strong>Alert Inbox</strong> − Alert inbox is as per the role assigned to a business user and is used for viewing all the alerts in SAP PI system as per configuration.</li><li><strong>Alert Configuration</strong> − Alert framework in C&amp;M allows you to report all the errors during message processing in ABAP and Java. Using alert configuration, you can define policy, if an alert has to be reported for error and to perform analysis or not.</li><li><strong>Monitoring of Runtime Cache</strong> − This is used to view objects in runtime cache.</li></ol></li><li>BE（best effort）：同步通信，sender给receiver发送request，然后等待response，否则就不继续了。如果有错误发生了，超时了，sender就会重复发送</li><li>同步通信优点：不需要配置response message routing；不需要correlate response to a request；response立即可以收到。适用于reading操作的场景，比如view po</li><li>同步通信缺点：失败了需要resend；receiver需要配置check重复message；sender application会堵塞直到收到response或者超时错误；不能适用于配置多个receivers</li><li>EO（exactly once）或EOIO（exactly once in order，按照business requirement）,异步通信，两个系统间加一个中间系统（队列结构），sender发送request，不需要等待response。如果出错误了，中间系统会负责重发。If required, the receiving system can send a response back to Sender as a separate asynchronous call. 使用场景：创建po，修改po</li><li>异步通信优点：保证delivery，会重发；不需要配置check重复message；可以多个receiver；sender和receiver不需要同时在线；</li><li>异步通信缺点：不提供及时的response；Response message needs to be implemented and routed separately；In this scenario, the sender needs to correlate responses to request on its own</li><li>SOAP：PI传递信息的格式：包括一个header和payload，头部包括sender和receiver的信息，payload包括actual data</li><li>With SAP AS ABAP, each client is defined as one business system. In SAP AS Java, each technical system acts as a business system.</li><li>Technical systems are part of the System Landscape Directory (SLD) and contain information about version, database and patch levels, operating system, etc.</li><li>Business system acts as a sender and a receiver in SLD. They inherit the software components from technical systems as products</li><li>Inbound Service Interface will be dragged to Target Operation and Outbound Service Interface will be dragged to Source Operation.</li></ol>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;ol&gt;
+&lt;li&gt;BPE：message correlation and deals with the processing of messages in ccBPM.&lt;/li&gt;
+&lt;li&gt;IE：routing and mapping and provides central in
+      
+    
+    </summary>
+    
+    
+      <category term="SAP" scheme="http://yoursite.com/tags/SAP/"/>
+    
+  </entry>
   
   <entry>
     <title>SAP 演讲培训</title>
