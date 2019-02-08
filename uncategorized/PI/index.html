@@ -1,0 +1,1581 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="中文">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-flash.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="SAP," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="周尧尧的博客" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="Unit 1 PI Architecture SLD(system landscape directory): 负责business和technical system，包括software catalog，landscapes ESR(enterprise services repository): 各种对象，比如interface，mappings，process definitions SR(">
+<meta name="keywords" content="SAP">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SAP PI（1）">
+<meta property="og:url" content="https://zhousiyaoyao.github.io/uncategorized/PI/index.html">
+<meta property="og:site_name" content="周尧尧的博客">
+<meta property="og:description" content="Unit 1 PI Architecture SLD(system landscape directory): 负责business和technical system，包括software catalog，landscapes ESR(enterprise services repository): 各种对象，比如interface，mappings，process definitions SR(">
+<meta property="og:locale" content="中文">
+<meta property="og:image" content="https://zhousiyaoyao.github.io/uncategorized/PI/5.png">
+<meta property="og:image" content="https://zhousiyaoyao.github.io/uncategorized/PI/6.png">
+<meta property="og:image" content="https://zhousiyaoyao.github.io/uncategorized/PI/7.png">
+<meta property="og:image" content="https://zhousiyaoyao.github.io/uncategorized/PI/8.png">
+<meta property="og:image" content="https://zhousiyaoyao.github.io/uncategorized/PI/9.png">
+<meta property="og:image" content="https://zhousiyaoyao.github.io/uncategorized/PI/10.png">
+<meta property="og:image" content="https://zhousiyaoyao.github.io/uncategorized/PI/11.png">
+<meta property="og:image" content="https://zhousiyaoyao.github.io/uncategorized/PI/12.png">
+<meta property="og:image" content="https://zhousiyaoyao.github.io/uncategorized/PI/13.png">
+<meta property="og:image" content="https://zhousiyaoyao.github.io/uncategorized/PI/15.png">
+<meta property="og:image" content="https://zhousiyaoyao.github.io/uncategorized/PI/14.png">
+<meta property="og:image" content="https://zhousiyaoyao.github.io/uncategorized/PI/16.png">
+<meta property="og:image" content="https://zhousiyaoyao.github.io/uncategorized/PI/17.png">
+<meta property="og:image" content="https://zhousiyaoyao.github.io/uncategorized/PI/18.png">
+<meta property="og:image" content="https://zhousiyaoyao.github.io/uncategorized/PI/19.png">
+<meta property="og:updated_time" content="2018-11-02T14:12:02.204Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="SAP PI（1）">
+<meta name="twitter:description" content="Unit 1 PI Architecture SLD(system landscape directory): 负责business和technical system，包括software catalog，landscapes ESR(enterprise services repository): 各种对象，比如interface，mappings，process definitions SR(">
+<meta name="twitter:image" content="https://zhousiyaoyao.github.io/uncategorized/PI/5.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":true,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://zhousiyaoyao.github.io/uncategorized/PI/"/>
+
+
+
+
+
+  <title>SAP PI（1） | 周尧尧的博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="中文">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+<a href="https://github.com/zhousiyaoyao"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_orange_ff7600.png" alt="Fork me on GitHub"></a>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">周尧尧的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">已识乾坤大，犹怜草木青</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            Search
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="Searching..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://zhousiyaoyao.github.io/uncategorized/PI/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ZEUS ZHOU">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="周尧尧的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">SAP PI（1）</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-11-02T21:51:15+08:00">
+                2018-11-02
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Post modified&#58;</span>
+              
+              <time title="Post modified" itemprop="dateModified" datetime="2018-11-02T22:12:02+08:00">
+                2018-11-02
+              </time>
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Words count in article&#58;</span>
+                
+                <span title="Words count in article">
+                  6.4k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Reading time &asymp;</span>
+                
+                <span title="Reading time">
+                  26
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h4 id="Unit-1-PI-Architecture"><a href="#Unit-1-PI-Architecture" class="headerlink" title="Unit 1 PI Architecture"></a>Unit 1 PI Architecture</h4><ul>
+<li>SLD(system landscape directory): 负责business和technical system，包括software catalog，landscapes</li>
+<li>ESR(enterprise services repository): 各种对象，比如interface，mappings，process definitions</li>
+<li>SR(service registry): 提供各种web服务，比如UDDI(Universal Description, Discovery, Integration)</li>
+<li>ID(Integration Directory): 配置场景，实现信息交换</li>
+<li>BPE(business process engine): 控制信息校准，决定处理哪条message，cross-component business process management (ccBPM)的一部分</li>
+<li>IE(integration Engine): 处理ID的信息，包括确定接收方和mapping传入的信息到接收方的接口</li>
+<li>AAE(Advanced Adapter Engine): 给adapters提供basis</li>
+<li>RW(Runtime Workbench): 监控部件和信息的工具</li>
+</ul>
+<p><img src="/uncategorized/PI/5.png" alt="示例图片" title="示例图片"></p>
+<h6 id="访问SAP-PI的方式"><a href="#访问SAP-PI的方式" class="headerlink" title="访问SAP PI的方式"></a>访问SAP PI的方式</h6><ul>
+<li>SAP GUI，访问ABAP版本的PI</li>
+<li>Integration Builder，提供了JAVA GUI，在ID中使用，同时还负责版本控制和锁管理</li>
+<li>Enterprise Services Builder，提供JAVA GUI，在ESR中使用</li>
+<li>SAP NetWeaver Developer Studio（NWDS），SAP的java开发工具，基于eclipse，可以用来查看编辑ESR中的对象类型</li>
+<li>浏览器，可以看到配置，监管，ID和SLD</li>
+</ul>
+<p><img src="/uncategorized/PI/6.png" alt="示例图片" title="示例图片"></p>
+<h6 id="SAP-PI的下载选项"><a href="#SAP-PI的下载选项" class="headerlink" title="SAP PI的下载选项"></a>SAP PI的下载选项</h6><p><img src="/uncategorized/PI/7.png" alt="示例图片" title="示例图片"></p>
+<h6 id="SLD"><a href="#SLD" class="headerlink" title="SLD"></a>SLD</h6><ul>
+<li>在SLD上填写technical，business系统的信息，包括hostname，software component的信息等</li>
+<li>SLD的结构基础是CIM（Common Information Model），CIM是由DMTF发展而来（Distributed Management Task Force），DMTF是用来集中管理landscape上的IT系统的</li>
+<li>business系统代表发送，接受系统，可以把business系统赋给任意的technical系统</li>
+<li>在ABAP系统上，可以把一个business系统分配给每个客户端</li>
+<li>business系统被导入ID中，创建完需要assign</li>
+<li>一般一个business系统对应一个technical系统对应多个software component</li>
+<li>business系统中包括software component versions（swcv），每个swcv有自己的接口</li>
+</ul>
+<h6 id="ESR"><a href="#ESR" class="headerlink" title="ESR"></a>ESR</h6><ul>
+<li>object name，software component name，namespace三者决定一个object</li>
+<li>除了business，technical系统，product，software component name（在技术系统上run）也在SLD上创建</li>
+<li>在software component verison中，创建namespace来存储在业务流程中使用的接口对象</li>
+<li>接口对象包括出入接口，还有mapping的细节</li>
+<li>可以使用接口：RFC,，IDoc，XSD，WSDL等，可以在ESR手动创建</li>
+<li>可以在ESR定义出入接口，如果与出入message不匹配，可以定义mapping规则来结构mapping，有一个图形化的mapping工具，或者可以自己写程序（java，ABAP，XSLT）。除此之外，还可以定义value<br>mapping，将结构值mapping成入结构需要的值</li>
+</ul>
+<h6 id="实现一个场景"><a href="#实现一个场景" class="headerlink" title="实现一个场景"></a>实现一个场景</h6><ul>
+<li>创建处理步骤，将出入接口赋给这些步骤，用线连接，可以表示同步或异步连接。</li>
+<li>选择出接口给发送系统，入接口给接受系统，再specify一个mapping程序来map出入接口。</li>
+<li>这些场景和配置可以当成配置模板，来简化标准场景的实现</li>
+<li>Message可以被IE（pipeline processing）或者AAE处理，取决于adapter和功能。</li>
+</ul>
+<h6 id="ID"><a href="#ID" class="headerlink" title="ID"></a>ID</h6><ul>
+<li>ESR只存储与软件成分开发对象相关的信息。对于这些对象，是否安装软件成分或者安装在哪个服务器上不重要，为了使业务流程在分布式的环境中运行，需要存储在集成目录中的配置对象</li>
+<li>ID负责发送方，接受方，adapter和其他的一些配置（发送者协议，接收方确定，接口确定，接收方协议）</li>
+<li>可以提供一个对象，这个对象绑定了所有的配置场景中的配置对象，配置场景使得配置对象更加容易使用</li>
+</ul>
+<h6 id="IE："><a href="#IE：" class="headerlink" title="IE："></a>IE：</h6><ul>
+<li>连接系统前保证接收发送者的message，发送到接收者message都是XML格式（PI format）</li>
+<li>Local IE 是SAP Basis 6.20以后的，可以集成XML格式，直接交换信息，使用SAP Process Integration proxies</li>
+<li>Adapter是另一个连接方法，将message转成xml，输出xml再转回去。可以使用合作伙伴的adapter</li>
+</ul>
+<h6 id="处理过程pipeline"><a href="#处理过程pipeline" class="headerlink" title="处理过程pipeline"></a>处理过程pipeline</h6><ul>
+<li>当一个符合format的message到了integration server时，processing开始</li>
+<li>配置数据决定sender和sender interface，这叫logical routing</li>
+<li>如果有多个sender，系统复制message，对于每个receiver，message从send interface map到receiver interface</li>
+<li>Pipeline决定技术方法与sender通信，这叫technical routing</li>
+<li>最终系统发送信息到指定的系统或者adapter</li>
+<li>在一个使用企业服务的应用中，PI作为一个企业服务的bus来促进各个服务之间的相互调用，接口集中存储在ESR中。PI和SAP Composition Environment都使用ESR。</li>
+</ul>
+<p><img src="/uncategorized/PI/8.png" alt="示例图片" title="示例图片"></p>
+<h6 id="SOA-Service-Oriented-Architecture"><a href="#SOA-Service-Oriented-Architecture" class="headerlink" title="SOA(Service-Oriented Architecture)"></a>SOA(Service-Oriented Architecture)</h6><ul>
+<li>面向服务的架构是一种软件体系结构，应用程序的不同组件通过网络上的通信协议向其他组件提供服务。通信可以是简单的数据传递，也可以是两个或多个服务彼此协调连接。这些独特的服务执行一些小功能，例如验证付款、创建用户帐户或提供社交登录等。</li>
+<li>面向服务的架构不太关于如何对应用程序进行模块化构建，更多的是关于如何通过分布式、单独维护和部署的软件组件的集成来组成应用程序。这些通过技术和标准来实现，通过技术和标准使得组件能够更容易地通过网络（尤其是IP网络）进行通信和协作。</li>
+<li>SOA架构中有两个主要角色：服务提供者（Provider）和服务使用者（Consumer）。而软件代理则可以扮演这两个角色。该Consumer层是用户（人、应用程序或第三方的其它组件）与SOA交互的点，和Provider层则由SOA架构内的所有服务所构成。</li>
+<li>SOA首先在90年代中期得名，当时一家名为Gartner Group的公司认识到了这个软件架构的新趋势，并在全球推广。通过这样做，他们设法大大加快了这种架构模式的采用和进一步发展。然而，使用分布式服务作为软件体系结构的最早记录可追溯到二十世纪80年代初。</li>
+<li>现在比较推崇微服务（micro service），可以把微服务当做去除了ESB的SOA。ESB是SOA架构中的中心总线，设计图形应该是星形的，而微服务是去中心化的分布式软件架构。SOA集中数据存储，微服务独立数据存储，轻量级协议，通常云平台，解耦。</li>
+</ul>
+<p><img src="/uncategorized/PI/9.png" alt="示例图片" title="示例图片"></p>
+<hr>
+<h4 id="Unit-2-SLD"><a href="#Unit-2-SLD" class="headerlink" title="Unit 2 SLD"></a>Unit 2 SLD</h4><h5 id="知识点"><a href="#知识点" class="headerlink" title="知识点"></a>知识点</h5><ul>
+<li>software component是模块化实体，可以用在不同的产品上，是进一步开发的组件，所以有各个版本。</li>
+<li>SLD中，独立的对象叫做软件特性，表示产品版本和软件组件版本的关系，复杂的软件特性让你能够展示复杂的产品。</li>
+<li>事务码SLDHTMLGUI连接SLD。</li>
+<li>Software Catalog里看产品组件版本信息，SAP的自动导入，不是SAP的要手动导入. SAP Service Marketplace提供最新的更新，应该2年导入更新一次。</li>
+<li>software component的外部接口信息存储在ESR中，会创建namespace，来标志每一个接口对象。</li>
+<li>接口最主要的对象是service interface，还有服务操作，信息类型，和数据类型</li>
+<li>product和software component是在系统级，因为sap系统的发展对象不是客户特定的</li>
+<li>注册Tech系统的前提是激活了SLD的data supplier bridge，配置完成后，specify RFC的gateway</li>
+<li>配置data supplier bridge：RZ70，ERP6.04之后，也表示收集产品版本的信息</li>
+<li>Product versions are software units that can be installed on your system and do not run independently of other software(错误)</li>
+<li>在SLD上可以创建product和component，再assign给technical和business system</li>
+<li>The Enterprise Service Repository within the software component version stores detailed information about the external interfaces of a software component</li>
+<li>The Java component SLD data supplier is deployed and started for the SAP NetWeaver AS Java server</li>
+<li>when using a single SLD for your entire system landscape, define groups of business systems and transport targets so that you can map and manage each part of your system landscape independently</li>
+</ul>
+<hr>
+<h4 id="Unit-3-ESR"><a href="#Unit-3-ESR" class="headerlink" title="Unit 3 ESR"></a>Unit 3 ESR</h4><h5 id="Usage-profiles"><a href="#Usage-profiles" class="headerlink" title="Usage profiles"></a>Usage profiles</h5><p>Usage profiles用来view和work with指定的对象类型，软件部件版本，模型过滤器。其他的会被隐藏。在ESB中，登陆后选择一个，之后可以改。</p>
+<p>3个predefined的usage profiles：</p>
+<ul>
+<li>Service Development：促进建模和接口开发</li>
+<li>Process Integration：跨组件过程建模，接口开发，mapping，adapter对象</li>
+<li>Unrestricted：SD和PI所有可用的对象类型</li>
+</ul>
+<h5 id="类型"><a href="#类型" class="headerlink" title="类型"></a>类型</h5><p><img src="/uncategorized/PI/10.png" alt="示例图片" title="示例图片"></p>
+<p>Data Type: </p>
+<ul>
+<li>Freely modeled data types</li>
+<li>Core data types (CDTs)</li>
+<li>Aggregated data types</li>
+</ul>
+<p>SAP 用 CDTs 和aggregated data types来创建enterprise service的signature; 一个CDT定义了一个主要部件（也指内容部件）和一个或者多个可选的补充部件; 数据类型是接口的基本组成; GDTs的基础是CDTs，可重用，更加广，需要重定义; CDTs不是应用特定，而是上下文无关</p>
+<p>Message Type: </p>
+<p>​    描述PI消息的结构，决定消息的根元素，当成单个或者复杂的数据类型，出入接口都能用。ESR中提供XSD版本的消息</p>
+<p>Service Interface:</p>
+<p>​    使用服务接口来描述操作</p>
+<p>WSDL（Web Service Description Language）,接口在WSDL中可用，WSDL中，消息类型变成消息元素，数据类型变成类型元素，接口本身变成端口元素; Context对象,封装了XPath的表达，另一种舒服的表达，有意义的名字，和公司相关</p>
+<p>创建接口三个方法：</p>
+<ul>
+<li>Service interface and service operation</li>
+<li>External definition</li>
+<li>Imported objects</li>
+</ul>
+<p>创建服务接口和服务操作：</p>
+<ul>
+<li>ESB</li>
+<li>SAP NetWeaver Developer Studio</li>
+</ul>
+<p>外部接口定义可用：</p>
+<ul>
+<li>WSDL</li>
+<li>XSD</li>
+<li>DTD</li>
+</ul>
+<h5 id="同步与异步"><a href="#同步与异步" class="headerlink" title="同步与异步"></a>同步与异步</h5><p>同步处理：</p>
+<ul>
+<li>发送系统发一条请求，等一个回应</li>
+<li>直到收到回应或者错误之前，发送过程是堵塞的</li>
+<li>服务接口包括至少两种消息类型，一个发送请求，一个回应（或者错误信息）</li>
+<li>为了防止连接错误，不知道数据记录在目的地有没有完全处理</li>
+<li>发送系统负责处理错误，而不是PI</li>
+</ul>
+<p>异步处理：</p>
+<ul>
+<li>发送系统发送请求，不等回应</li>
+<li>发送系统可以持续工作，和接受系统处理消息分开</li>
+<li>只要PI选为agent，当消息发送后，接收系统不需要可用</li>
+<li>这时，GUID附加在data上，和data一起存储，接受系统可以判断消息记录是否在连接被中止之前被处理</li>
+<li>发送接受系统需要支持重启</li>
+</ul>
+<p>QoS是流程集成XML消息的处理模式，可以区分同步处理和异步处理。 同步处理的QoS叫做BE（Best Effort），可以与sRFC相媲美。在异步场景中，处理序列也很重要。这也可以指数据记录的内容依赖性以及性能方面。如果不同时发送数据记录，性能就会提高。为了实现消息的序列化，数据记录被放入队列。在使用PI时，QoS总是按顺序排列(EOIO)。在RFC场景中，排队。RFC(qRFC)是一种特殊的tRFC。</p>
+<h5 id="通信"><a href="#通信" class="headerlink" title="通信"></a>通信</h5><p>有状态通信（指的是接收端的消息而不是PI）：</p>
+<ul>
+<li>不支持提供者局外人的状态</li>
+<li>允许存储消息的状态信息，未来这个信息可以用来处理其他消息</li>
+</ul>
+<p>无状态通信：</p>
+<ul>
+<li>在消息成功处理后支持提供程序端的状态</li>
+<li>消息接收器的运行时不支持使用消息的处理时间存储状态信息。</li>
+</ul>
+<h5 id="SAP-ACK"><a href="#SAP-ACK" class="headerlink" title="SAP ACK:"></a>SAP ACK:</h5><ul>
+<li>ACK是异步消息的确认（对于同步信息，发送者都会收到response）</li>
+<li>系统ACK提供发送消息的信息</li>
+<li>应用ACK提供消息在应用中处理的信息</li>
+<li>请求ACK只在代理接口和集成处理中生效</li>
+<li>返回ACK只在代理接口，集成处理，一些适配器中生效</li>
+</ul>
+<p>通过异步通信，发送方系统不会收到消息是否到达收件人的ACK，目标系统中也没有关于业务处理的信息。例如，发送方使用sap pi异步发送消息。发送方只收到技术响应确认消息已被sap pi接收，但它没有说明消息是被成功转发的还是被代理的。目标系统应用。为了提供这一信息，sap pi方便了ACK的使用。</p>
+<p>下列条件适用于请求确认：</p>
+<ul>
+<li>在代理方法调用中指定所请求的确认类型(应用程序或系统，肯定或否定，或替代者已完成)。</li>
+<li>确定使用方法调用发送的消息id。</li>
+<li>使用消息id并在正在运行的程序中直接检查消息是否已返回。</li>
+<li>缓冲消息id，然后检查通过主动使用消息id接收到的任何确认。</li>
+</ul>
+<p>ACK的确认</p>
+<ul>
+<li>代理服务器自动创建请求ACK</li>
+<li>一个积极的系统ACK在消息传到目标系统时创建</li>
+<li>一个积极的应用ACK在执行代理服务器方法没有异常发生时创建</li>
+<li>如果上述条件没有得到满足，一个消极的ACK发送</li>
+<li>接收者适配器，运行在适配器引擎支持系统ack，当其被发送者要求</li>
+<li>如果信息成功的被适配器处理或者处理中异常发送，这些ack被触发</li>
+<li>接收者适配器不支持应用ACK（除了RNIF和CDIX外）</li>
+</ul>
+<h5 id="Message-Monitoring"><a href="#Message-Monitoring" class="headerlink" title="Message Monitoring"></a>Message Monitoring</h5><ul>
+<li>ACK—Status 中可以看到ACK的请求，发送情况</li>
+<li>在reliable messaging下，可以看到ACK是否被请求</li>
+<li>ACK没有被作为monitoring中的消息列出来，只是一部分</li>
+</ul>
+<h5 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h5><p>You browse for services in the Enterprise Repository Workplace</p>
+<p>You can import interfaces with structures that have not been defined using Web Service Description Language, eXtensible Markup Language Schema Definition, or Data Type Definition into the Enterprise Services Repository（false）</p>
+<p>stateless and stateful communications are available basic interface patterns</p>
+<hr>
+<h4 id="Unit-4-Mapping-in-ESR"><a href="#Unit-4-Mapping-in-ESR" class="headerlink" title="Unit 4 Mapping in ESR"></a>Unit 4 Mapping in ESR</h4><h5 id="知识点-1"><a href="#知识点-1" class="headerlink" title="知识点"></a>知识点</h5><ul>
+<li>Message mappings：使用图形化mapping工具来进行mapping。您可以使用message type、outbound interface或inbound interface、Idoc或RFC签名作为source和target结构。也可以导入xml或xsd作为template。</li>
+</ul>
+<p><img src="/uncategorized/PI/11.png" alt="示例图片" title="示例图片"></p>
+<ul>
+<li>Mapping functions：例如将两个字段合成一个字段或者转换日期。在目标字段mapping中，为每个target字段创建rule。这些rule定义用于确定结果值的source字段。这些rule不是附加到souce字段，而是附加到target字段。每个source字段可以在任意数量的target字段映射中重用。然而，每个target字段只有一个目标字段mapping。</li>
+<li>Structure mapping：当发送者outbound interface与接收者inbound interface不一样时，需要分配语义相同的字段。</li>
+<li>Value mapping：转换rule的mapping过程，以转换为目标格式</li>
+<li>Operation mapping：创建interface的连接。在操作映射中，您通常可以引用outbound的service interface、IDOC或RFC接口作为outbound interface。您可以引用inbound的service interface、IDOC或RFC接口作为inbound interface。通过使用message mapping、XSLmapping、java类、abap类或abap xsl转换的mapping过程。您可以在操作mapping中引用程序。</li>
+</ul>
+<ul>
+<li>异步的operation mapping</li>
+</ul>
+<p><img src="/uncategorized/PI/12.png" alt="示例图片" title="示例图片"></p>
+<ul>
+<li>同步的operation mapping</li>
+</ul>
+<p><img src="/uncategorized/PI/13.png" alt="示例图片" title="示例图片"></p>
+<ul>
+<li>在同步接口的情况下，有一个用于查询的数据包，一个用于来自服务器同步接口的response。因此，operation mapping必须包含request和response的mapping程序。客户端outbound interface包含resquest的outbound message和response的inbound message。这些入站接口包含用于查询和响应的出站消息的目标消息。如果客户端出站消息和服务器目标消息没有相同的结构，则创建一个映射程序。如果服务器出站消息和客户机内消息没有相同的结构，则创建一个映射程序。您可以依次执行几个映射。提示：如果在服务接口中使用错误消息类型，则可能还需要一个映射程序。</li>
+<li>异步场景说明了sap管道是如何工作的。sap pi中的处理和配置步骤是本文的重点区域。sap pi以专门的xml格式接收文档，标识接收方或接收方，并以特殊的XML格式发送每个接收方系统的一个文档。发送方系统用于将文档传输到sap pi的数据格式。有各种适配器可用于转换文档。对于XML格式，即sap pi预期。同样的原则适用于接收系统。如果需要，适配器也可以将文档转换为接收方支持的格式。文档总是在sap pi中以相同的方式处理。这是用基于一个简化的材料主数据分发示例的演示和练习来说明的。发送者系统由一个http剪贴器模拟。一个文件是为一个虚拟接收系统创建的。</li>
+</ul>
+<h5 id="在设计时创建的对象"><a href="#在设计时创建的对象" class="headerlink" title="在设计时创建的对象"></a>在设计时创建的对象</h5><ul>
+<li>所有要用的软件组件的名字都输入到SLD，再到ESR</li>
+<li>所有软件组件的出入接口都在ESR可用</li>
+<li>一条mapping规则对应每一次数据交换，如果接口结构不同，创建mapping程序</li>
+</ul>
+<h5 id="PI场景的好处"><a href="#PI场景的好处" class="headerlink" title="PI场景的好处"></a>PI场景的好处</h5><ul>
+<li>支持绑定ESR使用的接口和映射。</li>
+<li>提供业务流程的图像overview。</li>
+<li>提供配置的可能模板。</li>
+</ul>
+<h5 id="Actions"><a href="#Actions" class="headerlink" title="Actions"></a>Actions</h5><ul>
+<li>定义actions，map一个业务流程，可以用在应用组件</li>
+<li>把出入接口赋给actions</li>
+<li>一个连接应用组件actions的场景，这个连接specifies哪个出和哪个入相匹配，用哪个operation mapping</li>
+</ul>
+<h5 id="题目-1"><a href="#题目-1" class="headerlink" title="题目"></a>题目</h5><p>You can import external XML files into the message mapping as structure templates</p>
+<p>You do not have to know the exact number of systems in a system landscape when you design a scenario in the Enterprise Service Repository at design time.</p>
+<hr>
+<h4 id="Unit-5-ID"><a href="#Unit-5-ID" class="headerlink" title="Unit 5 ID"></a>Unit 5 ID</h4><h5 id="配置视图"><a href="#配置视图" class="headerlink" title="配置视图"></a>配置视图</h5><ul>
+<li>业务系统在SLD中创建，每个业务系统匹配一个技术系统，业务组件在ID中创建</li>
+<li>配置视图包括出入接口和对应系统</li>
+<li>在ID中对配置视图进行配置</li>
+<li>用AAE来创建配置视图</li>
+</ul>
+<p>在配置视图中，重点是在物理系统环境中实现场景。配置视图确定要使用哪个系统和出站接口向不同的系统和内部接口发送消息。您可以将发送方和接收方指定为业务系统主体作为业务组件。</p>
+<p>您可以在集成目录中存储用于集成场景运行时的配置数据。该数据包括消息发送方和接收方系统的表示。在SAP流程集成中，消息的发送器或接收方有三种类型。</p>
+<h5 id="通信组件类型"><a href="#通信组件类型" class="headerlink" title="通信组件类型"></a>通信组件类型</h5><p>PI的三种接收者和发送者</p>
+<ul>
+<li>业务系统</li>
+<li>业务组件（业务服务）</li>
+<li>集成流程</li>
+</ul>
+<p>集成场景的配置数据放在ID上面。</p>
+<p>业务系统、业务组件和集成流程可以是消息的发送方和接收方。集成流程运行在集成服务器的业务流程引擎(BPE)上。这意味着，对于集成过程，集成引擎清楚消息来自何处以及消息从何处发送。这不适用于业务系统和业务组件。指定发送方或发送方的信息。可以联系到的接收方通信组件必须存储在集成目录中。此外，必须将消息转换为目标系统理解或转换为流程集成XML消息的格式，然后将其传递给集成服务器。此任务由适配器执行，您在其中定义内界或传出消息适配器的配置对象称为通信通道。</p>
+<h5 id="创建通信通道"><a href="#创建通信通道" class="headerlink" title="创建通信通道"></a>创建通信通道</h5><ol>
+<li>选择通信组件。指定要为其创建通信通道的通信组件(例如，业务系统)。</li>
+<li>输入名称。输入通信通道的名称。如果可能的话，选择一个不言自明的名称，例如rfc_send。</li>
+<li>选择适配器类型。指定连接详细信息(例如，用于文件访问的文件适配器)以及它是发送方还是接收方。</li>
+<li>选择适配器引擎和协议。除了中央适配器引擎(CAE)，您还可以有其他本地适配器引擎。您还需要输入传输和消息协议的详细信息，如Exchange基础设施(Xi)2.0或XI 3.0、网络文件系统(Nfs)或文件传输协议(Ftp)等)。</li>
+<li>输入特定于适配器的参数。</li>
+</ol>
+<p>为每个适配器输入额外的详细信息(例如，文件接收者的目标目录)。在导入业务系统时，可以指定是否生成标准通信通道。一旦生成通信通道，就需要为每个业务系统输入准确的参数和自定义信息。</p>
+<p>AAE（central，noncentral or advanced）are used for creating the configuration view for the integrated configuration。</p>
+<hr>
+<h4 id="Unit-6-ID-configuration-for-ABAP"><a href="#Unit-6-ID-configuration-for-ABAP" class="headerlink" title="Unit 6 ID configuration for ABAP"></a>Unit 6 ID configuration for ABAP</h4><h5 id="知识点-2"><a href="#知识点-2" class="headerlink" title="知识点"></a>知识点</h5><p>ID中的对象：</p>
+<ul>
+<li>发送方协议</li>
+<li>接收方确认</li>
+<li>接口确认</li>
+<li>接收方协议</li>
+</ul>
+<ul>
+<li>除了Integration Builder的通信组件(发送方和接收系统)和通信信道之外，在ID中还需要接口对象来处理来自IE运行时的传入消息。</li>
+</ul>
+<ol>
+<li>发送方协议不一定需要（当使用代理接口的时候）</li>
+<li>对象一定要定义</li>
+<li>如果您想要验证消息针对已定义的模式(在自定义中)，IE或AAE将此作为消息处理的第一步</li>
+<li>在传入消息的情况下，管道首先对接收方确定对象进行评估</li>
+<li>配置场景是可选的，而不是运行时相关的。基于参考配置，配置场景提供用户对所需的业务场景对象的overview。</li>
+</ol>
+<h5 id="ABAP-Runtime-Engines"><a href="#ABAP-Runtime-Engines" class="headerlink" title="ABAP Runtime Engines:"></a>ABAP Runtime Engines:</h5><ul>
+<li>Integration Engine: SAP PI的运行环境接受进程，传递XML消息</li>
+<li>Central Integration Engine: SAP PI的运行环境负责处理步骤，比如确认接收方，用Central pipeline接口确定</li>
+<li>Local Integration Engine：PI代理信息的运行环境，在SAP的后端系统，使用SENDER or RECEIVER pipeline来实现与PI的数据交换</li>
+<li>Pipeline：IE执行的一系列消息处理步骤</li>
+<li>Queues：对于异步处理，IE的信息通过queues来处理</li>
+</ul>
+<p>IE属于SAP流程集成的运行时环境，用于根据您所配置的业务流程交换消息。您使用Integration Builder的配置目录创建您的配置。XML消息的接收方是在入站处理期间的逻辑和技术路由中确定的。进一步处理取决于确定的接收方数量。</p>
+<p><img src="/uncategorized/PI/15.png" alt="示例图片" title="示例图片"></p>
+<p>Queuing in pipeline processing:</p>
+<ul>
+<li>The inbound SAP Process Integration XML message is first placed in an inbound queue and then sent to the pipeline.</li>
+<li>After a message from the inbound queue has been read, logical routing takes place and if necessary the message is split.</li>
+<li>The message is placed in an outbound queue.</li>
+<li>The outbound queues serve as inbound queues for the processing steps-mapping and technical routing of the pipeline.</li>
+<li>The message is placed back into an outbound queue assigned to the message receiver.</li>
+<li>The message is sent to the receiver through an adapter or sent directly by using the proxy technology.</li>
+</ul>
+<p>​                                             </p>
+<p><img src="/uncategorized/PI/14.png" alt="示例图片" title="示例图片"></p>
+<p>SOAP standstard (Simple Object Access Process)</p>
+<ul>
+<li>Define how XML messages are structured</li>
+<li>Conclude a header that contains information, including errors, in the form of message attributes</li>
+<li>A HopList detailing the stages that the document has passed through, and runtime and performance information.</li>
+<li>The actual application data (payload) is contained in the attachments</li>
+</ul>
+<p>SOAP message:</p>
+<ul>
+<li>Header</li>
+<li>Main: Sender Service and Sender Interface for receiver determination(additional Party attribute for B2B scenarios)</li>
+<li>HopList: the stations through which the message is forwarded are logged </li>
+<li>Reliable Message: QoS(quality of service) defines whether the message is processed synchronously (Best effort) or asynchronously(Exactly once) by the pipeline. In case of asynchronous processing, you also have the option of processing with serialization(exactly once in order)</li>
+<li>Body: a link to payload, which contains the actual application data.</li>
+<li>Payload: actual application data in the structure of the outbound interface.</li>
+</ul>
+<p><img src="/uncategorized/PI/16.png" alt="示例图片" title="示例图片"></p>
+<h5 id="Message-transfer-to-PI"><a href="#Message-transfer-to-PI" class="headerlink" title="Message transfer to PI"></a>Message transfer to PI</h5><ul>
+<li>Proxy sender: local IE sends it directly to the pipeline by using HTTP(s), no need to convert</li>
+<li>Sender uses an adapter: adapter in AE converts the message sender format into a sap PI XML format. The adapter then transfer the message to the pipeline by using HTTP(s)</li>
+<li>Sender sends plain HTTP: a service sends an XML document to the HTTP service</li>
+<li>Sender uses an enterprise service or a web service to address SAP PI. PI now supports new standard WS-Reliable Messaging (WS-RM) using its own, newly implemented inbound processing on the IE</li>
+</ul>
+<p>Usually a message is transferred to the pipeline in a special SOAP document format by using HTTP(s).</p>
+<p>The XML document is received by using the Internet Communication Manager(ICM).</p>
+<p>The remaining pipeline steps are defined by the configuration in the IS.</p>
+<p><img src="/uncategorized/PI/17.png" alt="示例图片" title="示例图片"></p>
+<h5 id="Ways-to-determine-a-receiver"><a href="#Ways-to-determine-a-receiver" class="headerlink" title="Ways to determine a receiver"></a>Ways to determine a receiver</h5><ul>
+<li>Cancel message processing with an error(restart possible)</li>
+<li>End message processing without an error(restart not possible)</li>
+<li>Continue with message processing with the following receiver. You can name an alternate receiver</li>
+</ul>
+<p>Communication party, communication component, interface and namespace 决定一个receiver</p>
+<h5 id="XML-Validation"><a href="#XML-Validation" class="headerlink" title="XML Validation"></a>XML Validation</h5><ul>
+<li>只在JAVA栈</li>
+<li>同步异步没有区别</li>
+</ul>
+<p>In the sender agreement</p>
+<ul>
+<li>Takes place in the pipeline processing of the IE</li>
+<li>Takes place directly on entry to the AAE(JAVA)</li>
+</ul>
+<p>In the receiver agreement</p>
+<ul>
+<li>Takes place in the pipeline processing of the IE</li>
+</ul>
+<h5 id="题目-2"><a href="#题目-2" class="headerlink" title="题目"></a>题目</h5><ul>
+<li>You create your configuration using the configuration directory of the Integration Builder. The receiver of an XML message is determined in the logical and technical routing during inbound processing</li>
+<li>The communication profile objects list the cross-scenario configuration objects, which include communication components and channels</li>
+<li>You can display the processed messages in message monitoring</li>
+<li>Communication party, communication component, interface and namespace uniquely identify the receiver determination</li>
+<li>If more than one receivers is determined by the receiver determination, the message is copied for each receiver after the interface determination. This is known as message branching</li>
+</ul>
+<hr>
+<h4 id="Unit-7-ID-configuration-for-JAVA"><a href="#Unit-7-ID-configuration-for-JAVA" class="headerlink" title="Unit 7 ID configuration for JAVA"></a>Unit 7 ID configuration for JAVA</h4><p><img src="/uncategorized/PI/18.png" alt="示例图片" title="示例图片"></p>
+<p>大家注意！！！</p>
+<p>classic的才要determination和agreement，现在只需要integrated processing，也就是integrated configuration！！！一步到位！！！不能都有，会有冲突报错！！！真tm6！</p>
+<p><img src="/uncategorized/PI/19.png" alt="示例图片" title="示例图片"></p>
+<h5 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h5><ul>
+<li>Advanced Adapter Engine perform Integrated processing and Routing</li>
+<li>Advanced Adapter Engine Extended is a cost-saving option compared to a full installation of SAP NetWeaver Process Integration</li>
+<li>When an integration flow is complete, it is deployed to the runtime, where the actual execution of a process integration takes place</li>
+</ul>
+<h4 id="Unit-8-Operation-of-PI"><a href="#Unit-8-Operation-of-PI" class="headerlink" title="Unit 8 Operation of PI"></a>Unit 8 Operation of PI</h4><h5 id="monitor类型"><a href="#monitor类型" class="headerlink" title="monitor类型"></a>monitor类型</h5><ol>
+<li>message overview:  provides an overview of the message processing during a specific time period and aggregates messages by processing status</li>
+<li>end-to-end monitor: monitors the infrastructure components of SAP NetWeaver PI and the path of individual messages through these components from start to end</li>
+<li>component monitor: provides insight into the health status of the individual components of SAP NetWeaver PI</li>
+<li>integration process monitor: provides insight into the execution of integration processes in the business process engine(BPE) and displays aggregated and detailed information about processes and process instances</li>
+<li>background job monitor: provides an overview of background jobs specific to the BPE</li>
+<li>message monitor(database): displays the details of message processing on the IE</li>
+<li>performance monitor: displays the performance of message processing on the IE</li>
+<li>cache monitor: displays the cached object on the integration engine cache,AAE cache, and mapping runtime cache</li>
+<li>IDoc monitor: provides the details of IDoc messages processed on the IE and AAE</li>
+<li>System Landscape Directory(SLD) registration checks: Checks if the components of SAP NetWeaver PI were registered correctly during the technical configuration phase(you can apply corrections to the registration as well as register further components)</li>
+<li>Security data achiving: enables the administrator to configure the archiving of messages that are processed by the AAR processes and that use secure multipurpose internet mail extension(S/MIME) security</li>
+</ol>
+<h5 id="题目-3"><a href="#题目-3" class="headerlink" title="题目"></a>题目</h5><ul>
+<li>Data archiving cockpit is included in operation management</li>
+<li>component monitoring provides a uniform interface to monitor ABAP and Java component</li>
+<li>integration process monitor is used to display the aggregated and detailed information about processes and process instances</li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+<div>
+      
+        
+      
+</div>
+
+    
+
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>Post author:</strong>
+    ZEUS ZHOU
+  </li>
+  <li class="post-copyright-link">
+    <strong>Post link:</strong>
+    <a href="https://zhousiyaoyao.github.io/uncategorized/PI/" title="SAP PI（1）">https://zhousiyaoyao.github.io/uncategorized/PI/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>Copyright Notice: </strong>
+    All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 4.0</a> unless stating additionally.
+  </li>
+</ul>
+
+      </div>
+    
+
+    <div>
+      
+        <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束-------------</div>
+    
+</div>
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/SAP/" rel="tag"><i class="fa fa-tag"></i> SAP</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/uncategorized/service/" rel="next" title="SAP Service Delivery">
+                <i class="fa fa-chevron-left"></i> SAP Service Delivery
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/uncategorized/演讲培训/" rel="prev" title="SAP 演讲培训">
+                SAP 演讲培训 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.gif"
+                alt="ZEUS ZHOU" />
+            
+              <p class="site-author-name" itemprop="name">ZEUS ZHOU</p>
+              <p class="site-description motion-element" itemprop="description">分享快乐</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-name">tags</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.zhihu.com/people/zhou-si-yao-9/activities" target="_blank" title="Zhihu">
+                      
+                        <i class="fa fa-fw fa-globe"></i>Zhihu</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://weibo.com/5624701104/profile?topnav=1&wvr=6" target="_blank" title="Weibo">
+                      
+                        <i class="fa fa-fw fa-globe"></i>Weibo</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/zhousiyaoyao" target="_blank" title="Github">
+                      
+                        <i class="fa fa-fw fa-globe"></i>Github</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#Unit-1-PI-Architecture"><span class="nav-number">1.</span> <span class="nav-text">Unit 1 PI Architecture</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#访问SAP-PI的方式"><span class="nav-number">1.0.1.</span> <span class="nav-text">访问SAP PI的方式</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#SAP-PI的下载选项"><span class="nav-number">1.0.2.</span> <span class="nav-text">SAP PI的下载选项</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#SLD"><span class="nav-number">1.0.3.</span> <span class="nav-text">SLD</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#ESR"><span class="nav-number">1.0.4.</span> <span class="nav-text">ESR</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#实现一个场景"><span class="nav-number">1.0.5.</span> <span class="nav-text">实现一个场景</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#ID"><span class="nav-number">1.0.6.</span> <span class="nav-text">ID</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#IE："><span class="nav-number">1.0.7.</span> <span class="nav-text">IE：</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#处理过程pipeline"><span class="nav-number">1.0.8.</span> <span class="nav-text">处理过程pipeline</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#SOA-Service-Oriented-Architecture"><span class="nav-number">1.0.9.</span> <span class="nav-text">SOA(Service-Oriented Architecture)</span></a></li></ol></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Unit-2-SLD"><span class="nav-number">2.</span> <span class="nav-text">Unit 2 SLD</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#知识点"><span class="nav-number">2.1.</span> <span class="nav-text">知识点</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Unit-3-ESR"><span class="nav-number">3.</span> <span class="nav-text">Unit 3 ESR</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#Usage-profiles"><span class="nav-number">3.1.</span> <span class="nav-text">Usage profiles</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#类型"><span class="nav-number">3.2.</span> <span class="nav-text">类型</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#同步与异步"><span class="nav-number">3.3.</span> <span class="nav-text">同步与异步</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#通信"><span class="nav-number">3.4.</span> <span class="nav-text">通信</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#SAP-ACK"><span class="nav-number">3.5.</span> <span class="nav-text">SAP ACK:</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Message-Monitoring"><span class="nav-number">3.6.</span> <span class="nav-text">Message Monitoring</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#题目"><span class="nav-number">3.7.</span> <span class="nav-text">题目</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Unit-4-Mapping-in-ESR"><span class="nav-number">4.</span> <span class="nav-text">Unit 4 Mapping in ESR</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#知识点-1"><span class="nav-number">4.1.</span> <span class="nav-text">知识点</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#在设计时创建的对象"><span class="nav-number">4.2.</span> <span class="nav-text">在设计时创建的对象</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#PI场景的好处"><span class="nav-number">4.3.</span> <span class="nav-text">PI场景的好处</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Actions"><span class="nav-number">4.4.</span> <span class="nav-text">Actions</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#题目-1"><span class="nav-number">4.5.</span> <span class="nav-text">题目</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Unit-5-ID"><span class="nav-number">5.</span> <span class="nav-text">Unit 5 ID</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#配置视图"><span class="nav-number">5.1.</span> <span class="nav-text">配置视图</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#通信组件类型"><span class="nav-number">5.2.</span> <span class="nav-text">通信组件类型</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#创建通信通道"><span class="nav-number">5.3.</span> <span class="nav-text">创建通信通道</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Unit-6-ID-configuration-for-ABAP"><span class="nav-number">6.</span> <span class="nav-text">Unit 6 ID configuration for ABAP</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#知识点-2"><span class="nav-number">6.1.</span> <span class="nav-text">知识点</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#ABAP-Runtime-Engines"><span class="nav-number">6.2.</span> <span class="nav-text">ABAP Runtime Engines:</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Message-transfer-to-PI"><span class="nav-number">6.3.</span> <span class="nav-text">Message transfer to PI</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Ways-to-determine-a-receiver"><span class="nav-number">6.4.</span> <span class="nav-text">Ways to determine a receiver</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#XML-Validation"><span class="nav-number">6.5.</span> <span class="nav-text">XML Validation</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#题目-2"><span class="nav-number">6.6.</span> <span class="nav-text">题目</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Unit-7-ID-configuration-for-JAVA"><span class="nav-number">7.</span> <span class="nav-text">Unit 7 ID configuration for JAVA</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#问题"><span class="nav-number">7.1.</span> <span class="nav-text">问题</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Unit-8-Operation-of-PI"><span class="nav-number">8.</span> <span class="nav-text">Unit 8 Operation of PI</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#monitor类型"><span class="nav-number">8.1.</span> <span class="nav-text">monitor类型</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#题目-3"><span class="nav-number">8.2.</span> <span class="nav-text">题目</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+            <span id="scrollpercent"><span>0</span>%</span>
+          
+        </div>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">ZEUS ZHOU</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count">14k</span>
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
