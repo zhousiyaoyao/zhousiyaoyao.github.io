@@ -104,7 +104,7 @@
 <meta property="og:image" content="https://zhousiyaoyao.github.io/SAP/IV/1.6.png">
 <meta property="og:image" content="https://zhousiyaoyao.github.io/SAP/IV/1.7.png">
 <meta property="og:image" content="https://zhousiyaoyao.github.io/SAP/IV/1.8.png">
-<meta property="og:updated_time" content="2019-02-08T03:51:22.130Z">
+<meta property="og:updated_time" content="2019-02-08T05:12:44.668Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="SAP Integration Validation">
 <meta name="twitter:description" content="方法论五大维度： Data consistency management  系统时间，订单以时间戳追踪，外围，内部系统，Head（列）和item（行）需要同步commit。外围系统同步订单到中央系统，中央系统不会同步到所有的外围系统。直接改中央系统，会发生问题。解决方法，每晚后台作业，抽出A,B系统数据进行对比。更新完整的信息块，logic unit of work。 Exception mana">
@@ -362,7 +362,7 @@
               
                 <span class="post-meta-item-text">Post modified&#58;</span>
               
-              <time title="Post modified" itemprop="dateModified" datetime="2019-02-08T11:51:22+08:00">
+              <time title="Post modified" itemprop="dateModified" datetime="2019-02-08T13:12:44+08:00">
                 2019-02-08
               </time>
             
@@ -421,6 +421,9 @@
         <h2 id="方法论"><a href="#方法论" class="headerlink" title="方法论"></a>方法论</h2><h5 id="五大维度："><a href="#五大维度：" class="headerlink" title="五大维度："></a>五大维度：</h5><ul>
 <li>Data consistency management  系统时间，订单以时间戳追踪，外围，内部系统，Head（列）和item（行）需要同步commit。外围系统同步订单到中央系统，中央系统不会同步到所有的外围系统。直接改中央系统，会发生问题。解决方法，每晚后台作业，抽出A,B系统数据进行对比。更新完整的信息块，logic unit of work。</li>
 <li>Exception management 提示要到位，提供引导性步骤。定位异常位置，5个小灯，哪里红了一目了然。创建instance追踪issue。SAP非常重要的问题：back office有三个时区，中国，欧洲，美国。无缝连接，不加班，晚上下班欧洲的接班，早上起来接美国的班。一般和运维的人打电话。Incident resolution 就是便利贴，需要解释清楚自己做了什么，还有什么问题，才可以接着做。</li>
+</ul>
+<a id="more"></a>
+<ul>
 <li>System integration and queues 系统集成，队列问题，接口问题，同步异步，两个系统信息如何传达，完整信息块，先后逻辑正常，RFC call。系统集成，设计模块很多，很多是外部系统，sap不能cover，只能进行监控。业务性能用KPI来定义，有一个阈值，光看客户主观感受不能判断，KPI就是一把尺子，超过了这个阈值找SAP才有用。</li>
 <li>Performance and scalability 客户问题百分之80在这里，快与不快，网络问题，数据多，业务数据并发，用户量大，性能下降，订单有10个行项目，10个的时候1s，100个的时候就是10s，这就叫好的延展性，差的可能要一分钟，反应慢，按回车等很久（这种情况很多），代码，数据库，业务逻辑。</li>
 <li>End-of-Day and Volume Processing 批量处理，日结流程（工程，超市等），货架，材料消耗盘点，月结保驾护航，很多企业年底买sap这个服务，平安稳定的月结或年结，后台作业，有依赖关系，先后逻辑，正常时候没问题，8个小时一个订单2小时，但异常情况，重新开始，从哪里开始，断点续传，好的程序前54成功，55失败，则做56，银行部门，后台作业没跑完问题很大。报错后能不能重启的能力。</li>
@@ -681,7 +684,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-count">6</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -692,7 +695,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-count">1</span>
                   <span class="site-state-item-name">categories</span>
                 </a>
               </div>
@@ -703,7 +706,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-count">3</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>
@@ -824,7 +827,7 @@
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">14k</span>
+    <span title="Site words total count">13.4k</span>
   
 </div>
 
