@@ -96,19 +96,19 @@
 <meta property="og:site_name" content="ZEUS ZHOU">
 <meta property="og:description" content="方法论五大维度： Data consistency management  系统时间，订单以时间戳追踪，外围，内部系统，Head（列）和item（行）需要同步commit。外围系统同步订单到中央系统，中央系统不会同步到所有的外围系统。直接改中央系统，会发生问题。解决方法，每晚后台作业，抽出A,B系统数据进行对比。更新完整的信息块，logic unit of work。 Exception mana">
 <meta property="og:locale" content="中文">
-<meta property="og:image" content="/SAP/IV/1.1.png">
-<meta property="og:image" content="/SAP/IV/1.2.png">
-<meta property="og:image" content="/SAP/IV/1.3.png">
-<meta property="og:image" content="/SAP/IV/1.4.png">
-<meta property="og:image" content="/SAP/IV/1.5.png">
-<meta property="og:image" content="/SAP/IV/1.6.png">
-<meta property="og:image" content="/SAP/IV/1.7.png">
-<meta property="og:image" content="/SAP/IV/1.8.png">
+<meta property="og:image" content="/IV/1.1.png">
+<meta property="og:image" content="/IV/1.2.png">
+<meta property="og:image" content="/IV/1.3.png">
+<meta property="og:image" content="/IV/1.4.png">
+<meta property="og:image" content="/IV/1.5.png">
+<meta property="og:image" content="/IV/1.6.png">
+<meta property="og:image" content="/IV/1.7.png">
+<meta property="og:image" content="/IV/1.8.png">
 <meta property="og:updated_time" content="2019-02-08T05:12:44.668Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="SAP Integration Validation">
 <meta name="twitter:description" content="方法论五大维度： Data consistency management  系统时间，订单以时间戳追踪，外围，内部系统，Head（列）和item（行）需要同步commit。外围系统同步订单到中央系统，中央系统不会同步到所有的外围系统。直接改中央系统，会发生问题。解决方法，每晚后台作业，抽出A,B系统数据进行对比。更新完整的信息块，logic unit of work。 Exception mana">
-<meta name="twitter:image" content="/SAP/IV/1.1.png">
+<meta name="twitter:image" content="/IV/1.1.png">
 
 
 
@@ -454,18 +454,18 @@
 <li><p>客制化的稳定性，优化程度，性能，数据一致性，异常处理等等不如标准程序好，千锤百炼，进化的比较好。但要考虑实施方的利益，如果都标准化了，单子就变小了，人天变少了，甚至不需要开发，利益就减少了。但从sap的角度，当然希望客户系统干净稳定，持续运行。</p>
 </li>
 <li><p>IV Dashboard：全是绿灯最好，红骷髅头是very high，红色是high，不至于影响到业务发展不下去，灰色表示还没做，或者out of scope，不需要考虑。打绿灯需要勇气，sap最难的是发现不了任何问题，这意味着得打绿灯，意味着出了问题就打脸了。</p>
-<p><img src="/SAP/IV/1.1.png" alt="示例图片" title="示例图片"></p>
+<p><img src="/IV/1.1.png" alt="示例图片" title="示例图片"></p>
 </li>
 <li><p>但打绿灯需要各部门的同意，需要商量，团队作业，比如back office，不用担心，都需要验证的，Senior的同事带junior的同事。一个绿灯，表示包含的step全是绿灯，有一个step红，最终就是红灯。</p>
 </li>
 <li><p>IV人员分配以及计划表格：</p>
-<p><img src="/SAP/IV/1.2.png" alt="示例图片" title="示例图片"></p>
+<p><img src="/IV/1.2.png" alt="示例图片" title="示例图片"></p>
 </li>
 <li><p>这个图有时候自己画，有时候运气好是客户给的。跟业务leader访谈问出来的</p>
-<p><img src="/SAP/IV/1.3.png" alt="示例图片" title="示例图片"></p>
+<p><img src="/IV/1.3.png" alt="示例图片" title="示例图片"></p>
 </li>
 <li><p>灰色的是第三方的，黄的是sap的，外部红点是接口，里面是步骤。需要行业相关的知识。</p>
-<p><img src="/SAP/IV/1.4.png" alt="示例图片" title="示例图片"></p>
+<p><img src="/IV/1.4.png" alt="示例图片" title="示例图片"></p>
 </li>
 <li><p>Management summary：各个地方的服务都要这个。第一段这个客户是谁，用了我们什么产品，想达到什么目的，现在什么状态，核心业务。第二段IV服务什么时候开始，关注了哪些问题，做了哪些检查，有什么进展，目前什么状态，如果有关键问题，下面罗列出来。第三段后面还有什么东西需要注意的。SAP的经典行文八股文，为了让别人迅速理解，便于对接和交付。</p>
 </li>
@@ -484,7 +484,7 @@
 <li><p>跑过几十万次的语句也很常见，因为是公用的，累积出来</p>
 </li>
 <li><p>Gross指货物净重，net指的是包装的箱子重量。这个箱子整个就是function，function是空的，net就指function本身的时间，gross% = 1 – net%。最上面的语句就是最大的箱子，就像俄罗斯套娃，下面慢慢变小</p>
-<p><img src="/SAP/IV/1.5.png" alt="示例图片" title="示例图片"></p>
+<p><img src="/IV/1.5.png" alt="示例图片" title="示例图片"></p>
 </li>
 <li><p>Gross = net，比如select语句，因为不可再分了，没有壳，最里面的套娃</p>
 </li>
@@ -499,7 +499,7 @@
 <li><p>可以切换为per module，module里面的module按照顺序排列，外面还是按时间量排列，第一个module是最大的套娃，里面包括其他套娃</p>
 </li>
 </ol>
-<p><img src="/SAP/IV/1.6.png" alt="示例图片" title="示例图片"></p>
+<p><img src="/IV/1.6.png" alt="示例图片" title="示例图片"></p>
 <ol start="13">
 <li><p>Server一般都选all server，选指定实例的情况也有，就是出了玄学，其他实例都行，就这个不行的时候</p>
 </li>
@@ -528,8 +528,8 @@
 <li><p>Statistical records不需要trace，就可以看的到response time，wait time，cpu time等等，默认就是开的。T code：STAD，有些公司甚至可以用这个看谁谁谁今天有没有干活，可以看到今天多少人登陆系统，什么时候上班的，最后一次操作什么时候，干了什么事情。但是时间有限，只能保存48小时，平时做服务没问题，跨周末的时候，周五的事到周一就没了，这就很尴尬。</p>
 </li>
 </ol>
-<p><img src="/SAP/IV/1.7.png" alt="示例图片" title="示例图片"></p>
-<p><img src="/SAP/IV/1.8.png" alt="示例图片" title="示例图片"></p>
+<p><img src="/IV/1.7.png" alt="示例图片" title="示例图片"></p>
+<p><img src="/IV/1.8.png" alt="示例图片" title="示例图片"></p>
 
       
     </div>
@@ -684,7 +684,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-count">7</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -827,7 +827,7 @@
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">13.4k</span>
+    <span title="Site words total count">15k</span>
   
 </div>
 
