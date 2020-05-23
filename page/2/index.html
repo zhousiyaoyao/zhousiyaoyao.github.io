@@ -92,7 +92,7 @@
 <meta name="keywords" content="java web">
 <meta property="og:type" content="website">
 <meta property="og:title" content="ZEUS ZHOU">
-<meta property="og:url" content="zeuszhou.xyz/archives/2018/11/page/2/index.html">
+<meta property="og:url" content="zeuszhou.xyz/page/2/index.html">
 <meta property="og:site_name" content="ZEUS ZHOU">
 <meta property="og:description" content="Keep Learning">
 <meta property="og:locale" content="中文">
@@ -128,13 +128,13 @@
 
 
 
-  <link rel="canonical" href="zeuszhou.xyz/archives/2018/11/page/2/"/>
+  <link rel="canonical" href="zeuszhou.xyz/page/2/"/>
 
 
 
 
 
-  <title>Archive | ZEUS ZHOU</title>
+  <title>ZEUS ZHOU</title>
   
 
 
@@ -153,7 +153,8 @@
     
   
 
-  <div class="container sidebar-position-left page-archive">
+  <div class="container sidebar-position-left 
+  page-home">
     <div class="headband"></div>
 
 <a href="https://github.com/zhousiyaoyao"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_orange_ff7600.png" alt="Fork me on GitHub"></a>
@@ -292,78 +293,183 @@
         <div class="content-wrap">
           <div id="content" class="content">
             
-
-  
-  
-  
-  <div class="post-block archive">
-    <div id="posts" class="posts-collapse">
-      <span class="archive-move-on"></span>
-
-      <span class="archive-page-counter">
-        
-        
-        
-          
-        
-        Um..! 11 posts in total. Keep on posting.
-      </span>
-
+  <section id="posts" class="posts-expand">
+    
       
 
-        
-        
-        
+  
 
-        
-          
-          <div class="collection-title">
-            <h1 class="archive-year" id="archive-year-2018">2018</h1>
-          </div>
-        
-        
-
-        
+  
+  
+  
 
   <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="zeuszhou.xyz/SAP/IV/">
 
-      <h2 class="post-title">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ZEUS ZHOU">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ZEUS ZHOU">
+    </span>
+
+    
+      <header class="post-header">
+
         
-            <a class="post-title-link" href="/SAP/service/" itemprop="url">
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/SAP/IV/" itemprop="url">SAP Integration Validation</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
               
-                <span itemprop="name">SAP Service Delivery</span>
+                <span class="post-meta-item-text">Posted on</span>
               
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-10-30T20:25:33+08:00">
+                2018-10-30
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Post modified&#58;</span>
+              
+              <time title="Post modified" itemprop="dateModified" datetime="2019-02-08T13:12:44+08:00">
+                2019-02-08
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/SAP/" itemprop="url" rel="index">
+                    <span itemprop="name">SAP</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h2 id="方法论"><a href="#方法论" class="headerlink" title="方法论"></a>方法论</h2><h5 id="五大维度："><a href="#五大维度：" class="headerlink" title="五大维度："></a>五大维度：</h5><ul>
+<li>Data consistency management  系统时间，订单以时间戳追踪，外围，内部系统，Head（列）和item（行）需要同步commit。外围系统同步订单到中央系统，中央系统不会同步到所有的外围系统。直接改中央系统，会发生问题。解决方法，每晚后台作业，抽出A,B系统数据进行对比。更新完整的信息块，logic unit of work。</li>
+<li>Exception management 提示要到位，提供引导性步骤。定位异常位置，5个小灯，哪里红了一目了然。创建instance追踪issue。SAP非常重要的问题：back office有三个时区，中国，欧洲，美国。无缝连接，不加班，晚上下班欧洲的接班，早上起来接美国的班。一般和运维的人打电话。Incident resolution 就是便利贴，需要解释清楚自己做了什么，还有什么问题，才可以接着做。</li>
+</ul>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/SAP/IV/#more" rel="contents">
+              Read more &raquo;
             </a>
+          </div>
+          <!--/noindex-->
         
-      </h2>
+      
+    </div>
+    
+    
+    
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-11-01T21:59:47+08:00"
-              content="2018-11-01" >
-          11-01
-        </time>
-      </div>
+<div>
+      
+</div>
 
-    </header>
-  </article>
+    
 
+    
 
+    
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
 
       
 
-    </div>
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
   </div>
   
   
   
+  </article>
+
+
+    
+  </section>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/archives/2018/11/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/archives/2018/11/">1</a><span class="page-number current">2</span>
+    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span>
   </nav>
-
 
 
 
