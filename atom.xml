@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="zeuszhou.xyz/"/>
-  <updated>2020-05-23T02:51:07.361Z</updated>
+  <updated>2020-05-23T12:28:32.547Z</updated>
   <id>zeuszhou.xyz/</id>
   
   <author>
@@ -15,6 +15,32 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>前端设计模式</title>
+    <link href="zeuszhou.xyz/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E5%89%8D%E7%AB%AF%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
+    <id>zeuszhou.xyz/设计模式/前端设计模式/</id>
+    <published>2020-05-23T09:49:17.000Z</published>
+    <updated>2020-05-23T12:28:32.547Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="设计模式原则"><a href="#设计模式原则" class="headerlink" title="设计模式原则"></a>设计模式原则</h3><ol><li><strong>单一职责</strong>，一个程序只做一件事，功能过于复杂就取消，每个部分保持独立</li><li><strong>开放闭合原则</strong>，对扩展开放，对修改封闭，增加需求时，扩展新代码，而非修改已有代码</li><li><strong>里氏替换原则</strong>，子类能够覆盖父类，父类能出现的地方，子类就能出现</li><li><strong>接口隔离原则</strong>，保持接口的单一独立，类似单一职责原则，这里更关注接口</li><li><strong>依赖倒转原则</strong>，面向接口编程，依赖于抽象而不依赖于具体，使用方只关注接口而不关注具体类的实现</li></ol><h3 id="单例模式"><a href="#单例模式" class="headerlink" title="单例模式"></a>单例模式</h3><p>一个类只能构造出唯一的实例<br>比如弹窗，无论点击多少，都只被创建一次<br>实现方法为先判断实例存在与否，不存在创建再返回，存在直接返回，保证一个类只有一个实例</p><h3 id="策略模式"><a href="#策略模式" class="headerlink" title="策略模式"></a>策略模式</h3><p>根据参数的不同可以命中不同的策略<br>两部分组成，策略类封装具体算法，环境类接受客户请求，随后将请求委托给某一个策略类</p><h3 id="代理模式"><a href="#代理模式" class="headerlink" title="代理模式"></a>代理模式</h3><p>代理对象和本体对象具有一致的接口<br>为一个对象提供一个代用品或占位符，以便控制对它的访问<br>比如某一个花销很大的操作，可以先用虚拟代理的方式延迟到需要它的时候才创建，比如图片懒加载</p><h3 id="迭代器模式"><a href="#迭代器模式" class="headerlink" title="迭代器模式"></a>迭代器模式</h3><p>能获取聚合对象的顺序和元素</p><h3 id="发布订阅模式"><a href="#发布订阅模式" class="headerlink" title="发布订阅模式"></a>发布订阅模式</h3><p>PubSub</p><h3 id="命令模式"><a href="#命令模式" class="headerlink" title="命令模式"></a>命令模式</h3><p>不同对象间约定好响应的接口</p><h3 id="组合模式"><a href="#组合模式" class="headerlink" title="组合模式"></a>组合模式</h3><p>组合模式在对象间形成一致对待的树形结构</p><h3 id="模版方法模式"><a href="#模版方法模式" class="headerlink" title="模版方法模式"></a>模版方法模式</h3><p>父类中定好执行顺序</p><h3 id="享元模式"><a href="#享元模式" class="headerlink" title="享元模式"></a>享元模式</h3><p>减少创建实例的个数</p><h3 id="职责链模式"><a href="#职责链模式" class="headerlink" title="职责链模式"></a>职责链模式</h3><p>通过请求第一个条件，会持续执行后续的条件，直到返回结果为止</p><h3 id="中介者模式"><a href="#中介者模式" class="headerlink" title="中介者模式"></a>中介者模式</h3><p>对象和对象之间借助第三方中介者进行通信<br>比如购物车需求，有商品选择表单，颜色选择表单和购买数量表单，都会触发change事件，可以通过中介者来转发处理这个事件</p><h3 id="装饰者模式"><a href="#装饰者模式" class="headerlink" title="装饰者模式"></a>装饰者模式</h3><p>动态的给函数赋能</p><h3 id="状态模式"><a href="#状态模式" class="headerlink" title="状态模式"></a>状态模式</h3><p>每个状态建立一个类，状态改变会产生不同的行为</p><h3 id="适配者模式"><a href="#适配者模式" class="headerlink" title="适配者模式"></a>适配者模式</h3><p>一种数据结构改成另一种数据结构</p><h3 id="观察者模式"><a href="#观察者模式" class="headerlink" title="观察者模式"></a>观察者模式</h3><p>当观察对象发生变化时，自动调用相关函数</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h3 id=&quot;设计模式原则&quot;&gt;&lt;a href=&quot;#设计模式原则&quot; class=&quot;headerlink&quot; title=&quot;设计模式原则&quot;&gt;&lt;/a&gt;设计模式原则&lt;/h3&gt;&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;单一职责&lt;/strong&gt;，一个程序只做一件事，功能过于复杂就取消，每个部分保持
+      
+    
+    </summary>
+    
+      <category term="设计模式" scheme="zeuszhou.xyz/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
+    
+    
+      <category term="设计模式" scheme="zeuszhou.xyz/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
+    
+  </entry>
   
   <entry>
     <title>时尚版性能优化</title>
