@@ -308,6 +308,197 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="zeuszhou.xyz/浏览器/Chrome浏览器/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ZEUS ZHOU">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ZEUS ZHOU">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/浏览器/Chrome浏览器/" itemprop="url">Chrome浏览器</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-05-25T21:15:07+08:00">
+                2020-05-25
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Post modified&#58;</span>
+              
+              <time title="Post modified" itemprop="dateModified" datetime="2020-05-25T22:51:25+08:00">
+                2020-05-25
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/浏览器/" itemprop="url" rel="index">
+                    <span itemprop="name">浏览器</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>今天面了一个试，暴露出了很多问题，感觉自己有些知识建立在虚无缥缈之上，没有根基，也不连贯，还是需要多总结和学习。<br>面试官问了一下chrome的进程和线程，自己是凭感觉回答的，天天和chrome打交道，却不太了解有点不行，需要好好的学习一个。</p>
+<h3 id="浏览器结构"><a href="#浏览器结构" class="headerlink" title="浏览器结构"></a>浏览器结构</h3><ol>
+<li>用户界面</li>
+<li>浏览器引擎</li>
+<li>渲染引擎（Webkit，Blink，Trident）</li>
+<li>网络模块</li>
+<li>js引擎（V8）</li>
+<li>界面后端</li>
+<li>数据存储</li>
+</ol>
+<h3 id="多进程架构浏览器"><a href="#多进程架构浏览器" class="headerlink" title="多进程架构浏览器"></a>多进程架构浏览器</h3><p>Chrome浏览器使用多个进程来隔离不同的网页。因此在Chrome中打开一个网页相当于起了一个进程。<br>原因第一是安全，因为进程间不会共享资源和地址空间，而线程之间有可能会恶意修改或者获取非授权数据等复杂的安全问题。<br>原因第二是把所有网页都放进一个进程的浏览器面临在健壮性，响应速度，安全性方面的挑战，一个tab崩，浏览器全崩</p>
+<h3 id="Chrome的进程"><a href="#Chrome的进程" class="headerlink" title="Chrome的进程"></a>Chrome的进程</h3><p>打开chrome的任务管理器可以发现，他有很多进程</p>
+<ol>
+<li>浏览器进程，占用CPU最多，控制chrome应用程序，包括地址栏，书签，后退和前进按钮等，还有权限管理例如网络请求和文件访问</li>
+<li>渲染器进程，控制选项卡内，网站里显示的全部内容</li>
+<li>插件进程，chrome的插件，比如flash</li>
+<li>GPU进程，专门用来处理GPU任务</li>
+<li>扩展进程，执行的各种应用插件，例如掘金</li>
+<li>标签页进程，每一个标签页也是一个进程</li>
+<li>实用进程，比如网络或者声音</li>
+</ol>
+<h3 id="Chrome内核的多线程"><a href="#Chrome内核的多线程" class="headerlink" title="Chrome内核的多线程"></a>Chrome内核的多线程</h3><p>浏览器内核是通过取得页面内容、整理信息（应用CSS）、计算和组合最终输出可视化的图像结果，通常也被称为渲染引擎。每个tab网页都有由其独立的渲染引擎实例。</p>
+<ol>
+<li>GUI渲染线程，负责渲染html元素，当需要重绘或者回流时执行，js引擎会导致GUI引擎挂起，也就是冻结</li>
+<li>js引擎线程，解析js脚本，运行代码</li>
+<li>定时触发器线程，因为js是单线程，如果处于阻塞状态会影响计时的准确，因此需要单独的线程进行计时</li>
+<li>事件触发线程，事件被触发时，事件线程会把事件添加到待处理事件的队尾，等待js引擎的处理。</li>
+<li>异步http请求线程，在XMLHttpRequest在连接后是通过浏览器新开一个线程请求， 将检测到状态变更时，如果设置有回调函数，异步线程就产生状态变更事件放到 JavaScript引擎的处理队列中等待处理。</li>
+</ol>
+<p><strong>js引擎与GUI线程是互斥的</strong>：因为js可以操作dom，如果修改的同时渲染界面，那么渲染线程前后获得的元素数据就不一样。<br>所以当js执行时，gui会被挂起，gui更新会被保存到一个队列里，等引擎线程空闲时立即被执行。<br>所以JS执行的时间过长，就会造成页面的渲染不连贯。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+<div>
+      
+</div>
+
+    
+
+    
+
+    
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-categories" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="zeuszhou.xyz/设计模式/前端设计模式/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1946,176 +2137,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="zeuszhou.xyz/SAP/service/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="ZEUS ZHOU">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="ZEUS ZHOU">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/SAP/service/" itemprop="url">SAP Service Delivery</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-11-01T21:59:47+08:00">
-                2018-11-01
-              </time>
-            
-
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Post modified&#58;</span>
-              
-              <time title="Post modified" itemprop="dateModified" datetime="2019-02-08T13:13:38+08:00">
-                2019-02-08
-              </time>
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/SAP/" itemprop="url" rel="index">
-                    <span itemprop="name">SAP</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h5 id="service流程"><a href="#service流程" class="headerlink" title="service流程"></a>service流程</h5><ol>
-<li>service request，TQM（technical quality management）的任务，和客户沟通，了解客户需要什么service，了解需求，创建service plan 和 service order，提出最初需求，很多不是技术出身</li>
-<li>scoping，OSM和scoping member（COE各个leader和manager）提出，具体化需求，需要多少人天，和TQM协商，使用的技术，onsite还是remote</li>
-<li>staffing，OSM的任务，使用RPA，通过schedule set看到人员availability，哪段时间有空，然后让人员book他，也会和leader和manager沟通，公开透明的</li>
-</ol>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/SAP/service/#more" rel="contents">
-              Read more &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-<div>
-      
-</div>
-
-    
-
-    
-
-    
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2170,7 +2191,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-count">13</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -2181,7 +2202,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-count">5</span>
                   <span class="site-state-item-name">categories</span>
                 </a>
               </div>
@@ -2192,7 +2213,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-count">9</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>
