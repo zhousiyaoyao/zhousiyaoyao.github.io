@@ -96,7 +96,7 @@
 <meta property="og:site_name" content="ZEUS ZHOU">
 <meta property="og:description" content="前言今天面了一个试，暴露出了很多问题，感觉自己有些知识建立在虚无缥缈之上，没有根基，也不连贯，还是需要多总结和学习。面试官问了一下chrome的进程和线程，自己是凭感觉回答的，天天和chrome打交道，却不太了解有点不行，需要好好的学习一个。 浏览器结构 用户界面 浏览器引擎 渲染引擎（Webkit，Blink，Trident） 网络模块 js引擎（V8） 界面后端 数据存储  多进程架构浏览器C">
 <meta property="og:locale" content="中文">
-<meta property="og:updated_time" content="2020-05-25T14:51:25.564Z">
+<meta property="og:updated_time" content="2020-05-26T06:28:07.191Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Chrome浏览器">
 <meta name="twitter:description" content="前言今天面了一个试，暴露出了很多问题，感觉自己有些知识建立在虚无缥缈之上，没有根基，也不连贯，还是需要多总结和学习。面试官问了一下chrome的进程和线程，自己是凭感觉回答的，天天和chrome打交道，却不太了解有点不行，需要好好的学习一个。 浏览器结构 用户界面 浏览器引擎 渲染引擎（Webkit，Blink，Trident） 网络模块 js引擎（V8） 界面后端 数据存储  多进程架构浏览器C">
@@ -353,8 +353,8 @@
               
                 <span class="post-meta-item-text">Post modified&#58;</span>
               
-              <time title="Post modified" itemprop="dateModified" datetime="2020-05-25T22:51:25+08:00">
-                2020-05-25
+              <time title="Post modified" itemprop="dateModified" datetime="2020-05-26T14:28:07+08:00">
+                2020-05-26
               </time>
             
           </span>
@@ -435,7 +435,7 @@
 <li>标签页进程，每一个标签页也是一个进程</li>
 <li>实用进程，比如网络或者声音</li>
 </ol>
-<h3 id="Chrome内核的多线程"><a href="#Chrome内核的多线程" class="headerlink" title="Chrome内核的多线程"></a>Chrome内核的多线程</h3><p>浏览器内核是通过取得页面内容、整理信息（应用CSS）、计算和组合最终输出可视化的图像结果，通常也被称为渲染引擎。每个tab网页都有由其独立的渲染引擎实例。</p>
+<h3 id="Chrome内核（渲染进程）的多线程"><a href="#Chrome内核（渲染进程）的多线程" class="headerlink" title="Chrome内核（渲染进程）的多线程"></a>Chrome内核（渲染进程）的多线程</h3><p>浏览器内核是通过取得页面内容、整理信息（应用CSS）、计算和组合最终输出可视化的图像结果，通常也被称为渲染引擎。每个tab网页都有由其独立的渲染引擎实例。</p>
 <ol>
 <li>GUI渲染线程，负责渲染html元素，当需要重绘或者回流时执行，js引擎会导致GUI引擎挂起，也就是冻结</li>
 <li>js引擎线程，解析js脚本，运行代码</li>
@@ -465,7 +465,7 @@
   <p><span>本文标题:</span>Chrome浏览器</a></p>
   <p><span>文章作者:</span>ZEUS ZHOU</a></p>
   <p><span>发布时间:</span>2020年05月25日 - 21:15:07</p>
-  <p><span>最后更新:</span>2020年05月25日 - 22:51:25</p>
+  <p><span>最后更新:</span>2020年05月26日 - 14:28:07</p>
   <p><span>原始链接:</span>
     <span class="copy-path"  title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="zeuszhou.xyz/浏览器/Chrome浏览器/"  aria-label="复制成功！"></i></span>
   </p>
@@ -551,6 +551,10 @@
 
           <div class="post-nav-prev post-nav-item">
             
+              <a href="/浏览器/JS常见API总结/" rel="prev" title="BOM常见对象和方法总结">
+                BOM常见对象和方法总结 <i class="fa fa-chevron-right"></i>
+              </a>
+            
           </div>
         </div>
       
@@ -630,7 +634,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">13</span>
+                  <span class="site-state-item-count">14</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -732,7 +736,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#浏览器结构"><span class="nav-number">2.</span> <span class="nav-text">浏览器结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#多进程架构浏览器"><span class="nav-number">3.</span> <span class="nav-text">多进程架构浏览器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Chrome的进程"><span class="nav-number">4.</span> <span class="nav-text">Chrome的进程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Chrome内核的多线程"><span class="nav-number">5.</span> <span class="nav-text">Chrome内核的多线程</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#浏览器结构"><span class="nav-number">2.</span> <span class="nav-text">浏览器结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#多进程架构浏览器"><span class="nav-number">3.</span> <span class="nav-text">多进程架构浏览器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Chrome的进程"><span class="nav-number">4.</span> <span class="nav-text">Chrome的进程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Chrome内核（渲染进程）的多线程"><span class="nav-number">5.</span> <span class="nav-text">Chrome内核（渲染进程）的多线程</span></a></li></ol></div>
             
 
           </div>
