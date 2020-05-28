@@ -355,7 +355,7 @@
               
                 <span class="post-meta-item-text">Post modified&#58;</span>
               
-              <time title="Post modified" itemprop="dateModified" datetime="2020-05-28T11:35:01+08:00">
+              <time title="Post modified" itemprop="dateModified" datetime="2020-05-28T14:33:45+08:00">
                 2020-05-28
               </time>
             
@@ -479,6 +479,37 @@
 <li>映射法</li>
 </ol>
 <p>语法：[K in Keys]<br>K对应每个属性名的类型，Keys表示一组属性名的类型，所以[K in keyof T]表示属性的类型，T[K]表示属性值的类型<br>结果：type partial<t> = { [K in keyof T]?: T[K] }</t></p>
+<p>Q：找到一个接口中value为function的key和value<br><figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> FunctionPropertyNames&lt;T&gt; = &#123; [K <span class="keyword">in</span> keyof T]: T[K] <span class="keyword">extends</span> <span class="built_in">Function</span> ? K : never &#125;[keyof T]</span><br></pre></td></tr></table></figure></p>
+<p>Partial可以把外层的属性都变成可选。处理深层需要递归<br>-?把可选属性变成必选，-readonly把只读属性变成非只读<br>Required把传入的属性变成必选项<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">type Partial&lt;T&gt; = &#123; [P <span class="keyword">in</span> keyof T]?: T[P] &#125;;</span><br><span class="line"></span><br><span class="line">type DeepPartial&lt;T&gt; = &#123;</span><br><span class="line">    [U <span class="keyword">in</span> keyof T]?: T[U] extends object</span><br><span class="line">    ? DeepPartial&lt;T[U]&gt;</span><br><span class="line">    : T[U]</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">type Required&lt;T&gt; = &#123; [P <span class="keyword">in</span> keyof T]-?: T[P] &#125;;</span><br></pre></td></tr></table></figure></p>
+<h3 id="常见工具类型"><a href="#常见工具类型" class="headerlink" title="常见工具类型"></a>常见工具类型</h3><ul>
+<li>Pick</li>
+<li>Exclude</li>
+<li>Omit</li>
+<li>Compute</li>
+<li>Merge</li>
+<li>Intersection</li>
+<li>Overwrite</li>
+<li>Mutable<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> Exclude&lt;T, U&gt; = T <span class="keyword">extends</span> U ? never : T;</span><br><span class="line"><span class="keyword">type</span> T = Exclude&lt;<span class="number">1</span> | <span class="number">2</span>, <span class="number">1</span> | <span class="number">3</span>&gt; <span class="comment">// -&gt; 2  从T中排除出可分配给U的元素</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> Omit&lt;T, K&gt; = Pick&lt;T, Exclude&lt;keyof T, K&gt;&gt;</span><br><span class="line"><span class="keyword">type</span> Foo = Omit&lt;&#123;name: <span class="built_in">string</span>, age: <span class="built_in">number</span>&#125;, <span class="string">'name'</span>&gt; <span class="comment">// -&gt; &#123; age: number &#125; Omit忽略T中的某些属性</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> Compute&lt;A <span class="keyword">extends</span> <span class="built_in">any</span>&gt; = A <span class="keyword">extends</span> <span class="built_in">Function</span> ? A : &#123; [K <span class="keyword">in</span> keyof A]: A[K] &#125; <span class="comment">// compute将交叉类型合并</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> Merge&lt;O1 <span class="keyword">extends</span> object, O2 <span class="keyword">extends</span> object&gt; = Compute&lt;O1 &amp; Omit&lt;O2, keyof O1&gt;&gt; <span class="comment">// merge将两个对象的属性合并</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> Intersection&lt;T <span class="keyword">extends</span> object, U <span class="keyword">extends</span> object&gt; = </span><br><span class="line">Pick&lt;T,Extract&lt;keyof T, keyof U&gt; &amp; Extract&lt;keyof U, keyof T&gt;&gt;;  <span class="comment">// Intersection取交集</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> Overwrite&lt;</span><br><span class="line">  T <span class="keyword">extends</span> object,</span><br><span class="line">  U <span class="keyword">extends</span> object,</span><br><span class="line">  I = Diff&lt;T, U&gt; &amp; Intersection&lt;U, T&gt;</span><br><span class="line">&gt; = Pick&lt;I, keyof I&gt;; <span class="comment">// 用U的属性覆盖T的相同属性</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> Mutable&lt;T&gt; = &#123;</span><br><span class="line">  -readonly [P <span class="keyword">in</span> keyof T]: T[P]</span><br><span class="line">&#125; <span class="comment">// 将T的所有属性的readonly移除</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>record允许从Union中创建新类型<br><figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> Car = <span class="string">'Audi'</span> | <span class="string">'BMW'</span> | <span class="string">'MercedesBenz'</span></span><br><span class="line"><span class="keyword">type</span> CarList = Record&lt;Car, &#123;age: <span class="built_in">number</span>&#125;&gt;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> cars: CarList = &#123;</span><br><span class="line">    Audi: &#123; age: <span class="number">119</span> &#125;,</span><br><span class="line">    BMW: &#123; age: <span class="number">113</span> &#125;,</span><br><span class="line">    MercedesBenz: &#123; age: <span class="number">133</span> &#125;,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>在tsx，如果<t>泛型被当成jsx标签，可以加上<t extends="" {}=""></t></t></p>
+<h3 id="TS的编译原理"><a href="#TS的编译原理" class="headerlink" title="TS的编译原理"></a>TS的编译原理</h3><p>编译器的组成：</p>
+<ol>
+<li>Scanner扫描器</li>
+<li>Parser解析器</li>
+<li>Binder绑定器</li>
+<li>Emitter发射器</li>
+<li>Checker检查器</li>
+</ol>
+<p>处理过程：</p>
+<ol>
+<li>code + 扫描器 = token流 （词法分析）</li>
+<li>token流 + 解析器 = AST抽象语法树 （语法分析）</li>
+<li>AST + 绑定器 = Symbols符号 （语义分析）</li>
+<li>AST + 符号 + 检查器 = 类型验证 （代码优化）</li>
+<li>AST + 检查器 + 发射器 = JS代码 （目标代码生成）</li>
+</ol>
 
           
         
@@ -582,8 +613,8 @@
               
                 <span class="post-meta-item-text">Post modified&#58;</span>
               
-              <time title="Post modified" itemprop="dateModified" datetime="2020-05-26T19:43:59+08:00">
-                2020-05-26
+              <time title="Post modified" itemprop="dateModified" datetime="2020-05-28T17:53:10+08:00">
+                2020-05-28
               </time>
             
           </span>
@@ -648,6 +679,23 @@
 <li>虚拟：空分复用技术（虚拟存储器），时分复用技术（虚拟处理器）</li>
 </ol>
 <p>指令是CPU能识别和执行的最基本命令，分为特权指令和非特权指令，内核程序才能执行特权指令，普通程序执行非特权指令。<br>CPU也有内核态和用户态两种状态。</p>
+<h3 id="进程"><a href="#进程" class="headerlink" title="进程"></a>进程</h3><p>定义： 进程是具有独立功能的程序在数据集合上运行的过程，分配资源的基本单位，内存地址空间相互独立</p>
+<p>每个进程都有一个进程控制块PCB来描述进程的各种信息，包括PID，UID，状态，优先级，指针，寄存器值等等</p>
+<p>进程的基本状态：运行（占有CPU，在CPU上运行），就绪（缺空闲CPU）和阻塞（等待某事件）<br>进程的另外2种2状态：创建态（正在初始化PCB），终止态（撤销PCB，资源回收）</p>
+<p>状态转换：运行进入阻塞是主动的（系统调用），阻塞进入就绪是被动的（其他都弄好了，就差CPU了），阻塞不能直接进入运行，就绪也不能直接进入阻塞（因为运行时才能主动请求）</p>
+<p>原语：不可被中断的原子操作，使用关中断指令和开中断指令实现，先关再开</p>
+<p>进程的通信：</p>
+<ol>
+<li>共享存储：互斥的，内存画出一块共享区</li>
+<li>管道：半双工，某一时间段只能实现单向传输，双向需要2个管道。字符流形式，管道写满时，write被阻塞，数据都读完时，read被阻塞。如果没写满，就不让读，没空就不让写。读进程只有一个。</li>
+<li>消息传递：格式化的消息为单位，通过发送消息/接受消息两个原语进行通信，包括信息头和尾</li>
+<li>间接通信：通过中介者信箱来进行通信</li>
+</ol>
+<p>同步：某些进程的执行必须先于另一些进程<br>互斥：当某个进程使用某种资源时，其他进程必须等待<br>信号量：解决进程的同步和互斥，由剩余资源和阻塞队列的地址组成<br>生成者消费者问题：生产者的作用是生成一定量数据到缓存区，消费者消耗这些数据，保证生产者不会在满时加入数据，消费者不会在空时消耗数据，用互斥信号量实现互斥访问，同步信号量表示还可以生成多少产品和消耗多少产品</p>
+<h3 id="线程"><a href="#线程" class="headerlink" title="线程"></a>线程</h3><p>定义：进程并发多个事件的能力，基本的CPU执行单位，程序执行流的最小单位，进程可以并发，进程的线程也可以并发，引入线程后，进程只作为除CPU外的系统资源分配单位。线程的切换比进程的切换开销小。</p>
+<h3 id="内存"><a href="#内存" class="headerlink" title="内存"></a>内存</h3><p>内存是计算机硬件与CPU沟通的桥梁，中转站，程序执行前要先放到内存中才能被CPU处理<br>CPU通过内存的存储单元编址来找到执行程序的数据</p>
+<p>连续分配：用户进程分配必须是一个连续的内存空间，包括动态分区分配，缺点是会产生内存碎片<br>非连续分配<br>动态分区分配：不会预先划分内存分区，而是动态的建立分区</p>
+<p>空闲分区表：分区号，分区大小，起始地址，状态<br>首次适应算法：每次从低地址开始查找，找到第一个满足大小的空闲分区<br>最佳适应算法：从空闲分区表中找到最小的适合分配的分区块来满足需求<br>基本分页存储：把内存空间分成一个个大小相等的分区，每个分区是一个页框，进程的页与内存的页有一一对应关系</p>
 
           
         

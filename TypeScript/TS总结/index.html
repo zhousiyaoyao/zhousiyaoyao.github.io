@@ -96,7 +96,7 @@
 <meta property="og:site_name" content="ZEUS ZHOU">
 <meta property="og:description" content="前言codereview被ts搞得非常痛苦，需要好好学习一个 TS是静态类型化的js超集，静态性使其牛逼语言在编译时报错是静态语言，运行时报错时动态语言TS是静态弱类型语言，不是强类型，因为要兼容js，不限制js的隐式类型转换 使用TS的优点：  可以避免低级错误，在编写时就能发现 减少多人合作的成本，适合大项目 良好的代码提示  类型TS的原始类型：  boolean number string">
 <meta property="og:locale" content="中文">
-<meta property="og:updated_time" content="2020-05-28T03:35:01.462Z">
+<meta property="og:updated_time" content="2020-05-28T06:33:45.670Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="TS总结（一）">
 <meta name="twitter:description" content="前言codereview被ts搞得非常痛苦，需要好好学习一个 TS是静态类型化的js超集，静态性使其牛逼语言在编译时报错是静态语言，运行时报错时动态语言TS是静态弱类型语言，不是强类型，因为要兼容js，不限制js的隐式类型转换 使用TS的优点：  可以避免低级错误，在编写时就能发现 减少多人合作的成本，适合大项目 良好的代码提示  类型TS的原始类型：  boolean number string">
@@ -353,7 +353,7 @@
               
                 <span class="post-meta-item-text">Post modified&#58;</span>
               
-              <time title="Post modified" itemprop="dateModified" datetime="2020-05-28T11:35:01+08:00">
+              <time title="Post modified" itemprop="dateModified" datetime="2020-05-28T14:33:45+08:00">
                 2020-05-28
               </time>
             
@@ -480,6 +480,37 @@
 <li>映射法</li>
 </ol>
 <p>语法：[K in Keys]<br>K对应每个属性名的类型，Keys表示一组属性名的类型，所以[K in keyof T]表示属性的类型，T[K]表示属性值的类型<br>结果：type partial<t> = { [K in keyof T]?: T[K] }</t></p>
+<p>Q：找到一个接口中value为function的key和value<br><figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> FunctionPropertyNames&lt;T&gt; = &#123; [K <span class="keyword">in</span> keyof T]: T[K] <span class="keyword">extends</span> <span class="built_in">Function</span> ? K : never &#125;[keyof T]</span><br></pre></td></tr></table></figure></p>
+<p>Partial可以把外层的属性都变成可选。处理深层需要递归<br>-?把可选属性变成必选，-readonly把只读属性变成非只读<br>Required把传入的属性变成必选项<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">type Partial&lt;T&gt; = &#123; [P <span class="keyword">in</span> keyof T]?: T[P] &#125;;</span><br><span class="line"></span><br><span class="line">type DeepPartial&lt;T&gt; = &#123;</span><br><span class="line">    [U <span class="keyword">in</span> keyof T]?: T[U] extends object</span><br><span class="line">    ? DeepPartial&lt;T[U]&gt;</span><br><span class="line">    : T[U]</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">type Required&lt;T&gt; = &#123; [P <span class="keyword">in</span> keyof T]-?: T[P] &#125;;</span><br></pre></td></tr></table></figure></p>
+<h3 id="常见工具类型"><a href="#常见工具类型" class="headerlink" title="常见工具类型"></a>常见工具类型</h3><ul>
+<li>Pick</li>
+<li>Exclude</li>
+<li>Omit</li>
+<li>Compute</li>
+<li>Merge</li>
+<li>Intersection</li>
+<li>Overwrite</li>
+<li>Mutable<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> Exclude&lt;T, U&gt; = T <span class="keyword">extends</span> U ? never : T;</span><br><span class="line"><span class="keyword">type</span> T = Exclude&lt;<span class="number">1</span> | <span class="number">2</span>, <span class="number">1</span> | <span class="number">3</span>&gt; <span class="comment">// -&gt; 2  从T中排除出可分配给U的元素</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> Omit&lt;T, K&gt; = Pick&lt;T, Exclude&lt;keyof T, K&gt;&gt;</span><br><span class="line"><span class="keyword">type</span> Foo = Omit&lt;&#123;name: <span class="built_in">string</span>, age: <span class="built_in">number</span>&#125;, <span class="string">'name'</span>&gt; <span class="comment">// -&gt; &#123; age: number &#125; Omit忽略T中的某些属性</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> Compute&lt;A <span class="keyword">extends</span> <span class="built_in">any</span>&gt; = A <span class="keyword">extends</span> <span class="built_in">Function</span> ? A : &#123; [K <span class="keyword">in</span> keyof A]: A[K] &#125; <span class="comment">// compute将交叉类型合并</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> Merge&lt;O1 <span class="keyword">extends</span> object, O2 <span class="keyword">extends</span> object&gt; = Compute&lt;O1 &amp; Omit&lt;O2, keyof O1&gt;&gt; <span class="comment">// merge将两个对象的属性合并</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> Intersection&lt;T <span class="keyword">extends</span> object, U <span class="keyword">extends</span> object&gt; = </span><br><span class="line">Pick&lt;T,Extract&lt;keyof T, keyof U&gt; &amp; Extract&lt;keyof U, keyof T&gt;&gt;;  <span class="comment">// Intersection取交集</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> Overwrite&lt;</span><br><span class="line">  T <span class="keyword">extends</span> object,</span><br><span class="line">  U <span class="keyword">extends</span> object,</span><br><span class="line">  I = Diff&lt;T, U&gt; &amp; Intersection&lt;U, T&gt;</span><br><span class="line">&gt; = Pick&lt;I, keyof I&gt;; <span class="comment">// 用U的属性覆盖T的相同属性</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> Mutable&lt;T&gt; = &#123;</span><br><span class="line">  -readonly [P <span class="keyword">in</span> keyof T]: T[P]</span><br><span class="line">&#125; <span class="comment">// 将T的所有属性的readonly移除</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>record允许从Union中创建新类型<br><figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> Car = <span class="string">'Audi'</span> | <span class="string">'BMW'</span> | <span class="string">'MercedesBenz'</span></span><br><span class="line"><span class="keyword">type</span> CarList = Record&lt;Car, &#123;age: <span class="built_in">number</span>&#125;&gt;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> cars: CarList = &#123;</span><br><span class="line">    Audi: &#123; age: <span class="number">119</span> &#125;,</span><br><span class="line">    BMW: &#123; age: <span class="number">113</span> &#125;,</span><br><span class="line">    MercedesBenz: &#123; age: <span class="number">133</span> &#125;,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>在tsx，如果<t>泛型被当成jsx标签，可以加上<t extends="" {}=""></t></t></p>
+<h3 id="TS的编译原理"><a href="#TS的编译原理" class="headerlink" title="TS的编译原理"></a>TS的编译原理</h3><p>编译器的组成：</p>
+<ol>
+<li>Scanner扫描器</li>
+<li>Parser解析器</li>
+<li>Binder绑定器</li>
+<li>Emitter发射器</li>
+<li>Checker检查器</li>
+</ol>
+<p>处理过程：</p>
+<ol>
+<li>code + 扫描器 = token流 （词法分析）</li>
+<li>token流 + 解析器 = AST抽象语法树 （语法分析）</li>
+<li>AST + 绑定器 = Symbols符号 （语义分析）</li>
+<li>AST + 符号 + 检查器 = 类型验证 （代码优化）</li>
+<li>AST + 检查器 + 发射器 = JS代码 （目标代码生成）</li>
+</ol>
 
       
     </div>
@@ -501,7 +532,7 @@
   <p><span>本文标题:</span>TS总结（一）</a></p>
   <p><span>文章作者:</span>ZEUS ZHOU</a></p>
   <p><span>发布时间:</span>2020年05月27日 - 15:58:59</p>
-  <p><span>最后更新:</span>2020年05月28日 - 11:35:01</p>
+  <p><span>最后更新:</span>2020年05月28日 - 14:33:45</p>
   <p><span>原始链接:</span>
     <span class="copy-path"  title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="zeuszhou.xyz/TypeScript/TS总结/"  aria-label="复制成功！"></i></span>
   </p>
@@ -768,7 +799,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#类型"><span class="nav-number">2.</span> <span class="nav-text">类型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#接口"><span class="nav-number">3.</span> <span class="nav-text">接口</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#类和函数"><span class="nav-number">4.</span> <span class="nav-text">类和函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#泛型"><span class="nav-number">5.</span> <span class="nav-text">泛型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#类型断言"><span class="nav-number">6.</span> <span class="nav-text">类型断言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#类型守卫"><span class="nav-number">7.</span> <span class="nav-text">类型守卫</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#React实战"><span class="nav-number">8.</span> <span class="nav-text">React实战</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#索引类型查询"><span class="nav-number">9.</span> <span class="nav-text">索引类型查询</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#映射类型把接口成员都变成可选"><span class="nav-number">10.</span> <span class="nav-text">映射类型把接口成员都变成可选</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#类型"><span class="nav-number">2.</span> <span class="nav-text">类型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#接口"><span class="nav-number">3.</span> <span class="nav-text">接口</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#类和函数"><span class="nav-number">4.</span> <span class="nav-text">类和函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#泛型"><span class="nav-number">5.</span> <span class="nav-text">泛型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#类型断言"><span class="nav-number">6.</span> <span class="nav-text">类型断言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#类型守卫"><span class="nav-number">7.</span> <span class="nav-text">类型守卫</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#React实战"><span class="nav-number">8.</span> <span class="nav-text">React实战</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#索引类型查询"><span class="nav-number">9.</span> <span class="nav-text">索引类型查询</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#映射类型把接口成员都变成可选"><span class="nav-number">10.</span> <span class="nav-text">映射类型把接口成员都变成可选</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#常见工具类型"><span class="nav-number">11.</span> <span class="nav-text">常见工具类型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#TS的编译原理"><span class="nav-number">12.</span> <span class="nav-text">TS的编译原理</span></a></li></ol></div>
             
 
           </div>
