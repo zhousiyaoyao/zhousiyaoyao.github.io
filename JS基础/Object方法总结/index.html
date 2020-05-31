@@ -75,7 +75,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="JS基础," />
 
 
 
@@ -88,17 +88,18 @@
 
 
 
-<meta name="description" content="Keep Learning">
-<meta name="keywords" content="java web">
-<meta property="og:type" content="website">
-<meta property="og:title" content="ZEUS ZHOU">
-<meta property="og:url" content="zeuszhou.xyz/archives/2019/02/index.html">
+<meta name="description" content="Object方法 Object.assign对象合并，浅拷贝，只拷贝自身属性，prototype不拷贝，视数组为对象进行处理，[1,2,3] + [4,5] = [4,5,3]  Object.create使用指定的原型对象及其属性去创建一个新的对象  Object.defineProperties直接在一个对象上修改一个或多个属性或者加属性（指的是内部属性）  Object.defineProp">
+<meta name="keywords" content="JS基础">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JS对象方法总结">
+<meta property="og:url" content="zeuszhou.xyz/JS基础/Object方法总结/index.html">
 <meta property="og:site_name" content="ZEUS ZHOU">
-<meta property="og:description" content="Keep Learning">
+<meta property="og:description" content="Object方法 Object.assign对象合并，浅拷贝，只拷贝自身属性，prototype不拷贝，视数组为对象进行处理，[1,2,3] + [4,5] = [4,5,3]  Object.create使用指定的原型对象及其属性去创建一个新的对象  Object.defineProperties直接在一个对象上修改一个或多个属性或者加属性（指的是内部属性）  Object.defineProp">
 <meta property="og:locale" content="中文">
+<meta property="og:updated_time" content="2020-05-31T14:30:48.612Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="ZEUS ZHOU">
-<meta name="twitter:description" content="Keep Learning">
+<meta name="twitter:title" content="JS对象方法总结">
+<meta name="twitter:description" content="Object方法 Object.assign对象合并，浅拷贝，只拷贝自身属性，prototype不拷贝，视数组为对象进行处理，[1,2,3] + [4,5] = [4,5,3]  Object.create使用指定的原型对象及其属性去创建一个新的对象  Object.defineProperties直接在一个对象上修改一个或多个属性或者加属性（指的是内部属性）  Object.defineProp">
 
 
 
@@ -128,13 +129,13 @@
 
 
 
-  <link rel="canonical" href="zeuszhou.xyz/archives/2019/02/"/>
+  <link rel="canonical" href="zeuszhou.xyz/JS基础/Object方法总结/"/>
 
 
 
 
 
-  <title>Archive | ZEUS ZHOU</title>
+  <title>JS对象方法总结 | ZEUS ZHOU</title>
   
 
 
@@ -153,7 +154,7 @@
     
   
 
-  <div class="container sidebar-position-left page-archive">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
 <a href="https://github.com/zhousiyaoyao"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_orange_ff7600.png" alt="Fork me on GitHub"></a>
@@ -293,74 +294,384 @@
           <div id="content" class="content">
             
 
+  <div id="posts" class="posts-expand">
+    
+
+  
+
   
   
   
-  <div class="post-block archive">
-    <div id="posts" class="posts-collapse">
-      <span class="archive-move-on"></span>
-
-      <span class="archive-page-counter">
-        
-        
-        
-          
-        
-        Um..! 18 posts in total. Keep on posting.
-      </span>
-
-      
-
-        
-        
-        
-
-        
-          
-          <div class="collection-title">
-            <h1 class="archive-year" id="archive-year-2019">2019</h1>
-          </div>
-        
-        
-
-        
 
   <article class="post post-type-categories" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="zeuszhou.xyz/JS基础/Object方法总结/">
 
-      <h2 class="post-title">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ZEUS ZHOU">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ZEUS ZHOU">
+    </span>
+
+    
+      <header class="post-header">
+
         
-            <a class="post-title-link" href="/SAP/SAP-PI-3/" itemprop="url">
-              
-                <span itemprop="name">SAP PI (3)</span>
-              
-            </a>
         
-      </h2>
+          <h1 class="post-title" itemprop="name headline">JS对象方法总结</h1>
+        
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2019-02-19T22:45:41+08:00"
-              content="2019-02-19" >
-          02-19
-        </time>
-      </div>
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-05-31T16:30:54+08:00">
+                2020-05-31
+              </time>
+            
 
-    </header>
-  </article>
+            
+              <span class="post-meta-divider">|</span>
+            
 
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Post modified&#58;</span>
+              
+              <time title="Post modified" itemprop="dateModified" datetime="2020-05-31T22:30:48+08:00">
+                2020-05-31
+              </time>
+            
+          </span>
 
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/JS基础/" itemprop="url" rel="index">
+                    <span itemprop="name">JS基础</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>  阅读数
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
+      
 
+      
+        <h3 id="Object方法"><a href="#Object方法" class="headerlink" title="Object方法"></a>Object方法</h3><ol>
+<li><p>Object.assign<br>对象合并，浅拷贝，只拷贝自身属性，prototype不拷贝，视数组为对象进行处理，[1,2,3] + [4,5] = [4,5,3]</p>
+</li>
+<li><p>Object.create<br>使用指定的原型对象及其属性去创建一个新的对象</p>
+</li>
+<li><p>Object.defineProperties<br>直接在一个对象上修改一个或多个属性或者加属性（指的是内部属性）</p>
+</li>
+<li><p>Object.defineProperty<br>同上，单复数的区别</p>
+</li>
+</ol>
+<p>数据描述符｜数据属性</p>
+<ul>
+<li>Configurable：表示能否通过delete删除此属性，能否修改内部属性值</li>
+<li>Enumerable：表示该属性是否可枚举，是否可以通过for in或Object.keys()返回属性</li>
+<li>Writable：表示能否修改属性的值</li>
+<li>Value：表示该属性对应的值</li>
+</ul>
+<p>存取描述符｜访问器属性</p>
+<ul>
+<li>Configurable</li>
+<li>Enumerable</li>
+<li>get：访问对象属性时调用的函数</li>
+<li>set：改变对象属性时调用的函数<br>使用defineProperty或者defineProperties时，属性默认为false或者undefined<br>用var定义的任何变量，该属性都是false<br>字面量定义的对象，该对象内部的属性的数据描述符属性都为true<br>当writable为true，configurable为false时，修改writable和value，不会报错<br>当writable为false，configurable为true时，value可以通过defineProperty修改，但不能直接赋值修改</li>
+</ul>
+<ol start="5">
+<li>Object.getOwnPropertyDescriptor</li>
+<li><p>Object.getOwnPropertyDescriptors<br>返回指定对象上一个自有属性对应的属性描述符</p>
+</li>
+<li><p>Object.entries<br>返回键值对数组</p>
+</li>
+<li><p>obj.hasOwnProperty<br>对象自身属性是否有指定的属性</p>
+</li>
+<li><p>Object.keys<br>for in会枚举原型链上的属性，这个不会<br>不可枚举属性也不会打印</p>
+</li>
+<li><p>Object.values<br>会过滤属性名为 Symbol 值的属性</p>
+</li>
+<li><p>Object.getOwnPropertyNames<br>返回所有的属性，包括不可以枚举属性，但不包括属性名为 Symbol 值的属性</p>
+</li>
+<li><p>Object.getOwnPropertySymbols<br>返回所有Symbol属性的数组</p>
+</li>
+<li><p>Object.getPropertyOf<br>返回对象的原型</p>
+</li>
+<li><p>obj.isPrototypeOf<br>判断一个对象是否在另一个对象的原型链上</p>
+</li>
+<li><p>Object.setPrototypeOf<br>设置对象的原型对象</p>
+</li>
+<li><p>Object.is<br>判断两个值是否相等</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Object</span>.is([], []); <span class="comment">// false</span></span><br><span class="line"><span class="built_in">Object</span>.is(<span class="literal">NaN</span>, <span class="number">0</span>/<span class="number">0</span>); <span class="comment">// true</span></span><br><span class="line"><span class="built_in">Object</span>.is(<span class="number">0</span>, <span class="number">-0</span>); <span class="comment">// false</span></span><br><span class="line"><span class="built_in">Object</span>.is(<span class="number">-0</span>, <span class="number">-0</span>); <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Object.freeze<br>冻结一个对象，对象永远不可变</p>
+</li>
+<li><p>Object.isFrozen<br>判断是否冻结</p>
+</li>
+<li><p>Object.preventExtensions<br>对象不能添加新属性，可修改删除，不能添加</p>
+</li>
+<li><p>Object.isExtensible<br>判断对象是否可扩展，seal，freeze，preventExtensions都会使其不可扩展</p>
+</li>
+<li><p>Object.seal<br>密封对象，不能添加属性，不能配置，不可删除，但可以修改属性的值</p>
+</li>
+<li><p>Object.isSealed<br>判断对象是否被密封</p>
+</li>
+</ol>
+<p>扩展（不能加属性） -&gt; 密封（不能配置，但可改值） -&gt; 冻结（不能修改值，所以啥都不能）</p>
+<h3 id="Array方法"><a href="#Array方法" class="headerlink" title="Array方法"></a>Array方法</h3><ol>
+<li>isArray 判断是否数组</li>
+<li>toString 数组转字符串</li>
+<li>valueof 返回对象原始值</li>
+<li>join 数组转字符串</li>
+<li>push </li>
+<li>pop</li>
+<li>unshift 添加头</li>
+<li>shift 删除头</li>
+<li>reverse</li>
+<li>sort</li>
+<li>concat</li>
+<li>slice</li>
+<li>splice</li>
+<li>indexOf</li>
+<li>every</li>
+<li>filter</li>
+<li>forEach</li>
+<li>map</li>
+<li>some</li>
+<li>reduce</li>
+<li>reduceRight</li>
+<li>copyWithin 从数组的指定位置拷贝元素到数组的另一个指定位置中</li>
+<li>entries</li>
+<li>fill</li>
+<li>find 返回符合传入测试（函数）条件的数组元素</li>
+<li>findIndex 返回符合传入测试（函数）条件的数组元素索引</li>
+<li>from 通过给定的对象中创建一个数组，比如set</li>
+<li>includes 判断一个数组是否包含一个指定的值</li>
+<li>keys</li>
+<li>lastIndexOf</li>
+</ol>
+<h3 id="String方法"><a href="#String方法" class="headerlink" title="String方法"></a>String方法</h3><ol>
+<li>charAt</li>
+<li>charCodeAt</li>
+<li>concat</li>
+<li>slice</li>
+<li>substr</li>
+<li>substring</li>
+<li>indexOf</li>
+<li>lastIndexOf</li>
+<li>toLowerCase</li>
+<li>toUpperCase</li>
+<li>match</li>
+<li>search</li>
+<li>replace</li>
+<li>split</li>
+<li>trim 去除字符串两边的空白</li>
+<li>localeCompare 比较两个字符串的字符顺序</li>
+<li>formCharCode</li>
+<li>valueOf</li>
+<li>includes</li>
+<li>startsWith</li>
+<li>endsWith</li>
+<li>repeat</li>
+<li>padStart 在头部补全字符串</li>
+<li>padEnd 在尾部补全字符串</li>
+</ol>
+<h3 id="Math方法"><a href="#Math方法" class="headerlink" title="Math方法"></a>Math方法</h3><ol>
+<li>Math.abs</li>
+<li>Math.ceil</li>
+<li>Math.floor</li>
+<li>Math.max</li>
+<li>Math.min</li>
+<li>Math.pow(x,y) x的y次方</li>
+<li>Math.random</li>
+<li>Math.round</li>
+<li>Math.sqrt</li>
+</ol>
+
+      
     </div>
+    
+    
+    
+
+<div>
+      
+        
+<div class="my_post_copyright">
+  <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+  
+  <!-- JS库 sweetalert 可修改路径 -->
+  <script type="text/javascript" src="http://jslibs.wuxubj.cn/sweetalert_mini/jquery-1.7.1.min.js"></script>
+  <script src="http://jslibs.wuxubj.cn/sweetalert_mini/sweetalert.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="http://jslibs.wuxubj.cn/sweetalert_mini/sweetalert.mini.css">
+
+  <p><span>本文标题:</span>JS对象方法总结</a></p>
+  <p><span>文章作者:</span>ZEUS ZHOU</a></p>
+  <p><span>发布时间:</span>2020年05月31日 - 16:30:54</p>
+  <p><span>最后更新:</span>2020年05月31日 - 22:30:48</p>
+  <p><span>原始链接:</span>
+    <span class="copy-path"  title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="zeuszhou.xyz/JS基础/Object方法总结/"  aria-label="复制成功！"></i></span>
+  </p>
+  <p><span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">署名-非商业性使用-禁止演绎 4.0 国际</a> 转载请保留原文链接及作者。</p>  
+</div>
+<script> 
+    var clipboard = new Clipboard('.fa-clipboard');
+    clipboard.on('success', $(function(){
+      $(".fa-clipboard").click(function(){
+        swal({   
+          title: "",   
+          text: '复制成功',   
+          html: false,
+          timer: 500,   
+          showConfirmButton: false
+        });
+      });
+    }));  
+</script>
+
+      
+</div>
+
+    
+
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>Post author:</strong>
+    ZEUS ZHOU
+  </li>
+  <li class="post-copyright-link">
+    <strong>Post link:</strong>
+    <a href="zeuszhou.xyz/JS基础/Object方法总结/" title="JS对象方法总结">zeuszhou.xyz/JS基础/Object方法总结/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>Copyright Notice: </strong>
+    All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 4.0</a> unless stating additionally.
+  </li>
+</ul>
+
+      </div>
+    
+
+    <div>
+      
+        <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束-------------</div>
+    
+</div>
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/JS基础/" rel="tag"><i class="fa fa-tag"></i> JS基础</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/React/React总结第一弹/" rel="next" title="React总结第一弹">
+                <i class="fa fa-chevron-left"></i> React总结第一弹
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
 
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -368,6 +679,10 @@
 
 
           
+
+  
+
+
 
         </div>
         
@@ -388,8 +703,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -500,6 +824,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Object方法"><span class="nav-number">1.</span> <span class="nav-text">Object方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Array方法"><span class="nav-number">2.</span> <span class="nav-text">Array方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#String方法"><span class="nav-number">3.</span> <span class="nav-text">String方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Math方法"><span class="nav-number">4.</span> <span class="nav-text">Math方法</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -653,6 +993,10 @@
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 
