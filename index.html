@@ -308,6 +308,210 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="zeuszhou.xyz/HTML/HTML的知识点/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ZEUS ZHOU">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ZEUS ZHOU">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/HTML/HTML的知识点/" itemprop="url">HTML的新学知识点</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-05-31T23:17:15+08:00">
+                2020-05-31
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Post modified&#58;</span>
+              
+              <time title="Post modified" itemprop="dateModified" datetime="2020-06-01T22:29:35+08:00">
+                2020-06-01
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/HTML/" itemprop="url" rel="index">
+                    <span itemprop="name">HTML</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="行内元素"><a href="#行内元素" class="headerlink" title="行内元素"></a>行内元素</h3><p>行内元素设置 width 无效，height 无效（可以设置 line-height）<br>行内元素设置 margin 和 padding 不会对其他元素产生影响</p>
+<h3 id="浏览器渲染原理"><a href="#浏览器渲染原理" class="headerlink" title="浏览器渲染原理"></a>浏览器渲染原理</h3><ol>
+<li>先解析收到的文档，构建一棵dom树，遇到js会先暂停，等js运行完毕</li>
+<li>解析css，生成cssom规则树</li>
+<li>根据dom和cssom树构建渲染树</li>
+<li>渲染树布局和重排</li>
+<li>绘制阶段，遍历渲染树，并调用渲染对象的paint方法把内容显示在屏幕上</li>
+</ol>
+<h3 id="async和defer"><a href="#async和defer" class="headerlink" title="async和defer"></a>async和defer</h3><p>都可以并行加载，async加载完就执行，执行会阻塞文档解析，defer会等整个文档解析完成后，在DOMContentLoaded事件触发之前完成，按照顺序</p>
+<h3 id="文档的预解析"><a href="#文档的预解析" class="headerlink" title="文档的预解析"></a>文档的预解析</h3><p>当执行js脚本时，另一个线程会解析剩下的文档，但不会改变dom树，只解析外部资源的引用</p>
+<h3 id="css阻塞文档解析"><a href="#css阻塞文档解析" class="headerlink" title="css阻塞文档解析"></a>css阻塞文档解析</h3><p>因为js脚本执行可以请求样式信息，如果css没解析完，会得到错误的信息<br>所以如果cssom还没构建解析好，遇到js脚本，浏览器会延迟js的执行和文档的解析<br>所以浏览器会先下载和构建cssom，在执行js，再继续文档的解析</p>
+<h3 id="FOUC和白屏"><a href="#FOUC和白屏" class="headerlink" title="FOUC和白屏"></a>FOUC和白屏</h3><p>FOUC：样式闪烁，css加载时候过长或者css放在文档底部，会先呈现html，无样式内容，然后突然样式呈现<br>白屏：浏览器需要构建出dom树和cssom树才能进行渲染，所以css加载未完成或者js阻塞文档解析都可以导致白屏</p>
+<h3 id="DOMContentLoaded-事件和-Load-事件"><a href="#DOMContentLoaded-事件和-Load-事件" class="headerlink" title="DOMContentLoaded 事件和 Load 事件"></a>DOMContentLoaded 事件和 Load 事件</h3><p>DOMContentLoaded：当HTML加载和解析完就触发<br>Load：所有资源加载完后触发</p>
+<h3 id="H5新增功能"><a href="#H5新增功能" class="headerlink" title="H5新增功能"></a>H5新增功能</h3><ol>
+<li>绘画canvas</li>
+<li>video和audio元素</li>
+<li>localstorage和sessionStorage</li>
+<li>webworker</li>
+<li>websocket</li>
+<li>getCurrentPosition，获得用户当前位置</li>
+</ol>
+<h3 id="H5离线存储"><a href="#H5离线存储" class="headerlink" title="H5离线存储"></a>H5离线存储</h3><p>基于一个.appcache文件的缓存机制，通过这个文件上解析清单离线存储功能，这些资源就能被存储下来，当离线时，可以展示离线存储的数据，用HTML的头部manifest属性实现，第一次访问app会离线存储，后面每次都会对比文件是否发生变化，变化的化会更新文件</p>
+<h3 id="cookie"><a href="#cookie" class="headerlink" title="cookie"></a>cookie</h3><ol>
+<li>cookie的domain和path构成了其url，哪些地方可以获取到cookie</li>
+<li>删除cookie需要把cookie的过期时间设为过去的时间</li>
+<li>cookie的secure属性设置当请求是HTTPS或者安全协议时，才会被发送。在http协议中无法设置</li>
+<li>cookie的httponly属性规定cookie是否能够通过js访问，默认可以，只能通过服务器设置</li>
+</ol>
+<h3 id="IndexedDB"><a href="#IndexedDB" class="headerlink" title="IndexedDB"></a>IndexedDB</h3><ol>
+<li>键值对存储，NoSql，支持事务，同源，存储空间大</li>
+<li>异步，localstorage是同步</li>
+</ol>
+<h3 id="Label"><a href="#Label" class="headerlink" title="Label"></a>Label</h3><p>用于表单的聚焦，当用户选择改标签，会自动转移焦点</p>
+<h3 id="实现标签页的通信"><a href="#实现标签页的通信" class="headerlink" title="实现标签页的通信"></a>实现标签页的通信</h3><ol>
+<li>Websocket，服务器做中介</li>
+<li>ShareWorker，所有页面共享，而webworker只能每个页面一个，属于render进程</li>
+<li>localstorage，监听localstorage的变化事件来传递数据</li>
+<li>postmessage，跨页面请求数据，安全的跨源通信，需要获的对应标签页的引用</li>
+</ol>
+<h3 id="页面可见性api"><a href="#页面可见性api" class="headerlink" title="页面可见性api"></a>页面可见性api</h3><p>通过监听网页的可见性，判断网页的卸载，节省资源和耗电，可以停止播放音乐和video，结束轮询和动画<br>document.visibilityState，hidden页面不可见，visible一部分可见，prerender即将或正在渲染<br>visibilitychange事件，visibilityState改变触发</p>
+<h3 id="Canvas和SVG"><a href="#Canvas和SVG" class="headerlink" title="Canvas和SVG"></a>Canvas和SVG</h3><p>Canvas通过js来绘制2D图像，逐像素渲染，缩放时会出现锯齿或者失真<br>SVG通过XML来绘制2D图像，缩放不会失帧</p>
+<h3 id="Chrome瀑布图"><a href="#Chrome瀑布图" class="headerlink" title="Chrome瀑布图"></a>Chrome瀑布图</h3><p>紫线表示html解析完，绿线表示开始渲染<br>越矮越窄，绿线越左，性能越好</p>
+<h3 id="serviceWorker-和-PWA"><a href="#serviceWorker-和-PWA" class="headerlink" title="serviceWorker 和 PWA"></a>serviceWorker 和 PWA</h3><p>PWA：渐进式网页应用，三大特性service worker离线缓存（存储到cache storage），manifest应用清单（网页出现在手机app清单）和推送通知（服务器push给sw，sw推送给用户）<br>service worker：浏览器独立于网页运行的脚本，作用于浏览器和服务器之间，相当于代理服务器，能够直接截取和返回用户请求</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+<div>
+      
+</div>
+
+    
+
+    
+
+    
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-categories" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="zeuszhou.xyz/JS基础/Object方法总结/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2249,187 +2453,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-categories" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="zeuszhou.xyz/React/React-Hooks入门/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="ZEUS ZHOU">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="ZEUS ZHOU">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/React/React-Hooks入门/" itemprop="url">useEffect小试</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-05-10T15:33:00+08:00">
-                2020-05-10
-              </time>
-            
-
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Post modified&#58;</span>
-              
-              <time title="Post modified" itemprop="dateModified" datetime="2020-05-10T23:10:30+08:00">
-                2020-05-10
-              </time>
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/React/" itemprop="url" rel="index">
-                    <span itemprop="name">React</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="前序"><a href="#前序" class="headerlink" title="前序"></a>前序</h2><p>实习了3天，感受到了互联网公司的快节奏<br>React hooks，TS，Sass是基础，而自己又不太熟，需要补补课<br>React hooks之前看了一下官方文档，感觉非常清晰，然鹅做起项目来，还是有点不大理解，需要捋一捋</p>
-<h2 id="useEffect"><a href="#useEffect" class="headerlink" title="useEffect"></a>useEffect</h2><p>react只会在浏览器绘制之后运行effects<br>useEffect函数在每一次渲染中都不同，对应的state值也只属于当前那次渲染。<br>一个function对应多次渲染，每一次渲染中useEffect和state都是不同且独立的，每个effect函数看到的props和state都是来自他属于的那次渲染</p>
-<h4 id="一次完整的渲染过程，以官网count为例子"><a href="#一次完整的渲染过程，以官网count为例子" class="headerlink" title="一次完整的渲染过程，以官网count为例子"></a>一次完整的渲染过程，以官网count为例子</h4><ol>
-<li>组件给react需要渲染的内容，此时count为0，并告诉react渲染之后调用effect函数</li>
-<li>react拿到组件渲染内容，更新UI，告诉DOM进行修改</li>
-<li>浏览器绘制后告诉react，react运行effect</li>
-<li>然后count为1，组件给react count为1时的渲染内容，重复进行</li>
-</ol>
-<p>和componentDidUpdate相比，componentDidUpdate的state会指向最新的state，而hooks会指向某次特定渲染的值，这也是闭包的一个应用。<br>如果想在effec的回调中拿到最新的值而不是每次渲染的值，可以用refs</p>
-<h4 id="effect清理"><a href="#effect清理" class="headerlink" title="effect清理"></a>effect清理</h4><ol>
-<li>react渲染id为1的UI</li>
-<li>浏览器绘制，我们看到id为1的UI</li>
-<li>react清除id为0的effect</li>
-<li>react运行id为1的effect，id变成2<br>上一次的effect会在重新渲染后，被清除，effect的清除并不会读取到最新的props。所以react能做到在绘制后立即处理effect</li>
-</ol>
-<h4 id="依赖数组deps"><a href="#依赖数组deps" class="headerlink" title="依赖数组deps"></a>依赖数组deps</h4><p>因为react无法区分effects之间的不同，只能依靠deps<br>如果两次渲染，deps一样，react会跳过这次effect，也就是只有deps改变，effect才会生效<br>如果deps为空，表示只有第一次渲染会执行effect</p>
-<h4 id="依赖撒谎"><a href="#依赖撒谎" class="headerlink" title="依赖撒谎"></a>依赖撒谎</h4><p>依赖是我们给react的暗示，告诉它effect里需要使用的渲染的值，如果effect使用了count，但依赖数组里没有，会出大问题。<br>比如设置定时器，定时器调用了state但没有在deps里面标明，这样effect不会重复调用，每一次setCount里count都是常数<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Counter</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> [count, setCount] = useState(<span class="number">0</span>);</span><br><span class="line"></span><br><span class="line">  useEffect(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> id = setInterval(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">      setCount(count + <span class="number">1</span>);</span><br><span class="line">      <span class="comment">// setCount(c =&gt; c + 1); 正确的姿势</span></span><br><span class="line">    &#125;, <span class="number">1000</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="function"><span class="params">()</span> =&gt;</span> clearInterval(id);</span><br><span class="line">  &#125;, []);</span><br><span class="line">  <span class="keyword">return</span> &lt;h1&gt;&#123;count&#125;&lt;/h1&gt;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<h4 id="useEffect发请求"><a href="#useEffect发请求" class="headerlink" title="useEffect发请求"></a>useEffect发请求</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">useEffect(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">async</span> <span class="function"><span class="keyword">function</span> <span class="title">fetchData</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        <span class="keyword">const</span> result = <span class="keyword">await</span> axios()</span><br><span class="line">    &#125;</span><br><span class="line">    fetchData()</span><br><span class="line">&#125;, [])</span><br><span class="line"></span><br><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">function</span> <span class="title">fetchData</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">const</span> result = <span class="keyword">await</span> axios()</span><br><span class="line">&#125;</span><br><span class="line">useEffect(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    fetchData()</span><br><span class="line">&#125;, [])</span><br></pre></td></tr></table></figure>
-<p>请求函数写在useEffect里面容易出现问题，比如如果async函数里面有一个state，UserID，我们需要在deps里面加入，但由于代码量比较大，我们非常可能忘记加上这个deps，然而如果我们把async函数写在useEffect里面，就很直观，程序员可以意识到要加这个间接依赖</p>
-<p>如果几个effect调用了同一个函数，可以把函数放在整个组件外面，或者用callback钩子<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">getFetchUrl</span>(<span class="params">query</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="string">'https://hn.algolia.com/api/v1/search?query='</span> + query;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">SearchResults</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  useEffect(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> url = getFetchUrl(<span class="string">'react'</span>);</span><br><span class="line">  &#125;, []);</span><br><span class="line">  useEffect(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> url = getFetchUrl(<span class="string">'redux'</span>);</span><br><span class="line">  &#125;, []);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">SearchResults</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> getFetchUrl = useCallback(<span class="function">(<span class="params">query</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="string">'https://hn.algolia.com/api/v1/search?query='</span> + query;</span><br><span class="line">  &#125;, []); </span><br><span class="line"></span><br><span class="line">  useEffect(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> url = getFetchUrl(<span class="string">'react'</span>);</span><br><span class="line">  &#125;, [getFetchUrl]);</span><br><span class="line"></span><br><span class="line">  useEffect(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> url = getFetchUrl(<span class="string">'redux'</span>);</span><br><span class="line">  &#125;, [getFetchUrl]); </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-<div>
-      
-</div>
-
-    
-
-    
-
-    
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2484,7 +2507,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">18</span>
+                  <span class="site-state-item-count">19</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -2495,7 +2518,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-count">9</span>
                   <span class="site-state-item-name">categories</span>
                 </a>
               </div>
@@ -2506,7 +2529,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">13</span>
+                  <span class="site-state-item-count">14</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>
