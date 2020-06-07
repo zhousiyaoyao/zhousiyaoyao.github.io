@@ -308,6 +308,600 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="zeuszhou.xyz/设计模式/前端设计模式/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ZEUS ZHOU">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ZEUS ZHOU">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/设计模式/前端设计模式/" itemprop="url">前端设计模式</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-05-23T17:49:17+08:00">
+                2020-05-23
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Post modified&#58;</span>
+              
+              <time title="Post modified" itemprop="dateModified" datetime="2020-05-23T20:28:32+08:00">
+                2020-05-23
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/设计模式/" itemprop="url" rel="index">
+                    <span itemprop="name">设计模式</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="设计模式原则"><a href="#设计模式原则" class="headerlink" title="设计模式原则"></a>设计模式原则</h3><ol>
+<li><strong>单一职责</strong>，一个程序只做一件事，功能过于复杂就取消，每个部分保持独立</li>
+<li><strong>开放闭合原则</strong>，对扩展开放，对修改封闭，增加需求时，扩展新代码，而非修改已有代码</li>
+<li><strong>里氏替换原则</strong>，子类能够覆盖父类，父类能出现的地方，子类就能出现</li>
+<li><strong>接口隔离原则</strong>，保持接口的单一独立，类似单一职责原则，这里更关注接口</li>
+<li><strong>依赖倒转原则</strong>，面向接口编程，依赖于抽象而不依赖于具体，使用方只关注接口而不关注具体类的实现</li>
+</ol>
+<h3 id="单例模式"><a href="#单例模式" class="headerlink" title="单例模式"></a>单例模式</h3><p>一个类只能构造出唯一的实例<br>比如弹窗，无论点击多少，都只被创建一次<br>实现方法为先判断实例存在与否，不存在创建再返回，存在直接返回，保证一个类只有一个实例</p>
+<h3 id="策略模式"><a href="#策略模式" class="headerlink" title="策略模式"></a>策略模式</h3><p>根据参数的不同可以命中不同的策略<br>两部分组成，策略类封装具体算法，环境类接受客户请求，随后将请求委托给某一个策略类</p>
+<h3 id="代理模式"><a href="#代理模式" class="headerlink" title="代理模式"></a>代理模式</h3><p>代理对象和本体对象具有一致的接口<br>为一个对象提供一个代用品或占位符，以便控制对它的访问<br>比如某一个花销很大的操作，可以先用虚拟代理的方式延迟到需要它的时候才创建，比如图片懒加载</p>
+<h3 id="迭代器模式"><a href="#迭代器模式" class="headerlink" title="迭代器模式"></a>迭代器模式</h3><p>能获取聚合对象的顺序和元素</p>
+<h3 id="发布订阅模式"><a href="#发布订阅模式" class="headerlink" title="发布订阅模式"></a>发布订阅模式</h3><p>PubSub</p>
+<h3 id="命令模式"><a href="#命令模式" class="headerlink" title="命令模式"></a>命令模式</h3><p>不同对象间约定好响应的接口</p>
+<h3 id="组合模式"><a href="#组合模式" class="headerlink" title="组合模式"></a>组合模式</h3><p>组合模式在对象间形成一致对待的树形结构</p>
+<h3 id="模版方法模式"><a href="#模版方法模式" class="headerlink" title="模版方法模式"></a>模版方法模式</h3><p>父类中定好执行顺序</p>
+<h3 id="享元模式"><a href="#享元模式" class="headerlink" title="享元模式"></a>享元模式</h3><p>减少创建实例的个数</p>
+<h3 id="职责链模式"><a href="#职责链模式" class="headerlink" title="职责链模式"></a>职责链模式</h3><p>通过请求第一个条件，会持续执行后续的条件，直到返回结果为止</p>
+<h3 id="中介者模式"><a href="#中介者模式" class="headerlink" title="中介者模式"></a>中介者模式</h3><p>对象和对象之间借助第三方中介者进行通信<br>比如购物车需求，有商品选择表单，颜色选择表单和购买数量表单，都会触发change事件，可以通过中介者来转发处理这个事件</p>
+<h3 id="装饰者模式"><a href="#装饰者模式" class="headerlink" title="装饰者模式"></a>装饰者模式</h3><p>动态的给函数赋能</p>
+<h3 id="状态模式"><a href="#状态模式" class="headerlink" title="状态模式"></a>状态模式</h3><p>每个状态建立一个类，状态改变会产生不同的行为</p>
+<h3 id="适配者模式"><a href="#适配者模式" class="headerlink" title="适配者模式"></a>适配者模式</h3><p>一种数据结构改成另一种数据结构</p>
+<h3 id="观察者模式"><a href="#观察者模式" class="headerlink" title="观察者模式"></a>观察者模式</h3><p>当观察对象发生变化时，自动调用相关函数</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+<div>
+      
+</div>
+
+    
+
+    
+
+    
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-categories" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="zeuszhou.xyz/性能优化/性能优化/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ZEUS ZHOU">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ZEUS ZHOU">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/性能优化/性能优化/" itemprop="url">时尚版性能优化</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-05-22T21:15:57+08:00">
+                2020-05-22
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Post modified&#58;</span>
+              
+              <time title="Post modified" itemprop="dateModified" datetime="2020-05-23T10:51:07+08:00">
+                2020-05-23
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/性能优化/" itemprop="url" rel="index">
+                    <span itemprop="name">性能优化</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>前端性能优化的目的不是追求一味的快，而是优化用户的体验，即使没有实质化的优化，让用户产生性能快的错觉，也是性能优化，用户觉得快，就是真的快，比如加loading。</p>
+<h3 id="加载优化（大部分）"><a href="#加载优化（大部分）" class="headerlink" title="加载优化（大部分）"></a>加载优化（大部分）</h3><ol>
+<li><strong>首屏loading</strong>：html-webpack-plugin，js执行期间加入提示，在文件中插入loading图</li>
+<li><strong>预渲染</strong>：prerender-spa-plugin，模拟浏览器获取首屏的html结构，在本地模拟浏览器环境，预先执行我们的打包文件，这样通过解析可以获取首屏的html，在正常环境中，可以返回预先解析好的HTML</li>
+<li><strong>开启HTTP2</strong>：浏览器并发限制一次性6次请求，http2二进制分帧进行通信，多路复用，只需一个tcp通道，请求和响应可以双向通信，头部压缩，只发送差异数据，维护头信息表，以后只发索引号。服务器推送，无需请求，减少多次请求的耗时</li>
+<li><strong>开启浏览器缓存</strong>：给第三方库设置强缓存，SplitChunksPlugin来做拆包，需要将应用基础库和特定依赖库分离。当chunk在强缓存期但服务器代码变了，需要通知客户端，需要每次引入script脚本的时候去服务器更新，并开启hashchunk，作用是当chunk变化时，hash值也会变，所以不变就命中缓存，变了重新请求</li>
+<li><strong>骨架图</strong>：antd的骨架屏Skeleton，vue的SkeletonWebpackPlugin，让骨架屏的css分离，直接作为内联style处理到html，提高载入速度</li>
+<li><strong>Tree shaking</strong>：通过程序流分析找出你代码中无用的代码并剔除，webpack4自带，坑Babel转译，因为需要es5的module，需要手动关闭commonjs；坑2第三方库不可控，因为有些只有es5版本</li>
+<li><strong>路由分割优化</strong>：只加载当前页面的代码，比如component: ()=&gt; import(‘@components/login’), 这样登陆页会被单独打包</li>
+<li><strong>组件懒加载</strong>：在页面的加载中只渲染部分必须的组件,而其余的组件可以按需加载。基于lazy+suspense，比如把echart的图进行懒加载</li>
+<li><strong>组件预加载</strong>：在用户的鼠标还处于hover状态的时候就开始触发图表资源的加载,通常情况下当用户点击结束之后,加载也基本完成,这个时候图表会很顺利地渲染出来,不会出现延迟</li>
+<li><strong>keep alive</strong>：vue中，在页面跳转后不销毁组件，先保存组件对应的实例到内存，当页面需要再次渲染时，可以利用这个缓存。但实例过多容易出现内存泄漏，注意调用deactivated销毁。react官网宣布不会加类似api，但可以用redux状态缓存（不推荐），或者React Keep Alive这个库</li>
+<li><strong>图片懒加载</strong>：页面内未出现在可视区域内的图片先不做加载，等到滚动到可视区域后再去加载。可见区域监听滚动事件</li>
+<li><strong>资源压缩</strong>：服务端启动gzip</li>
+<li><strong>CDN</strong>：静态资源走CDN，使用户就近获取内容，降低访问时延，减轻了源站的负载。静态资源不需要cookie，把静态资源和主页面置于不同的域名下，可以避免请求中携带不必要的cookie（同一个域名下的所有请求，都会携带一个相同的cookie，设置不当就会很大）</li>
+<li><strong>雪碧图，icon</strong>：这个不解释</li>
+</ol>
+<h3 id="执行优化（小部分）"><a href="#执行优化（小部分）" class="headerlink" title="执行优化（小部分）"></a>执行优化（小部分）</h3><p>动画一般是性能的重灾区，需要大量的计算和渲染，主要有三种方式：</p>
+<ol>
+<li>Canvas</li>
+<li>CSS3</li>
+<li>Dom</li>
+</ol>
+<p>动画优化方案：</p>
+<ol>
+<li><strong>Dom优化之Dom+js</strong>：容易引起回流和重绘，优化就是不用Dom+js做动画</li>
+<li><strong>CSS3优化之动画放在同一图层（合成层）</strong>：图层的概念，浏览器渲染页面，会把页面分成很多图层，对每个图层的节点计算样式，生成图形和位置，再把节点绘制到图层位图中，图层作为纹理上传至GPU，图层重组生成屏幕图像。将动画放在一个独立图层,这样可以避免动画效果影响其他渲染层的元素。比如iframe，video，3D或2D canvas，flash，3D transform，backface-visibility 为 hidden等</li>
+<li><strong>CSS3优化之避免重绘和回流</strong>：多使用transform和opacity来实现动画效果</li>
+<li><strong>CSS3优化之GPU加速</strong>：浏览器把一部分渲染任务丢给GPU。这部分css元素会提升到合成层，使得当页面上只有这个元素发生变换(transform)的时候其余元素不需要重新渲染。opacity，translate，rotate和scale会触发硬件加速，opacity号称性能最好的属性之一。</li>
+<li><strong>CSS3优化之will change</strong>：will-change，最好的方式，设置为opacity，transform或上下左右，允许我们提前告知浏览器可能会对元素进行哪些操作，让浏览器去优化并提前处理那些潜在的比较消耗性能的操作比如在动画开始之前，提前处理元素的动画行为。过多使用会占用计算机资源，且需要留足够时间，变更失效需要移除。</li>
+<li><strong>Canvas优化之requestAnimationFrame</strong>：setInterval定时完成动画不可靠，容易掉帧。requestAnimationFrame性能好，将所有动画放到一个浏览器重绘周期里去做，这样可以保存cpu循环次数，提高性能。开销更小，浏览器专门为动画提供的效果，运行时浏览器会自动优化方法的调用，如果页面不是激活状态，动画会暂停，节省了cpu开销</li>
+<li><strong>Canvas优化之离屏canvas</strong>：离屏canvas当成一个缓存区。把需要重复绘制的画面数据进行缓存起来，减少调用 canvas的 API的消耗。</li>
+<li><strong>Canvas优化之避免浮点运算</strong>：浮点数可能会使元素抖动或者抗锯齿失真</li>
+<li><strong>Canvas优化之减少调用Canvas API</strong>：通过适量js原生计算减少canvas API的调用，粒子效果少用圆，最好用方形</li>
+<li><strong>Web woker</strong>：分担主线程的压力</li>
+</ol>
+<p>大量数据性能优化方案：</p>
+<ol>
+<li><strong>虚拟列表</strong>：只渲染可视区域的数据，startIndex，endIndex，计算startOffset</li>
+<li><strong>webwork</strong>：完全和UI线程（主线程）并行的执行js代码，从而不会阻塞UI，它和主线程是通过 onmessage 和 postMessage 接口进行通信的。当主线程在处理界面事件时，worker 可以在后台运行，帮你处理大量的数据计算，当计算完成，将计算结果返回给主线程，由主线程更新 DOM 元素</li>
+</ol>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+<div>
+      
+</div>
+
+    
+
+    
+
+    
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-categories" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="zeuszhou.xyz/React/架构/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ZEUS ZHOU">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ZEUS ZHOU">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/React/架构/" itemprop="url">React Fiber初探</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-05-16T09:34:00+08:00">
+                2020-05-16
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Post modified&#58;</span>
+              
+              <time title="Post modified" itemprop="dateModified" datetime="2020-05-16T14:08:35+08:00">
+                2020-05-16
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/React/" itemprop="url" rel="index">
+                    <span itemprop="name">React</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="scheduler"><a href="#scheduler" class="headerlink" title="scheduler"></a>scheduler</h3><ol>
+<li>fiber reconcifer的过程，决定什么时候做什么</li>
+<li>stack reconcifer是一气呵成的，但需要考虑一些情况，不是所有的state更新都要实时显示，不同state更新的优先级应该不同，高优先级可以打断低优先级</li>
+<li>在fiber reconcifer，每次做一个小任务，再回主线程看看有没有更高优先级的任务需要处理，有的话优先执行，没有的话继续</li>
+</ol>
+<p>假如我们安排100ms来更新视图和虚拟dom，40ms给浏览器做其他事情，如果我们不需要100ms来更新或者浏览器需要超过40ms，就需要进行时间的调度，浏览器有一些api可供选择</p>
+<ol>
+<li>requestAnimationFrame：帧数控制调用，做动画</li>
+<li>requestIdleCallback：闲时调用</li>
+<li>web worker：多线程调用</li>
+<li>intersectionObserver：进入可视区调用，比如虚拟列表</li>
+</ol>
+<p>客户端线程执行任务以帧为单位，30-60不会影响用户体验，每两个帧之间主线程会有空闲，这时候requestIdleCallback可以调用回调，执行任务。</p>
+<ul>
+<li>requestIdleCallback来处理低优先级任务，提高deadline，任务执行限制时间来切分任务，避免长时间执行，导致阻塞UI渲染而掉帧</li>
+<li>requestAnimationFrame处理高优先级任务</li>
+</ul>
+<h3 id="stack-reconciler"><a href="#stack-reconciler" class="headerlink" title="stack reconciler"></a>stack reconciler</h3><ol>
+<li>工作流程类似函数调用，从父节点进行遍历，找出不同，才能找出需要修改的信息，传递给renderer，进行渲染，再显示在屏幕上</li>
+<li>这个过程主线程被react占住，大型项目中会出现屏幕卡顿</li>
+<li>代码中有元素的创建或者更新，react会根据这些元素创建虚拟dom，diff算法，更新真实dom，dom的更新是同步的，也就意味着在diff过程中，发现不同的instance，立刻执行dom操作</li>
+</ol>
+<h3 id="fiber-reconciler"><a href="#fiber-reconciler" class="headerlink" title="fiber reconciler"></a>fiber reconciler</h3><ol>
+<li>操作可以分成小部分，可以被中断</li>
+<li>fiber有四个属性，stateNode管理instance自身的特性，通过child（第一个孩子）和sibling（右边的兄弟）表示下一个工作单位，return（父节点）表示返回结果需要合并的目标。整个结构是个链表树，每个fiber单位执行完，会查看是否拥有主线程时间片，有的话继续，没有的话先处理高优先级事务</li>
+<li>页面渲染，react生成一个fiber tree，类似虚拟dom树，同时维护一个workInProgressTree，用于计算更新</li>
+</ol>
+<h3 id="fiber工作流程"><a href="#fiber工作流程" class="headerlink" title="fiber工作流程"></a>fiber工作流程</h3><ol>
+<li>组件更新，更新的state加入当前组件的update queue，交给scheduler</li>
+<li>使用requestIdleCallback api，浏览器不支持用pollyfill，scheduler根据主线程的情况处理这次update</li>
+<li>reconciliation过程得到时间片，进入work loop（让react在计算状态和等待状态间切换）</li>
+<li>每个loop需要追踪下一个工作单元和当前还能占据主线程的时间</li>
+<li>第一个loop，下一个待处理单元为根节点，因为根节点对应的update队列为空，直接将根节点复制到workInProgrssTree</li>
+<li>再复制其子节点，子节点向其父节点返回，标志父节点处理结束，此时react检查时间片是否用完，没有用完处理下一个</li>
+<li><p>子节点包含更新，react会调用setState的updater函数获得最新state值，需要传入一个函数</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">setState(&#123;&#125;, callback); <span class="comment">// stack conciler</span></span><br><span class="line">setState(<span class="function"><span class="params">()</span> =&gt;</span> &#123; <span class="keyword">return</span> &#123;&#125; &#125;, callback); <span class="comment">// fiber conciler</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>得到最新的state，react会更新props和state，调用render，得到elements，然后决定是否可以重用，需要更新的节点会打上标签</p>
+</li>
+<li>如果此时用户点击放大字体的按钮，操作不能立即实现，因为时间片被react占住。处理完一个节点看时间够不够用。</li>
+<li>通过shouldComponentUpdate钩子可以根据传入的props判断其是否需要改变，返回ture表示要，打上标签</li>
+<li>react会维护一个effect list列表，记录所有标签元素</li>
+<li>当所有节点标记完成，react将workInProgressTree标记为pendingCommit，可以进入commit阶段</li>
+<li>此时还是检查时间够不够用，够时间的话根据effect list更新Dom</li>
+<li>此时workInProgress和DOM保持一致，交换current和workInProgress两个指针</li>
+<li>commit完执行componentDidMount函数</li>
+</ol>
+<h3 id="fiber优先级策略"><a href="#fiber优先级策略" class="headerlink" title="fiber优先级策略"></a>fiber优先级策略</h3><p>核心：低优先级会被高优先级操作打断，并让主线程执行高优先级的更新，当主线程重新分配给低优先级的操作时，会重新开始<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  NoWork: <span class="number">0</span>, <span class="comment">// No work is pending.</span></span><br><span class="line">  SynchronousPriority: <span class="number">1</span>, <span class="comment">// For controlled text inputs. Synchronous side-effects.</span></span><br><span class="line">  AnimationPriority: <span class="number">2</span>, <span class="comment">// Needs to complete before the next frame.</span></span><br><span class="line">  HighPriority: <span class="number">3</span>, <span class="comment">// Interaction that needs to complete pretty soon to feel responsive.</span></span><br><span class="line">  LowPriority: <span class="number">4</span>, <span class="comment">// Data fetching, or result from updating stores.</span></span><br><span class="line">  OffscreenPriority: <span class="number">5</span>, <span class="comment">// Won't be visible but do the work in case it becomes visible.</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+<div>
+      
+</div>
+
+    
+
+    
+
+    
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-categories" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="zeuszhou.xyz/React/React-Hooks入门/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1522,352 +2116,11 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="zeuszhou.xyz/SAP/Assurance/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="ZEUS ZHOU">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="ZEUS ZHOU">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/SAP/Assurance/" itemprop="url">SAP Value Assurance</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-10-31T20:30:10+08:00">
-                2018-10-31
-              </time>
-            
-
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Post modified&#58;</span>
-              
-              <time title="Post modified" itemprop="dateModified" datetime="2019-02-08T13:12:31+08:00">
-                2019-02-08
-              </time>
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/SAP/" itemprop="url" rel="index">
-                    <span itemprop="name">SAP</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h5 id="知识点"><a href="#知识点" class="headerlink" title="知识点"></a>知识点</h5><ul>
-<li>价值保障：对sap的新产品的一些服务，针对S/4 HANA On Premise</li>
-<li>S/4 HANA Cloud迭代很快，每个Q都有一个新的版本</li>
-<li>S/4 HANA On Premise每年一个版本，1511，1610，1709，1809，基本都是9，10月份</li>
-<li>现有的ERP在2025年maintain会结束，希望现有ERP客户向S/4 HANA 上迁移，但迁移不是一蹴而就的，底层架构不一样，表结构</li>
-<li>SAP主要是卖软件的，不是负责实施的，但会提供服务，VA就是一个服务包，是保证客户快速有效的使用我们的产品，体现产品的价值</li>
-</ul>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/SAP/Assurance/#more" rel="contents">
-              Read more &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-<div>
-      
-</div>
-
-    
-
-    
-
-    
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="zeuszhou.xyz/SAP/IV/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="ZEUS ZHOU">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="ZEUS ZHOU">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/SAP/IV/" itemprop="url">SAP Integration Validation</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-10-30T20:25:33+08:00">
-                2018-10-30
-              </time>
-            
-
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Post modified&#58;</span>
-              
-              <time title="Post modified" itemprop="dateModified" datetime="2019-02-08T13:12:44+08:00">
-                2019-02-08
-              </time>
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/SAP/" itemprop="url" rel="index">
-                    <span itemprop="name">SAP</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h2 id="方法论"><a href="#方法论" class="headerlink" title="方法论"></a>方法论</h2><h5 id="五大维度："><a href="#五大维度：" class="headerlink" title="五大维度："></a>五大维度：</h5><ul>
-<li>Data consistency management  系统时间，订单以时间戳追踪，外围，内部系统，Head（列）和item（行）需要同步commit。外围系统同步订单到中央系统，中央系统不会同步到所有的外围系统。直接改中央系统，会发生问题。解决方法，每晚后台作业，抽出A,B系统数据进行对比。更新完整的信息块，logic unit of work。</li>
-<li>Exception management 提示要到位，提供引导性步骤。定位异常位置，5个小灯，哪里红了一目了然。创建instance追踪issue。SAP非常重要的问题：back office有三个时区，中国，欧洲，美国。无缝连接，不加班，晚上下班欧洲的接班，早上起来接美国的班。一般和运维的人打电话。Incident resolution 就是便利贴，需要解释清楚自己做了什么，还有什么问题，才可以接着做。</li>
-</ul>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/SAP/IV/#more" rel="contents">
-              Read more &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-<div>
-      
-</div>
-
-    
-
-    
-
-    
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span>
+    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1917,7 +2170,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">19</span>
+                  <span class="site-state-item-count">22</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -1928,7 +2181,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">9</span>
+                  <span class="site-state-item-count">10</span>
                   <span class="site-state-item-name">categories</span>
                 </a>
               </div>
@@ -1939,7 +2192,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">14</span>
+                  <span class="site-state-item-count">15</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>
