@@ -308,6 +308,694 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="zeuszhou.xyz/CSS/CSS3特性/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ZEUS ZHOU">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ZEUS ZHOU">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/CSS/CSS3特性/" itemprop="url">CSS3特性</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-06-09T21:35:08+08:00">
+                2020-06-09
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Post modified&#58;</span>
+              
+              <time title="Post modified" itemprop="dateModified" datetime="2020-06-10T09:57:23+08:00">
+                2020-06-10
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/CSS/" itemprop="url" rel="index">
+                    <span itemprop="name">CSS</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>比起前端的其他知识点，CSS容易被忽略，然而实际做项目中，CSS可真是太重要了，系统学一学对于开发效率来说有很大提升</p>
+<h3 id="选择器"><a href="#选择器" class="headerlink" title="选择器"></a>选择器</h3><ol>
+<li>E:nth-child(n)系列</li>
+<li>E:enabled, E:disabled, E:checked</li>
+<li>E:first-of-type系列,选择属于其父元素的首个E元素的每个E元素</li>
+<li>[attribute^=value]系列，选择某元素attribute属性是以value开头的</li>
+<li>E::selection: 选择被用户选取的元素部分</li>
+</ol>
+<h3 id="Transition"><a href="#Transition" class="headerlink" title="Transition"></a>Transition</h3><p>元素改变样式的过渡效果<br>transition-property: 规定应用过渡的CSS属性的名称。<br>transition-duration: 规定完成过渡效果需要多长时间。<br>transition-delay: 规定过渡效果何时开始，默认是0。<br>transition-timing-function: 规定过渡效果的时间曲线，默认是”ease”，还有linear、ease-in、ease-out、ease-in-out和cubic-bezier等过渡类型。<br>transition: 简写属性，用于在一个属性中设置四个过渡属性。<br><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">div</span> &#123; </span><br><span class="line">    <span class="attribute">transition</span>: width <span class="number">1s</span> linear <span class="number">2s</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>第一个1s是持续时间，第二个是从何时开始</p>
+<h3 id="Transform"><a href="#Transform" class="headerlink" title="Transform"></a>Transform</h3><p>Transform用来向元素应用各种2D和3D转换，该属性允许我们对元素进行旋转、缩放、移动或倾斜等操作。</p>
+<p>none: 定义不进行转换。<br>matrix(n,n,n,n,n,n): 定义2D转换，使用六个值的矩阵。<br>matrix3d(n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n): 定义3D转换，使用16个值的4x4矩阵。<br>translate(x,y): 定义2D位移转换。<br>translate3d(x,y,z): 定义3D位移转换。<br>translateX(x): 定义位移转换，只是用X轴的值。<br>translateY(y): 定义位移转换，只是用Y轴的值。<br>translateZ(z): 定义3D位移转换，只是用Z轴的值。<br>scale(x,y): 定义2D缩放转换。<br>scale3d(x,y,z): 定义3D缩放转换。<br>scaleX(x): 通过设置X轴的值来定义缩放转换。<br>scaleY(y): 通过设置Y轴的值来定义缩放转换。<br>scaleZ(z): 通过设置Z轴的值来定义3D缩放转换。<br>rotate(angle): 定义2D旋转，在参数中规定角度。<br>rotate3d(x,y,z,angle): 定义3D旋转。<br>rotateX(angle): 定义沿着X轴的3D旋转。<br>rotateY(angle): 定义沿着Y轴的3D旋转。<br>rotateZ(angle): 定义沿着Z轴的3D旋转。<br>skew(x-angle,y-angle): 定义沿着X和Y轴的2D倾斜转换。<br>skewX(angle): 定义沿着X轴的2D倾斜转换。<br>skewY(angle): 定义沿着Y轴的2D倾斜转换。<br>perspective(n): 为3D转换元素定义透视视图。</p>
+<h3 id="Animation"><a href="#Animation" class="headerlink" title="Animation"></a>Animation</h3><p>CSS3的Animation制作动画我们可以省去复杂的js代码.</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* 旋转 */</span></span><br><span class="line">@<span class="keyword">keyframes</span> spin &#123;</span><br><span class="line">    <span class="selector-tag">from</span> &#123;</span><br><span class="line">        <span class="attribute">transform</span>: <span class="built_in">rotate</span>(0deg)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="selector-tag">to</span> &#123;</span><br><span class="line">        <span class="attribute">transform</span>: <span class="built_in">rotate</span>(360deg)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-tag">div</span> &#123;</span><br><span class="line">    <span class="attribute">animation</span>: spin <span class="number">1s</span> linear infinite</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/* 弹幕 */</span></span><br><span class="line">@<span class="keyword">keyframes</span> bar &#123;</span><br><span class="line">    <span class="selector-tag">from</span> &#123;</span><br><span class="line">        <span class="attribute">left</span>: <span class="number">100%</span>;</span><br><span class="line">        transform: translate3d(0,0,0);;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="selector-tag">to</span> &#123;</span><br><span class="line">        <span class="attribute">left</span>: <span class="number">0</span>;</span><br><span class="line">        <span class="attribute">transform</span>: <span class="built_in">translate3d</span>(-100%,0,0);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-tag">div</span> &#123;</span><br><span class="line">    <span class="attribute">position</span>:absolute;</span><br><span class="line">    <span class="attribute">animation</span>: bar <span class="number">1s</span> linear <span class="number">0s</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="Border"><a href="#Border" class="headerlink" title="Border"></a>Border</h3><p>border-radius 圆角<br>box-shadow 添加阴影<br>border-image 绘制边框</p>
+<h3 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h3><p>background-clip属性用于确定背景画区，通常情况，背景都是覆盖整个元素的，利用这个属性可以设定背景颜色或图片的覆盖范围<br>background-origin，用于确定背景的位置，通常与background-position联合使用<br>background-size，常用来调整背景图片的大小<br>background-break，控制背景怎样在这些不同的盒子中显示</p>
+<h3 id="文字效果"><a href="#文字效果" class="headerlink" title="文字效果"></a>文字效果</h3><p>word-wrap 属性允许您允许文本强制文本进行换行<br>text-overflow 设置或检索当当前行超过指定容器的边界时如何显示，ellipsis逗号<br>text-shadow 可向文本应用阴影。能够规定水平阴影、垂直阴影、模糊距离，以及阴影的颜色</p>
+<p>text-decoration CSS3里面开始支持对文字的更深层次的渲染，具体有三个属性可供设置<br>text-fill-color: 设置文字内部填充颜色<br>text-stroke-color: 设置文字边界填充颜色<br>text-stroke-width: 设置文字边界宽度</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+<div>
+      
+</div>
+
+    
+
+    
+
+    
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-categories" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="zeuszhou.xyz/模块化/CommonJS和ES6Module的区别/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ZEUS ZHOU">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ZEUS ZHOU">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/模块化/CommonJS和ES6Module的区别/" itemprop="url">CommonJS和ES6 Module的区别</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-06-09T15:08:31+08:00">
+                2020-06-09
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Post modified&#58;</span>
+              
+              <time title="Post modified" itemprop="dateModified" datetime="2020-06-09T16:11:22+08:00">
+                2020-06-09
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/模块化/" itemprop="url" rel="index">
+                    <span itemprop="name">模块化</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="CommonJS"><a href="#CommonJS" class="headerlink" title="CommonJS"></a>CommonJS</h3><ol>
+<li>一个文件就是一个模块，第一次加载时，会在内存生成一个对象，以后再用到这个模块，直接从缓存取这个对象，除非清除缓存</li>
+<li>require是同步的，适用于node端，浏览器端读取文件速度很慢，容易卡死</li>
+<li>输出的是一个值的拷贝，一旦输出，输出的值发生变化，原来的值也不会变</li>
+<li>运行时加载，加载时执行，当脚本被require，就会全部执行，一旦出现某个模块被循环加载，就只输出已经执行的部分，未执行的部分不会输出</li>
+<li>this指向当前模块</li>
+<li>不能require ES6模块</li>
+</ol>
+<h3 id="ES6模块"><a href="#ES6模块" class="headerlink" title="ES6模块"></a>ES6模块</h3><ol>
+<li>ES6输出的是值的引用，输出的值发生变化，原来的值也会改变</li>
+<li>ES6是编译时输出接口</li>
+<li>this指向undefined</li>
+<li>遇到循环引用，使用import加载一个变量，变量不会被缓存，真正取值时能拿到最终的值</li>
+<li>支持加载commonjs</li>
+</ol>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+<div>
+      
+</div>
+
+    
+
+    
+
+    
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-categories" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="zeuszhou.xyz/函数式编程/函数式编程/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ZEUS ZHOU">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ZEUS ZHOU">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/函数式编程/函数式编程/" itemprop="url">函数式编程</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-06-08T21:28:56+08:00">
+                2020-06-08
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Post modified&#58;</span>
+              
+              <time title="Post modified" itemprop="dateModified" datetime="2020-06-08T21:57:45+08:00">
+                2020-06-08
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/函数式编程/" itemprop="url" rel="index">
+                    <span itemprop="name">函数式编程</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="特点"><a href="#特点" class="headerlink" title="特点"></a>特点</h3><ol>
+<li>函数是一等公民<br>函数当成赋值给变量，当成参数传给函数或者当成返回值返回</li>
+<li>只用表达式，不用语句，每一步都是纯运算，而且有返回值<br>表达式是单纯的运算过程，总有返回值<br>语句是执行某种操作，没有返回值</li>
+</ol>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+<div>
+      
+</div>
+
+    
+
+    
+
+    
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-categories" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="zeuszhou.xyz/React/React-hooks-再理解/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ZEUS ZHOU">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ZEUS ZHOU">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/React/React-hooks-再理解/" itemprop="url">React hooks 再理解</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-06-08T21:18:16+08:00">
+                2020-06-08
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Post modified&#58;</span>
+              
+              <time title="Post modified" itemprop="dateModified" datetime="2020-06-09T17:17:01+08:00">
+                2020-06-09
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/React/" itemprop="url" rel="index">
+                    <span itemprop="name">React</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>一句话概括hooks：不编写class的情况下，使用state和其他react特性</p>
+<h3 id="为什么要用hooks"><a href="#为什么要用hooks" class="headerlink" title="为什么要用hooks"></a>为什么要用hooks</h3><ol>
+<li>class版本，组件之间复用状态逻辑很难，hooks可以在不改变组件结构的情况下复用状态逻辑</li>
+<li>class版本，复杂组件变得难以理解，hooks将组件中相互关联的部分拆分的更小，并且舍去生命周期</li>
+<li>class版本，class难以理解，需要考虑this，绑定事件</li>
+<li>class版本，class无法很好的压缩，并且会使得热重载出现不稳定的情况</li>
+</ol>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+<div>
+      
+</div>
+
+    
+
+    
+
+    
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-categories" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="zeuszhou.xyz/promise/Promise专辑/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -661,7 +1349,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="zeuszhou.xyz/uncategorized/CSS的知识点/">
+    <link itemprop="mainEntityOfPage" href="zeuszhou.xyz/CSS/CSS的知识点/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="ZEUS ZHOU">
@@ -680,7 +1368,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/uncategorized/CSS的知识点/" itemprop="url">CSS的知识点</a></h1>
+                <a class="post-title-link" href="/CSS/CSS的知识点/" itemprop="url">CSS的知识点</a></h1>
         
 
         <div class="post-meta">
@@ -708,12 +1396,34 @@
               
                 <span class="post-meta-item-text">Post modified&#58;</span>
               
-              <time title="Post modified" itemprop="dateModified" datetime="2020-06-01T23:39:48+08:00">
-                2020-06-01
+              <time title="Post modified" itemprop="dateModified" datetime="2020-06-09T21:35:23+08:00">
+                2020-06-09
               </time>
             
           </span>
 
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/CSS/" itemprop="url" rel="index">
+                    <span itemprop="name">CSS</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
           
 
           
@@ -1489,871 +2199,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-categories" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="zeuszhou.xyz/TypeScript/TS总结/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="ZEUS ZHOU">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="ZEUS ZHOU">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/TypeScript/TS总结/" itemprop="url">TS总结（一）</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-05-27T15:58:59+08:00">
-                2020-05-27
-              </time>
-            
-
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Post modified&#58;</span>
-              
-              <time title="Post modified" itemprop="dateModified" datetime="2020-05-28T14:33:45+08:00">
-                2020-05-28
-              </time>
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/TypeScript/" itemprop="url" rel="index">
-                    <span itemprop="name">TypeScript</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>codereview被ts搞得非常痛苦，需要好好学习一个</p>
-<p>TS是静态类型化的js超集，静态性使其牛逼<br>语言在编译时报错是静态语言，运行时报错时动态语言<br>TS是静态弱类型语言，不是强类型，因为要兼容js，不限制js的隐式类型转换</p>
-<p>使用TS的优点：</p>
-<ul>
-<li>可以避免低级错误，在编写时就能发现</li>
-<li>减少多人合作的成本，适合大项目</li>
-<li>良好的代码提示</li>
-</ul>
-<h3 id="类型"><a href="#类型" class="headerlink" title="类型"></a>类型</h3><p>TS的原始类型：</p>
-<ol>
-<li>boolean</li>
-<li>number</li>
-<li>string</li>
-<li>null</li>
-<li>undefined</li>
-<li>symbol</li>
-<li>void</li>
-<li>bigint<br><strong>与js类型的区别</strong>，多了void和bigint，且都是小写开头</li>
-</ol>
-<p>TS的其他常见类型：</p>
-<ol>
-<li>any：不到万不得已，不要用，和js没有多少区别</li>
-<li>unknown：any的安全类型，unknown类型值操作之前，要进行检查，而any不用。虽然可以是任何类型，但unknown不能被进行任何操作比如对象取值等等。可以用来缩小类型范围</li>
-<li>never：永不存在的值的类型，任何类型的子类型，可以赋值给任何类型，但没有类型可以赋值给never（除了自己），也没有never的子类型。用于定义永远是空的数组，永远不会有返回值的函数，比如抛出异常。</li>
-<li>数组：范型定义（const list: Array<number> = [1,2,3])，元素类型加[]，(const list: number[] = [1,2,3])</number></li>
-<li>元组：严格版数组，但是元素的类型可以不同，let x: [string, number] = [‘hello’, 12]，元组可以push添加元素，但不能访问</li>
-<li>object：普通对象，数组，枚举，元组都是object类型</li>
-<li>枚举：声明一组命名的常数</li>
-</ol>
-<ul>
-<li>数字枚举从0开始，依次加1，累加效应</li>
-<li>字符串枚举可以用方括号取值（需要加双引号）也可以用点号取值</li>
-<li>异构枚举，前两者混合，也可以但少见</li>
-<li>正反向映射，可以用枚举名字取枚举值，也能用枚举值取枚举名字，原理是Direction[Direction[“Up”] = 10] = “Up”，所以up或者10都能取到</li>
-<li>常量枚举，Up = ‘Up’，好处在于编译成js之后，直接省略了枚举，是性能提升的一个方案</li>
-<li>字面量类型的情况，枚举的成员和枚举值可以当成类型使用</li>
-</ul>
-<h3 id="接口"><a href="#接口" class="headerlink" title="接口"></a>接口</h3><p>interface只能用于定义对象类型<br>可选属性：后面加?，可能是undefined<br>只读属性：前面加readonly，修改会给出警告<br>可索引类型：可以用来表示{北京：1}<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">interface Phone &#123;</span><br><span class="line">    [name: string]: string</span><br><span class="line">&#125;</span><br><span class="line">interface User &#123;</span><br><span class="line">    name: string <span class="comment">// 普通</span></span><br><span class="line">    age?: number  <span class="comment">// 可选属性</span></span><br><span class="line">    readonly isMale: boolean <span class="comment">//只读属性</span></span><br><span class="line">    say: <span class="function"><span class="params">()</span> =&gt;</span> string <span class="comment">// 函数属性</span></span><br><span class="line">    phone: Phone <span class="comment">// </span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>extends可以继承接口，在父接口的基础上，加上新的属性</p>
-<h3 id="类和函数"><a href="#类和函数" class="headerlink" title="类和函数"></a>类和函数</h3><ol>
-<li>abstract抽象类，无法实例化，被继承</li>
-<li>public都能访问，private只能类内访问，protected只能类内和子类访问</li>
-<li>类也可以作为接口</li>
-<li>函数可以重载</li>
-</ol>
-<h3 id="泛型"><a href="#泛型" class="headerlink" title="泛型"></a>泛型</h3><p>定义：在静态编写时不知道传入的参数到底是什么类型，只有在运行时传入参数才能确定，所以我们需要变量代表传入的类型，再返回这个变量，只用于表示类型而不表示值</p>
-<h3 id="类型断言"><a href="#类型断言" class="headerlink" title="类型断言"></a>类型断言</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">interface Person &#123;</span><br><span class="line">    name: string;</span><br><span class="line">    age: number</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">const</span> person = &#123;&#125; <span class="keyword">as</span> Person</span><br></pre></td></tr></table></figure>
-<p>双重断言，先断成any再断成自己想要的</p>
-<h3 id="类型守卫"><a href="#类型守卫" class="headerlink" title="类型守卫"></a>类型守卫</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">a</span>(<span class="params">arg: person | animal</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(arg <span class="keyword">instanceof</span> person)&#123;</span><br><span class="line">        xxx</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(<span class="string">'age'</span> <span class="keyword">in</span> arg)&#123;</span><br><span class="line">        xxx</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(arg.kind === <span class="string">'foo'</span>)&#123;</span><br><span class="line">        xxx</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>联合类型：中间用｜隔开，表示这些类型都可以</p>
-<p>交叉类型：const result = <t &="" u="">{}</t></p>
-<p>类型别名：type some = boolean | string</p>
-<h3 id="React实战"><a href="#React实战" class="headerlink" title="React实战"></a>React实战</h3><ol>
-<li>React.FC可以无需声明children属性的类型，会为props自动加上</li>
-<li>input的onchange，e的类型为React.ChangeEvent<htmlinputelement>，就可以用e.target.value了</htmlinputelement></li>
-<li>表单的submit，e的类型为React.FormEvent<htmlformelement></htmlformelement></li>
-<li>当我们在组件中输入事件对应的名称时，会有相关的定义提示，我们只要用这个提示中的类型就可以了</li>
-</ol>
-<h3 id="索引类型查询"><a href="#索引类型查询" class="headerlink" title="索引类型查询"></a>索引类型查询</h3><p>keyof可以作用于泛型，来获取泛型所有的属性名构成联合属性<br>keyof可以取到索引类型的属性名，但还要获取属性值的类型，所以需要索引访问符，T[K]</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Images</span> </span>&#123;</span><br><span class="line">    public src: string = <span class="string">'https://www.google.com.hk/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png'</span></span><br><span class="line">    public alt: string = <span class="string">'谷歌'</span></span><br><span class="line">    public width: number = <span class="number">500</span></span><br><span class="line">&#125;</span><br><span class="line">type propsNames = keyof Images <span class="comment">// src | alt | width</span></span><br><span class="line">type propsType = Images[propsNames] <span class="comment">// string | number</span></span><br><span class="line"></span><br><span class="line">function pick&lt;T, K extends keyof T&gt;(o: T, names: K[]): T[K][] &#123;</span><br><span class="line">    <span class="keyword">return</span> names.map(<span class="function"><span class="params">n</span> =&gt;</span> o[n]);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> res = pick(user, [<span class="string">'token'</span>, <span class="string">'id'</span>, ])</span><br></pre></td></tr></table></figure>
-<p>pick的例子，需要一个泛型T表示传入参数o的类型，因为编写时无法确定o是什么类型，第二个参数names表示数组的成员必须由参数o的属性名称构成，所以用keyof代表o类型的属性名的联合类型，所以用K约束到keyof T。返回值T[K]取到对应属性值的类型，T[K][]表示返回值的类型</p>
-<h3 id="映射类型把接口成员都变成可选"><a href="#映射类型把接口成员都变成可选" class="headerlink" title="映射类型把接口成员都变成可选"></a>映射类型把接口成员都变成可选</h3><ol>
-<li>一个一个在成员前加?</li>
-<li>映射法</li>
-</ol>
-<p>语法：[K in Keys]<br>K对应每个属性名的类型，Keys表示一组属性名的类型，所以[K in keyof T]表示属性的类型，T[K]表示属性值的类型<br>结果：type partial<t> = { [K in keyof T]?: T[K] }</t></p>
-<p>Q：找到一个接口中value为function的key和value<br><figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> FunctionPropertyNames&lt;T&gt; = &#123; [K <span class="keyword">in</span> keyof T]: T[K] <span class="keyword">extends</span> <span class="built_in">Function</span> ? K : never &#125;[keyof T]</span><br></pre></td></tr></table></figure></p>
-<p>Partial可以把外层的属性都变成可选。处理深层需要递归<br>-?把可选属性变成必选，-readonly把只读属性变成非只读<br>Required把传入的属性变成必选项<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">type Partial&lt;T&gt; = &#123; [P <span class="keyword">in</span> keyof T]?: T[P] &#125;;</span><br><span class="line"></span><br><span class="line">type DeepPartial&lt;T&gt; = &#123;</span><br><span class="line">    [U <span class="keyword">in</span> keyof T]?: T[U] extends object</span><br><span class="line">    ? DeepPartial&lt;T[U]&gt;</span><br><span class="line">    : T[U]</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">type Required&lt;T&gt; = &#123; [P <span class="keyword">in</span> keyof T]-?: T[P] &#125;;</span><br></pre></td></tr></table></figure></p>
-<h3 id="常见工具类型"><a href="#常见工具类型" class="headerlink" title="常见工具类型"></a>常见工具类型</h3><ul>
-<li>Pick</li>
-<li>Exclude</li>
-<li>Omit</li>
-<li>Compute</li>
-<li>Merge</li>
-<li>Intersection</li>
-<li>Overwrite</li>
-<li>Mutable<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> Exclude&lt;T, U&gt; = T <span class="keyword">extends</span> U ? never : T;</span><br><span class="line"><span class="keyword">type</span> T = Exclude&lt;<span class="number">1</span> | <span class="number">2</span>, <span class="number">1</span> | <span class="number">3</span>&gt; <span class="comment">// -&gt; 2  从T中排除出可分配给U的元素</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> Omit&lt;T, K&gt; = Pick&lt;T, Exclude&lt;keyof T, K&gt;&gt;</span><br><span class="line"><span class="keyword">type</span> Foo = Omit&lt;&#123;name: <span class="built_in">string</span>, age: <span class="built_in">number</span>&#125;, <span class="string">'name'</span>&gt; <span class="comment">// -&gt; &#123; age: number &#125; Omit忽略T中的某些属性</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> Compute&lt;A <span class="keyword">extends</span> <span class="built_in">any</span>&gt; = A <span class="keyword">extends</span> <span class="built_in">Function</span> ? A : &#123; [K <span class="keyword">in</span> keyof A]: A[K] &#125; <span class="comment">// compute将交叉类型合并</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> Merge&lt;O1 <span class="keyword">extends</span> object, O2 <span class="keyword">extends</span> object&gt; = Compute&lt;O1 &amp; Omit&lt;O2, keyof O1&gt;&gt; <span class="comment">// merge将两个对象的属性合并</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> Intersection&lt;T <span class="keyword">extends</span> object, U <span class="keyword">extends</span> object&gt; = </span><br><span class="line">Pick&lt;T,Extract&lt;keyof T, keyof U&gt; &amp; Extract&lt;keyof U, keyof T&gt;&gt;;  <span class="comment">// Intersection取交集</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> Overwrite&lt;</span><br><span class="line">  T <span class="keyword">extends</span> object,</span><br><span class="line">  U <span class="keyword">extends</span> object,</span><br><span class="line">  I = Diff&lt;T, U&gt; &amp; Intersection&lt;U, T&gt;</span><br><span class="line">&gt; = Pick&lt;I, keyof I&gt;; <span class="comment">// 用U的属性覆盖T的相同属性</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> Mutable&lt;T&gt; = &#123;</span><br><span class="line">  -readonly [P <span class="keyword">in</span> keyof T]: T[P]</span><br><span class="line">&#125; <span class="comment">// 将T的所有属性的readonly移除</span></span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<p>record允许从Union中创建新类型<br><figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> Car = <span class="string">'Audi'</span> | <span class="string">'BMW'</span> | <span class="string">'MercedesBenz'</span></span><br><span class="line"><span class="keyword">type</span> CarList = Record&lt;Car, &#123;age: <span class="built_in">number</span>&#125;&gt;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> cars: CarList = &#123;</span><br><span class="line">    Audi: &#123; age: <span class="number">119</span> &#125;,</span><br><span class="line">    BMW: &#123; age: <span class="number">113</span> &#125;,</span><br><span class="line">    MercedesBenz: &#123; age: <span class="number">133</span> &#125;,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>在tsx，如果<t>泛型被当成jsx标签，可以加上<t extends="" {}=""></t></t></p>
-<h3 id="TS的编译原理"><a href="#TS的编译原理" class="headerlink" title="TS的编译原理"></a>TS的编译原理</h3><p>编译器的组成：</p>
-<ol>
-<li>Scanner扫描器</li>
-<li>Parser解析器</li>
-<li>Binder绑定器</li>
-<li>Emitter发射器</li>
-<li>Checker检查器</li>
-</ol>
-<p>处理过程：</p>
-<ol>
-<li>code + 扫描器 = token流 （词法分析）</li>
-<li>token流 + 解析器 = AST抽象语法树 （语法分析）</li>
-<li>AST + 绑定器 = Symbols符号 （语义分析）</li>
-<li>AST + 符号 + 检查器 = 类型验证 （代码优化）</li>
-<li>AST + 检查器 + 发射器 = JS代码 （目标代码生成）</li>
-</ol>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-<div>
-      
-</div>
-
-    
-
-    
-
-    
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-categories" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="zeuszhou.xyz/CS基础/操作系统总结/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="ZEUS ZHOU">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="ZEUS ZHOU">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/CS基础/操作系统总结/" itemprop="url">操作系统总结</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-05-26T17:32:59+08:00">
-                2020-05-26
-              </time>
-            
-
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Post modified&#58;</span>
-              
-              <time title="Post modified" itemprop="dateModified" datetime="2020-05-28T17:53:10+08:00">
-                2020-05-28
-              </time>
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/CS基础/" itemprop="url" rel="index">
-                    <span itemprop="name">CS基础</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>几次面试都是因为操作系统完全没看，非常尴尬，看到这些知识，想起了在武大的快乐时光，自己的操作系统课本都送人了，还是得总结一个</p>
-<h3 id="OS四大特征"><a href="#OS四大特征" class="headerlink" title="OS四大特征"></a>OS四大特征</h3><ol>
-<li>并发：同时发生（并行：不同时，但连续，交替执行）</li>
-<li>共享：分互斥共享和同时共享，一段时间内只允许一个进程访问的资源叫做独占资源或者临界资源</li>
-<li>异步：类似js的异步</li>
-<li>虚拟：空分复用技术（虚拟存储器），时分复用技术（虚拟处理器）</li>
-</ol>
-<p>指令是CPU能识别和执行的最基本命令，分为特权指令和非特权指令，内核程序才能执行特权指令，普通程序执行非特权指令。<br>CPU也有内核态和用户态两种状态。</p>
-<h3 id="进程"><a href="#进程" class="headerlink" title="进程"></a>进程</h3><p>定义： 进程是具有独立功能的程序在数据集合上运行的过程，分配资源的基本单位，内存地址空间相互独立</p>
-<p>每个进程都有一个进程控制块PCB来描述进程的各种信息，包括PID，UID，状态，优先级，指针，寄存器值等等</p>
-<p>进程的基本状态：运行（占有CPU，在CPU上运行），就绪（缺空闲CPU）和阻塞（等待某事件）<br>进程的另外2种2状态：创建态（正在初始化PCB），终止态（撤销PCB，资源回收）</p>
-<p>状态转换：运行进入阻塞是主动的（系统调用），阻塞进入就绪是被动的（其他都弄好了，就差CPU了），阻塞不能直接进入运行，就绪也不能直接进入阻塞（因为运行时才能主动请求）</p>
-<p>原语：不可被中断的原子操作，使用关中断指令和开中断指令实现，先关再开</p>
-<p>进程的通信：</p>
-<ol>
-<li>共享存储：互斥的，内存画出一块共享区</li>
-<li>管道：半双工，某一时间段只能实现单向传输，双向需要2个管道。字符流形式，管道写满时，write被阻塞，数据都读完时，read被阻塞。如果没写满，就不让读，没空就不让写。读进程只有一个。</li>
-<li>消息传递：格式化的消息为单位，通过发送消息/接受消息两个原语进行通信，包括信息头和尾</li>
-<li>间接通信：通过中介者信箱来进行通信</li>
-</ol>
-<p>同步：某些进程的执行必须先于另一些进程<br>互斥：当某个进程使用某种资源时，其他进程必须等待<br>信号量：解决进程的同步和互斥，由剩余资源和阻塞队列的地址组成<br>生成者消费者问题：生产者的作用是生成一定量数据到缓存区，消费者消耗这些数据，保证生产者不会在满时加入数据，消费者不会在空时消耗数据，用互斥信号量实现互斥访问，同步信号量表示还可以生成多少产品和消耗多少产品</p>
-<h3 id="线程"><a href="#线程" class="headerlink" title="线程"></a>线程</h3><p>定义：进程并发多个事件的能力，基本的CPU执行单位，程序执行流的最小单位，进程可以并发，进程的线程也可以并发，引入线程后，进程只作为除CPU外的系统资源分配单位。线程的切换比进程的切换开销小。</p>
-<h3 id="内存"><a href="#内存" class="headerlink" title="内存"></a>内存</h3><p>内存是计算机硬件与CPU沟通的桥梁，中转站，程序执行前要先放到内存中才能被CPU处理<br>CPU通过内存的存储单元编址来找到执行程序的数据</p>
-<p>连续分配：用户进程分配必须是一个连续的内存空间，包括动态分区分配，缺点是会产生内存碎片<br>非连续分配<br>动态分区分配：不会预先划分内存分区，而是动态的建立分区</p>
-<p>空闲分区表：分区号，分区大小，起始地址，状态<br>首次适应算法：每次从低地址开始查找，找到第一个满足大小的空闲分区<br>最佳适应算法：从空闲分区表中找到最小的适合分配的分区块来满足需求<br>基本分页存储：把内存空间分成一个个大小相等的分区，每个分区是一个页框，进程的页与内存的页有一一对应关系</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-<div>
-      
-</div>
-
-    
-
-    
-
-    
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-categories" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="zeuszhou.xyz/浏览器/JS常见API总结/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="ZEUS ZHOU">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="ZEUS ZHOU">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/浏览器/JS常见API总结/" itemprop="url">BOM常见对象和方法总结</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-05-25T23:36:45+08:00">
-                2020-05-25
-              </time>
-            
-
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Post modified&#58;</span>
-              
-              <time title="Post modified" itemprop="dateModified" datetime="2020-05-26T15:24:41+08:00">
-                2020-05-26
-              </time>
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/浏览器/" itemprop="url" rel="index">
-                    <span itemprop="name">浏览器</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>依然是取材于那一次不太满意的面试，setInterval误差问题和requestAnimationFrame，了解的很少，需要学习一下</p>
-<h3 id="BOM对象总结"><a href="#BOM对象总结" class="headerlink" title="BOM对象总结"></a>BOM对象总结</h3><p>浏览器对象模型，浏览器对象模型提供了独立于内容的、可以与浏览器窗口进行互动的对象结构。<br>BOM由多个对象组成，其中代表浏览器窗口的Window对象是BOM的顶层对象，其他对象都是该对象的自对象。</p>
-<h4 id="Window对象方法"><a href="#Window对象方法" class="headerlink" title="Window对象方法"></a>Window对象方法</h4><ul>
-<li>alert</li>
-<li>requestAnimationFrame(callBack)：告诉浏览器您希望执行动画并请求浏览器在下一次重绘之前调用指定的函数来更新动画</li>
-<li>cancelAnimationFrame(callBack)：取消之前的动画帧请求</li>
-<li>requestIdleCallback：在浏览器空闲期依次调用函数，这样可以把低优先级的任务不会导致动画和交互延迟触发</li>
-<li>setImmediate(func)：把需要长时间运行的函数放到回调函数里，在浏览器完成后面的其他语句之后，立即执行这个回调</li>
-<li>setInterval(callback)：重复调用一个函数或执行一个代码段，在每次调用之间有一定的事件延迟</li>
-<li>clearInterval(intervalID)：取消用setInterval设置的重复定时任务</li>
-<li>fetch：用于发起获取资源的请求，返回一个promise对象</li>
-<li>postMessage：安全的实现跨源通信</li>
-<li>getSelection：返回selection对象，表示用户选择的文本范围或者光标的当前位置</li>
-</ul>
-<p><strong>setInterval计时不准确问题</strong>：因为其回调函数不是到时执行，这个时间代表的是延迟多少秒，把回调函数放到异步队列，等待主线程空闲再被执行，如果这个callback过于耗时或者有其他耗时任务，会越来越不准确。</p>
-<p>当使用setInterval时，<strong><em>仅当没有该定时器的任何其他代码实例时，才将定时器代码添加到队列中</em></strong>，这确保了定时器代码加入到队列中的最小时间间隔为指定间隔。<strong><em>如果当前事件队列中，存在当前定时器的回调函数，即使到了规定的间隔事件，也不会把这个时间点的回调函数放到事件队列，这样的机制会导致一些间隔被跳过</em></strong>。</p>
-<p>解决方法用迭代setTimeout,好处是在前一个定时器执行完之前，不会向队列插入新的定时器代码，确保没有缺失的间隔，而且可以保证在下一次定时器代码执行之前，至少要等待指定的间隔，避免了连续的运行。每次执行setTimeout，创建一个定时器，到达间隔时间时，把定时器回调加入队列，当主线程空闲时，可以执行这个回调函数，因为这个回调函数包含另一个setTimeout，因此可以把这个回调函数放到事件队列，这样执行上一个回调函数的时候，才会把下一个回调函数加入到队列，这样可以避免跳过某些时间点，也可以避免连续执行。<strong>因此setTimeout比setInterval稳定</strong></p>
-<p>具体写法：计算一个offset，为当前时间减去开始时间，再减去count时间，nextTime为1000减去offset，如果小于0，nexttime为0，setTimeout这个方法，间隔为nextTime。从而计算出下次触发的时间，修正了当前触发的延迟。</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fix</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    count++;</span><br><span class="line">    <span class="keyword">var</span> offset = <span class="keyword">new</span> <span class="built_in">Date</span>().getTime() - (startTime + count * <span class="number">1000</span>)</span><br><span class="line">    <span class="keyword">var</span> nextTime = <span class="number">1000</span> - offset</span><br><span class="line">    <span class="keyword">if</span>(nextTime &lt; <span class="number">0</span>) nextTime = <span class="number">0</span></span><br><span class="line">    setTimeout(fix, nextTime);</span><br><span class="line">&#125;</span><br><span class="line">setTimeout(fix, <span class="number">1000</span>)</span><br></pre></td></tr></table></figure>
-<p><strong>requestAnimationFrame三大好处</strong></p>
-<ol>
-<li>把每一帧的dom操作集中，一次重绘或回流中完成，并且重绘或回流的时间间隔紧紧跟随浏览器的刷新频率</li>
-<li>在隐藏或不可见的元素中，不会回流或重绘，意味着更少的CPU，GPU和内存使用量</li>
-<li>浏览器专门为动画提供的api，在运行时浏览器会自动优化方法的调用，如果页面不是激活状态的话，动画会自动暂停，有效节省CPU的开销</li>
-</ol>
-<h4 id="Location对象方法"><a href="#Location对象方法" class="headerlink" title="Location对象方法"></a>Location对象方法</h4><ul>
-<li>reload：重载来自当前URL的资源，可以接受一个布尔参数，为true表示一定会从服务器拿资源，如果是false或者没有，就可能来自缓存</li>
-<li>assign：加载给定URL的内容资源到这个location对象所关联到对象</li>
-<li>replace：用给定的URL替换掉当前的资源，与assign方法不同的是，replace替换掉的页面不会出现在history中，不能用回退回到该页面</li>
-</ul>
-<h4 id="History对象方法"><a href="#History对象方法" class="headerlink" title="History对象方法"></a>History对象方法</h4><ul>
-<li>back：前往上一页，类似于go（-1），也就是页面返回按钮</li>
-<li>forward：前往下一页，类似于go（1），也就是页面前进按钮</li>
-<li>go：在当前页面的相对位置，从浏览记录加载页面</li>
-<li>pushState：按指定的名称和URL把数据push进历史栈</li>
-<li>replaceState：更新历史栈的记录</li>
-<li>hashChange事件：location.hash触发，前端哈希路由的实现原理</li>
-<li>popState事件：pushState或replaceState触发</li>
-</ul>
-<h4 id="Navigator对象"><a href="#Navigator对象" class="headerlink" title="Navigator对象"></a>Navigator对象</h4><ol>
-<li>onLine属性：返回浏览器是否在线</li>
-<li>battery属性：充电信息</li>
-<li>connection属性：网络连接信息</li>
-<li>geolocation属性：地理位置信息</li>
-</ol>
-<ul>
-<li>vibrate（pattern）：调用设备的震动</li>
-<li>getUserMedia（）：通过提示获取用户许可，返回一个音频或摄像头的调用</li>
-</ul>
-<h4 id="Screen对象"><a href="#Screen对象" class="headerlink" title="Screen对象"></a>Screen对象</h4><ol>
-<li>availTop属性：返回屏幕上边有效的距离</li>
-<li>availHeight属性：返回屏幕有效的高度</li>
-</ol>
-<ul>
-<li>lockOrientation（orientation）：锁定屏幕到某个方向</li>
-<li>unlockOrientation：解锁</li>
-<li>onorientationchange：屏幕方向改变时触发事件</li>
-</ul>
-<h4 id="Document对象"><a href="#Document对象" class="headerlink" title="Document对象"></a>Document对象</h4><ul>
-<li>createAttribute（name）：创建并返回一个新的属性节点</li>
-<li>createDocumentFragment（）：创建一个新的空白的文档片段</li>
-<li>createElement（tagName[,options]）：创建由tagname指定的html元素</li>
-<li>querySelector（selectors）：返回文档中匹配指定的选择器组的第一个元素</li>
-<li>write（markup）：将一个文本字符串写入由document.open（）打开的一个文档流</li>
-<li>writeln（line）：同上，但会换行</li>
-<li>append：在parentNode最后一个子节点之后插入一组Node对象或者DOMString对象</li>
-<li>getAnimations：返回所运用的css动画，css过渡的元素集合</li>
-<li>getElementsBy系列：不解释</li>
-</ul>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-<div>
-      
-</div>
-
-    
-
-    
-
-    
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-categories" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="zeuszhou.xyz/浏览器/Chrome浏览器/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="ZEUS ZHOU">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="ZEUS ZHOU">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/浏览器/Chrome浏览器/" itemprop="url">Chrome浏览器</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-05-25T21:15:07+08:00">
-                2020-05-25
-              </time>
-            
-
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Post modified&#58;</span>
-              
-              <time title="Post modified" itemprop="dateModified" datetime="2020-05-26T14:28:07+08:00">
-                2020-05-26
-              </time>
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/浏览器/" itemprop="url" rel="index">
-                    <span itemprop="name">浏览器</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>今天面了一个试，暴露出了很多问题，感觉自己有些知识建立在虚无缥缈之上，没有根基，也不连贯，还是需要多总结和学习。<br>面试官问了一下chrome的进程和线程，自己是凭感觉回答的，天天和chrome打交道，却不太了解有点不行，需要好好的学习一个。</p>
-<h3 id="浏览器结构"><a href="#浏览器结构" class="headerlink" title="浏览器结构"></a>浏览器结构</h3><ol>
-<li>用户界面</li>
-<li>浏览器引擎</li>
-<li>渲染引擎（Webkit，Blink，Trident）</li>
-<li>网络模块</li>
-<li>js引擎（V8）</li>
-<li>界面后端</li>
-<li>数据存储</li>
-</ol>
-<h3 id="多进程架构浏览器"><a href="#多进程架构浏览器" class="headerlink" title="多进程架构浏览器"></a>多进程架构浏览器</h3><p>Chrome浏览器使用多个进程来隔离不同的网页。因此在Chrome中打开一个网页相当于起了一个进程。<br>原因第一是安全，因为进程间不会共享资源和地址空间，而线程之间有可能会恶意修改或者获取非授权数据等复杂的安全问题。<br>原因第二是把所有网页都放进一个进程的浏览器面临在健壮性，响应速度，安全性方面的挑战，一个tab崩，浏览器全崩</p>
-<h3 id="Chrome的进程"><a href="#Chrome的进程" class="headerlink" title="Chrome的进程"></a>Chrome的进程</h3><p>打开chrome的任务管理器可以发现，他有很多进程</p>
-<ol>
-<li>浏览器进程，占用CPU最多，控制chrome应用程序，包括地址栏，书签，后退和前进按钮等，还有权限管理例如网络请求和文件访问</li>
-<li>渲染器进程，控制选项卡内，网站里显示的全部内容</li>
-<li>插件进程，chrome的插件，比如flash</li>
-<li>GPU进程，专门用来处理GPU任务</li>
-<li>扩展进程，执行的各种应用插件，例如掘金</li>
-<li>标签页进程，每一个标签页也是一个进程</li>
-<li>实用进程，比如网络或者声音</li>
-</ol>
-<h3 id="Chrome内核（渲染进程）的多线程"><a href="#Chrome内核（渲染进程）的多线程" class="headerlink" title="Chrome内核（渲染进程）的多线程"></a>Chrome内核（渲染进程）的多线程</h3><p>浏览器内核是通过取得页面内容、整理信息（应用CSS）、计算和组合最终输出可视化的图像结果，通常也被称为渲染引擎。每个tab网页都有由其独立的渲染引擎实例。</p>
-<ol>
-<li>GUI渲染线程，负责渲染html元素，当需要重绘或者回流时执行，js引擎会导致GUI引擎挂起，也就是冻结</li>
-<li>js引擎线程，解析js脚本，运行代码</li>
-<li>定时触发器线程，因为js是单线程，如果处于阻塞状态会影响计时的准确，因此需要单独的线程进行计时</li>
-<li>事件触发线程，事件被触发时，事件线程会把事件添加到待处理事件的队尾，等待js引擎的处理。</li>
-<li>异步http请求线程，在XMLHttpRequest在连接后是通过浏览器新开一个线程请求， 将检测到状态变更时，如果设置有回调函数，异步线程就产生状态变更事件放到 JavaScript引擎的处理队列中等待处理。</li>
-</ol>
-<p><strong>js引擎与GUI线程是互斥的</strong>：因为js可以操作dom，如果修改的同时渲染界面，那么渲染线程前后获得的元素数据就不一样。<br>所以当js执行时，gui会被挂起，gui更新会被保存到一个队列里，等引擎线程空闲时立即被执行。<br>所以JS执行的时间过长，就会造成页面的渲染不连贯。</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-<div>
-      
-</div>
-
-    
-
-    
-
-    
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2408,7 +2253,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">22</span>
+                  <span class="site-state-item-count">26</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -2419,7 +2264,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">10</span>
+                  <span class="site-state-item-count">13</span>
                   <span class="site-state-item-name">categories</span>
                 </a>
               </div>
@@ -2430,7 +2275,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">15</span>
+                  <span class="site-state-item-count">18</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>

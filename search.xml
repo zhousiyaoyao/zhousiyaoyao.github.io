@@ -1,6 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[CSS3特性]]></title>
+    <url>%2FCSS%2FCSS3%E7%89%B9%E6%80%A7%2F</url>
+    <content type="text"><![CDATA[前言比起前端的其他知识点，CSS容易被忽略，然而实际做项目中，CSS可真是太重要了，系统学一学对于开发效率来说有很大提升 选择器 E:nth-child(n)系列 E:enabled, E:disabled, E:checked E:first-of-type系列,选择属于其父元素的首个E元素的每个E元素 [attribute^=value]系列，选择某元素attribute属性是以value开头的 E::selection: 选择被用户选取的元素部分 Transition元素改变样式的过渡效果transition-property: 规定应用过渡的CSS属性的名称。transition-duration: 规定完成过渡效果需要多长时间。transition-delay: 规定过渡效果何时开始，默认是0。transition-timing-function: 规定过渡效果的时间曲线，默认是”ease”，还有linear、ease-in、ease-out、ease-in-out和cubic-bezier等过渡类型。transition: 简写属性，用于在一个属性中设置四个过渡属性。123div &#123; transition: width 1s linear 2s;&#125; 第一个1s是持续时间，第二个是从何时开始 TransformTransform用来向元素应用各种2D和3D转换，该属性允许我们对元素进行旋转、缩放、移动或倾斜等操作。 none: 定义不进行转换。matrix(n,n,n,n,n,n): 定义2D转换，使用六个值的矩阵。matrix3d(n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n): 定义3D转换，使用16个值的4x4矩阵。translate(x,y): 定义2D位移转换。translate3d(x,y,z): 定义3D位移转换。translateX(x): 定义位移转换，只是用X轴的值。translateY(y): 定义位移转换，只是用Y轴的值。translateZ(z): 定义3D位移转换，只是用Z轴的值。scale(x,y): 定义2D缩放转换。scale3d(x,y,z): 定义3D缩放转换。scaleX(x): 通过设置X轴的值来定义缩放转换。scaleY(y): 通过设置Y轴的值来定义缩放转换。scaleZ(z): 通过设置Z轴的值来定义3D缩放转换。rotate(angle): 定义2D旋转，在参数中规定角度。rotate3d(x,y,z,angle): 定义3D旋转。rotateX(angle): 定义沿着X轴的3D旋转。rotateY(angle): 定义沿着Y轴的3D旋转。rotateZ(angle): 定义沿着Z轴的3D旋转。skew(x-angle,y-angle): 定义沿着X和Y轴的2D倾斜转换。skewX(angle): 定义沿着X轴的2D倾斜转换。skewY(angle): 定义沿着Y轴的2D倾斜转换。perspective(n): 为3D转换元素定义透视视图。 AnimationCSS3的Animation制作动画我们可以省去复杂的js代码. 123456789101112131415161718192021222324252627/* 旋转 */@keyframes spin &#123; from &#123; transform: rotate(0deg) &#125; to &#123; transform: rotate(360deg) &#125;&#125;div &#123; animation: spin 1s linear infinite&#125;/* 弹幕 */@keyframes bar &#123; from &#123; left: 100%; transform: translate3d(0,0,0);; &#125; to &#123; left: 0; transform: translate3d(-100%,0,0); &#125;&#125;div &#123; position:absolute; animation: bar 1s linear 0s;&#125; Borderborder-radius 圆角box-shadow 添加阴影border-image 绘制边框 背景background-clip属性用于确定背景画区，通常情况，背景都是覆盖整个元素的，利用这个属性可以设定背景颜色或图片的覆盖范围background-origin，用于确定背景的位置，通常与background-position联合使用background-size，常用来调整背景图片的大小background-break，控制背景怎样在这些不同的盒子中显示 文字效果word-wrap 属性允许您允许文本强制文本进行换行text-overflow 设置或检索当当前行超过指定容器的边界时如何显示，ellipsis逗号text-shadow 可向文本应用阴影。能够规定水平阴影、垂直阴影、模糊距离，以及阴影的颜色 text-decoration CSS3里面开始支持对文字的更深层次的渲染，具体有三个属性可供设置text-fill-color: 设置文字内部填充颜色text-stroke-color: 设置文字边界填充颜色text-stroke-width: 设置文字边界宽度]]></content>
+      <categories>
+        <category>CSS</category>
+      </categories>
+      <tags>
+        <tag>CSS</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[CommonJS和ES6 Module的区别]]></title>
+    <url>%2F%E6%A8%A1%E5%9D%97%E5%8C%96%2FCommonJS%E5%92%8CES6Module%E7%9A%84%E5%8C%BA%E5%88%AB%2F</url>
+    <content type="text"><![CDATA[CommonJS 一个文件就是一个模块，第一次加载时，会在内存生成一个对象，以后再用到这个模块，直接从缓存取这个对象，除非清除缓存 require是同步的，适用于node端，浏览器端读取文件速度很慢，容易卡死 输出的是一个值的拷贝，一旦输出，输出的值发生变化，原来的值也不会变 运行时加载，加载时执行，当脚本被require，就会全部执行，一旦出现某个模块被循环加载，就只输出已经执行的部分，未执行的部分不会输出 this指向当前模块 不能require ES6模块 ES6模块 ES6输出的是值的引用，输出的值发生变化，原来的值也会改变 ES6是编译时输出接口 this指向undefined 遇到循环引用，使用import加载一个变量，变量不会被缓存，真正取值时能拿到最终的值 支持加载commonjs]]></content>
+      <categories>
+        <category>模块化</category>
+      </categories>
+      <tags>
+        <tag>模块化</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[函数式编程]]></title>
+    <url>%2F%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B%2F%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B%2F</url>
+    <content type="text"><![CDATA[特点 函数是一等公民函数当成赋值给变量，当成参数传给函数或者当成返回值返回 只用表达式，不用语句，每一步都是纯运算，而且有返回值表达式是单纯的运算过程，总有返回值语句是执行某种操作，没有返回值]]></content>
+      <categories>
+        <category>函数式编程</category>
+      </categories>
+      <tags>
+        <tag>函数式编程</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[React hooks 再理解]]></title>
+    <url>%2FReact%2FReact-hooks-%E5%86%8D%E7%90%86%E8%A7%A3%2F</url>
+    <content type="text"><![CDATA[前言一句话概括hooks：不编写class的情况下，使用state和其他react特性 为什么要用hooks class版本，组件之间复用状态逻辑很难，hooks可以在不改变组件结构的情况下复用状态逻辑 class版本，复杂组件变得难以理解，hooks将组件中相互关联的部分拆分的更小，并且舍去生命周期 class版本，class难以理解，需要考虑this，绑定事件 class版本，class无法很好的压缩，并且会使得热重载出现不稳定的情况]]></content>
+      <categories>
+        <category>React</category>
+      </categories>
+      <tags>
+        <tag>React</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[Promise代码专辑]]></title>
     <url>%2Fpromise%2FPromise%E4%B8%93%E8%BE%91%2F</url>
     <content type="text"><![CDATA[前言Promise在前端的重要性不言而喻，手写promise代码在面试中出现的也越来越多，基本写不出来就拜拜了，还是得多敲一敲 Promise实现 自身属性value，reason，status，resolve的callback数组，reject的callback数组 resolve方法，status为pending时，赋值value，status，执行resolve全部方法 reject方法，status为pending时，赋值reason，status，执行reject全部方法 执行执行器函数 原型上定义then方法，传入resolve和reject作为参数 status为resolve，执行resolve，为reject，执行reject，为pending时，resolve加入resolve数组，reject加入reject数组 1234567891011121314151617181920212223242526272829303132333435363738394041424344function myPromise(executor)&#123; let self = this self.value = undefined self.reason = undefined self.status = 'pending' self.resolveCallback = [] self.rejectCallback = [] function resolve(value)&#123; if(self.status === 'pending')&#123; self.value = value self.status = 'resolved' self.resolveCallback.forEach(fn =&gt; &#123; fn() &#125;) &#125; &#125; function reject(reason)&#123; if(self.status === 'pending')&#123; self.reason = reason self.status = 'rejected' self.rejectCallback.forEach(fn =&gt; &#123; fn() &#125;) &#125; &#125; executor(resolve, reject)&#125;myPromise.prototype.then = function(resolve, reject)&#123; let self = this if(self.status === 'resolved')&#123; resolve(self.value) &#125; if(self.status === 'rejected')&#123; reject(self.reason) &#125; if(self.status === 'pending')&#123; self.resolveCallback.push(function()&#123; resolve(self.value) &#125;) self.rejectCallback.push(function()&#123; reject(self.reason) &#125;) &#125;&#125; Promise all实现 返回一个promise all，循环，每一个promise都resolve，再then 如果promise 成功了，count+1，value存到res，当count等于数组长度，代表都resolve完成了，resolve promise all，传入res 如果有promise reject了，直接reject promise all 1234567891011121314151617function promise_all(promises)&#123; return new Promise(resolve, reject)&#123; let count = 0 let res = [] for(let i = 0; i &lt; promises.length; i++)&#123; Promise.resolve(promises[i]).then((value) =&gt; &#123; count++ res[i] = value if(count === len)&#123; return resolve(res) &#125; &#125;,(reason) =&gt; &#123; return reject(reason) &#125;) &#125; &#125;&#125; Promise race实现 和all唯一区别，当子promise成功的时候，直接resolve，传入value 1234567891011function promise_race(promises)&#123; return new Promise(resolve, reject)&#123; for(let i = 0; i &lt; promises.length; i++)&#123; Promise.resolve(promises[i]).then((value) =&gt; &#123; return resolve(value) &#125;,(reason) =&gt; &#123; return reject(reason) &#125;) &#125; &#125;&#125; Promise 并发限制并发限制指的时每个时刻并发执行的promise数量是固定的，10w条并发请求，最终的执行结果也一样promise不是调用promiseall时执行，而是实例化promise对象的时候执行所以要并发限制，只能控制promise的实例化 从array第一个元素开始，初始化promise，ret存初始化的promise，用一个executing数组保存正在执行的promise 不断初始化promise，直到limit 使用promise.race，获得executing中promise的执行情况，当有一个promise执行完毕，继续初始化promise并放入executing中 所有的promise都执行完毕后调用promise.all返回 123456789101112131415161718192021222324252627function pool(limit, array, func)&#123; let i = 0 let ret = [] // promise数组 let executing = [] // promise执行数组 let enqueue = function()&#123; // 当array为i时，直接resolve if(array.length === i)&#123; return Promise.resolve &#125; // 每调用一次enqueue，初始化一个promise let item = array[i++] let p = Promise.resolve().then(() =&gt; func(item, array)) // 放入promise数组 ret.push(p) // promise执行完毕，从executing数组删除 let e = p.then(() =&gt; executing.splice(executing.indexOf(e),1)) // 放入promise执行数组 executing.push(e) // 使用promise.race，当执行数组数量低于limit，实例化新的promise并执行 let r = Promise.resolve() if (executing.length &gt;= limit)&#123; r = Promise.race(executing) &#125; return r.then(() =&gt; enqueue()) &#125; return enqueue().then(() =&gt; Promise.all(ret))&#125;]]></content>
@@ -18,8 +62,14 @@
   </entry>
   <entry>
     <title><![CDATA[CSS的知识点]]></title>
-    <url>%2Funcategorized%2FCSS%E7%9A%84%E7%9F%A5%E8%AF%86%E7%82%B9%2F</url>
+    <url>%2FCSS%2FCSS%E7%9A%84%E7%9F%A5%E8%AF%86%E7%82%B9%2F</url>
     <content type="text"><![CDATA[伪类和伪元素都是为了格式化文档树以外的信息，修饰不在文档树中的部分 伪类，单冒号，a:hover 表示鼠标覆盖样式； li:nth-child 表示n个li; 伪元素，双冒号，::before 让插入的内容出现在之前; ::after 让插入的内容出现在之后，可以用来清除浮动（clear both加上BFC）]]></content>
+      <categories>
+        <category>CSS</category>
+      </categories>
+      <tags>
+        <tag>CSS</tag>
+      </tags>
   </entry>
   <entry>
     <title><![CDATA[HTML的新学知识点]]></title>
