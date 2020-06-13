@@ -303,12 +303,12 @@
   
   
 
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  <article class="post post-type-categories" itemscope itemtype="http://schema.org/Article">
   
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="zeuszhou.xyz/SAP/PI2/">
+    <link itemprop="mainEntityOfPage" href="zeuszhou.xyz/React/React-Hooks入门/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="ZEUS ZHOU">
@@ -327,7 +327,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/SAP/PI2/" itemprop="url">SAP PI（2）</a></h1>
+                <a class="post-title-link" href="/React/React-Hooks入门/" itemprop="url">useEffect小试</a></h1>
         
 
         <div class="post-meta">
@@ -339,8 +339,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-11-06T23:48:01+08:00">
-                2018-11-06
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-05-10T15:33:00+08:00">
+                2020-05-10
               </time>
             
 
@@ -355,8 +355,8 @@
               
                 <span class="post-meta-item-text">Post modified&#58;</span>
               
-              <time title="Post modified" itemprop="dateModified" datetime="2019-02-08T13:13:25+08:00">
-                2019-02-08
+              <time title="Post modified" itemprop="dateModified" datetime="2020-05-10T23:10:30+08:00">
+                2020-05-10
               </time>
             
           </span>
@@ -374,8 +374,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/SAP/" itemprop="url" rel="index">
-                    <span itemprop="name">SAP</span>
+                  <a href="/categories/React/" itemprop="url" rel="index">
+                    <span itemprop="name">React</span>
                   </a>
                 </span>
 
@@ -412,20 +412,29 @@
 
       
         
-          <ol>
-<li>BPE：message correlation and deals with the processing of messages in ccBPM.</li>
-<li>IE：routing and mapping and provides central integration server services，handles messages in XML and SOAP protocol</li>
-<li>AAE：adapters</li>
-<li>大多数adapter在JAVA栈上，只有2个在abap栈上，IDOC，HTTP</li>
-<li>Service Repository：UDDI，还有一些web service</li>
+          
+            <h2 id="前序"><a href="#前序" class="headerlink" title="前序"></a>前序</h2><p>实习了3天，感受到了互联网公司的快节奏<br>React hooks，TS，Sass是基础，而自己又不太熟，需要补补课<br>React hooks之前看了一下官方文档，感觉非常清晰，然鹅做起项目来，还是有点不大理解，需要捋一捋</p>
+<h2 id="useEffect"><a href="#useEffect" class="headerlink" title="useEffect"></a>useEffect</h2><p>react只会在浏览器绘制之后运行effects<br>useEffect函数在每一次渲染中都不同，对应的state值也只属于当前那次渲染。<br>一个function对应多次渲染，每一次渲染中useEffect和state都是不同且独立的，每个effect函数看到的props和state都是来自他属于的那次渲染</p>
+<h4 id="一次完整的渲染过程，以官网count为例子"><a href="#一次完整的渲染过程，以官网count为例子" class="headerlink" title="一次完整的渲染过程，以官网count为例子"></a>一次完整的渲染过程，以官网count为例子</h4><ol>
+<li>组件给react需要渲染的内容，此时count为0，并告诉react渲染之后调用effect函数</li>
+<li>react拿到组件渲染内容，更新UI，告诉DOM进行修改</li>
+<li>浏览器绘制后告诉react，react运行effect</li>
+<li>然后count为1，组件给react count为1时的渲染内容，重复进行</li>
 </ol>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/SAP/PI2/#more" rel="contents">
-              Read more &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
+<p>和componentDidUpdate相比，componentDidUpdate的state会指向最新的state，而hooks会指向某次特定渲染的值，这也是闭包的一个应用。<br>如果想在effec的回调中拿到最新的值而不是每次渲染的值，可以用refs</p>
+<h4 id="effect清理"><a href="#effect清理" class="headerlink" title="effect清理"></a>effect清理</h4><ol>
+<li>react渲染id为1的UI</li>
+<li>浏览器绘制，我们看到id为1的UI</li>
+<li>react清除id为0的effect</li>
+<li>react运行id为1的effect，id变成2<br>上一次的effect会在重新渲染后，被清除，effect的清除并不会读取到最新的props。所以react能做到在绘制后立即处理effect</li>
+</ol>
+<h4 id="依赖数组deps"><a href="#依赖数组deps" class="headerlink" title="依赖数组deps"></a>依赖数组deps</h4><p>因为react无法区分effects之间的不同，只能依靠deps<br>如果两次渲染，deps一样，react会跳过这次effect，也就是只有deps改变，effect才会生效<br>如果deps为空，表示只有第一次渲染会执行effect</p>
+<h4 id="依赖撒谎"><a href="#依赖撒谎" class="headerlink" title="依赖撒谎"></a>依赖撒谎</h4><p>依赖是我们给react的暗示，告诉它effect里需要使用的渲染的值，如果effect使用了count，但依赖数组里没有，会出大问题。<br>比如设置定时器，定时器调用了state但没有在deps里面标明，这样effect不会重复调用，每一次setCount里count都是常数<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Counter</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> [count, setCount] = useState(<span class="number">0</span>);</span><br><span class="line"></span><br><span class="line">  useEffect(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> id = setInterval(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">      setCount(count + <span class="number">1</span>);</span><br><span class="line">      <span class="comment">// setCount(c =&gt; c + 1); 正确的姿势</span></span><br><span class="line">    &#125;, <span class="number">1000</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="function"><span class="params">()</span> =&gt;</span> clearInterval(id);</span><br><span class="line">  &#125;, []);</span><br><span class="line">  <span class="keyword">return</span> &lt;h1&gt;&#123;count&#125;&lt;/h1&gt;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h4 id="useEffect发请求"><a href="#useEffect发请求" class="headerlink" title="useEffect发请求"></a>useEffect发请求</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">useEffect(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">async</span> <span class="function"><span class="keyword">function</span> <span class="title">fetchData</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        <span class="keyword">const</span> result = <span class="keyword">await</span> axios()</span><br><span class="line">    &#125;</span><br><span class="line">    fetchData()</span><br><span class="line">&#125;, [])</span><br><span class="line"></span><br><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">function</span> <span class="title">fetchData</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">const</span> result = <span class="keyword">await</span> axios()</span><br><span class="line">&#125;</span><br><span class="line">useEffect(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    fetchData()</span><br><span class="line">&#125;, [])</span><br></pre></td></tr></table></figure>
+<p>请求函数写在useEffect里面容易出现问题，比如如果async函数里面有一个state，UserID，我们需要在deps里面加入，但由于代码量比较大，我们非常可能忘记加上这个deps，然而如果我们把async函数写在useEffect里面，就很直观，程序员可以意识到要加这个间接依赖</p>
+<p>如果几个effect调用了同一个函数，可以把函数放在整个组件外面，或者用callback钩子<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">getFetchUrl</span>(<span class="params">query</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="string">'https://hn.algolia.com/api/v1/search?query='</span> + query;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">SearchResults</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  useEffect(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> url = getFetchUrl(<span class="string">'react'</span>);</span><br><span class="line">  &#125;, []);</span><br><span class="line">  useEffect(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> url = getFetchUrl(<span class="string">'redux'</span>);</span><br><span class="line">  &#125;, []);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">SearchResults</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> getFetchUrl = useCallback(<span class="function">(<span class="params">query</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="string">'https://hn.algolia.com/api/v1/search?query='</span> + query;</span><br><span class="line">  &#125;, []); </span><br><span class="line"></span><br><span class="line">  useEffect(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> url = getFetchUrl(<span class="string">'react'</span>);</span><br><span class="line">  &#125;, [getFetchUrl]);</span><br><span class="line"></span><br><span class="line">  useEffect(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> url = getFetchUrl(<span class="string">'redux'</span>);</span><br><span class="line">  &#125;, [getFetchUrl]); </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+
+          
         
       
     </div>
@@ -475,12 +484,12 @@
   
   
 
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  <article class="post post-type-categories" itemscope itemtype="http://schema.org/Article">
   
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="zeuszhou.xyz/SAP/演讲培训/">
+    <link itemprop="mainEntityOfPage" href="zeuszhou.xyz/uncategorized/写在NTU毕业前夕/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="ZEUS ZHOU">
@@ -499,7 +508,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/SAP/演讲培训/" itemprop="url">SAP 演讲培训</a></h1>
+                <a class="post-title-link" href="/uncategorized/写在NTU毕业前夕/" itemprop="url">写在NTU毕业前夕</a></h1>
         
 
         <div class="post-meta">
@@ -511,8 +520,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-11-05T21:01:25+08:00">
-                2018-11-05
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-05-02T15:52:14+08:00">
+                2020-05-02
               </time>
             
 
@@ -527,34 +536,12 @@
               
                 <span class="post-meta-item-text">Post modified&#58;</span>
               
-              <time title="Post modified" itemprop="dateModified" datetime="2019-02-08T13:12:17+08:00">
-                2019-02-08
+              <time title="Post modified" itemprop="dateModified" datetime="2020-05-02T16:55:16+08:00">
+                2020-05-02
               </time>
             
           </span>
 
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/SAP/" itemprop="url" rel="index">
-                    <span itemprop="name">SAP</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
           
 
           
@@ -584,372 +571,43 @@
 
       
         
-          <h4 id="成功演讲之准备篇"><a href="#成功演讲之准备篇" class="headerlink" title="成功演讲之准备篇"></a>成功演讲之准备篇</h4><p>为什么会紧张：</p>
+          
+            <p>今天是2020年5月2号，算是一个里程碑式的节点，上传了NTU最后一门课text mining的作业，终于可以专心集中的搞一个领域了，有点小开心。<br>博客今天也重新开张了，是时候规划总结一波了</p>
+<h3 id="算法学习"><a href="#算法学习" class="headerlink" title="算法学习"></a>算法学习</h3><p>今天是刷leetcode的108天，目前leetcode刷了207道题，基本都是python写的，力扣刷了140道，基本都是js写的，ScriptOj刷了50道题。<br>本科算法基础有点差，现在刷了一些题感觉还是很有效果的，之后打算继续刷。定个小目标，拿到ntu毕业证之前：</p>
 <ol>
-<li>负面思考</li>
-<li>追求完美</li>
-<li>准备不足</li>
-<li>缺乏自信</li>
+<li>leetcode hot 100用js刷完做好笔记</li>
+<li>ScriptOj刷完做好笔记</li>
+<li>总结常见算法题型，回溯，动态规划，双指针，滑动窗口，树，单调栈，二分法，矩阵和一些小众算法比如摩尔投票等等</li>
+<li>力扣有竞赛就打，打tmd</li>
+<li>一天1道算法题，多了刷不动</li>
 </ol>
-<p>全球十大恐惧前三就有公众演讲，所以没有关系</p>
-<p>克服紧张四大心法：</p>
+<h3 id="前端学习"><a href="#前端学习" class="headerlink" title="前端学习"></a>前端学习</h3><p>今天是学习前端的103天，通过实习的项目和这两个月面试的磨练，前端的基础已经搭起来了，接下来主要就是实践。定个小目标，拿到ntu毕业证之前：</p>
 <ol>
-<li>主场意识</li>
-<li>焦点转移，不放在别人看法，想法上，完成自己所要完成的</li>
-<li>借力技巧，手卡，自然而然的看</li>
-<li>回归当下，享受与人分享的喜悦，暗爽</li>
-<li>技巧：336，吸气，呼气，临上场，真的紧张时，平复心情</li>
+<li>把之前面试准备的知识点总结到github</li>
+<li>多逛逛掘金和大佬们的博客，提高一下姿势水平</li>
+<li>在快手好好搬砖，争取拿个return offer</li>
+<li>技术栈提高一下广度，深度现在还搞不定，flutter，react全家桶，typescript，weex，nodejs学一学</li>
+<li>一天3道面经题总结，面经永远是最好的学习方式</li>
 </ol>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/SAP/演讲培训/#more" rel="contents">
-              Read more &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-<div>
-      
-</div>
-
-    
-
-    
-
-    
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="zeuszhou.xyz/SAP/PI/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="ZEUS ZHOU">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="ZEUS ZHOU">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/SAP/PI/" itemprop="url">SAP PI（1）</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-11-02T21:51:15+08:00">
-                2018-11-02
-              </time>
-            
-
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Post modified&#58;</span>
-              
-              <time title="Post modified" itemprop="dateModified" datetime="2019-02-08T13:12:55+08:00">
-                2019-02-08
-              </time>
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/SAP/" itemprop="url" rel="index">
-                    <span itemprop="name">SAP</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h4 id="Unit-1-PI-Architecture"><a href="#Unit-1-PI-Architecture" class="headerlink" title="Unit 1 PI Architecture"></a>Unit 1 PI Architecture</h4><ul>
-<li>SLD(system landscape directory): 负责business和technical system，包括software catalog，landscapes</li>
-<li>ESR(enterprise services repository): 各种对象，比如interface，mappings，process definitions</li>
-<li>SR(service registry): 提供各种web服务，比如UDDI(Universal Description, Discovery, Integration)</li>
-<li>ID(Integration Directory): 配置场景，实现信息交换</li>
-<li>BPE(business process engine): 控制信息校准，决定处理哪条message，cross-component business process management (ccBPM)的一部分</li>
-<li>IE(integration Engine): 处理ID的信息，包括确定接收方和mapping传入的信息到接收方的接口</li>
-</ul>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/SAP/PI/#more" rel="contents">
-              Read more &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-<div>
-      
-</div>
-
-    
-
-    
-
-    
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="zeuszhou.xyz/SAP/service/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="ZEUS ZHOU">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="ZEUS ZHOU">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/SAP/service/" itemprop="url">SAP Service Delivery</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-11-01T21:59:47+08:00">
-                2018-11-01
-              </time>
-            
-
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Post modified&#58;</span>
-              
-              <time title="Post modified" itemprop="dateModified" datetime="2019-02-08T13:13:38+08:00">
-                2019-02-08
-              </time>
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/SAP/" itemprop="url" rel="index">
-                    <span itemprop="name">SAP</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h5 id="service流程"><a href="#service流程" class="headerlink" title="service流程"></a>service流程</h5><ol>
-<li>service request，TQM（technical quality management）的任务，和客户沟通，了解客户需要什么service，了解需求，创建service plan 和 service order，提出最初需求，很多不是技术出身</li>
-<li>scoping，OSM和scoping member（COE各个leader和manager）提出，具体化需求，需要多少人天，和TQM协商，使用的技术，onsite还是remote</li>
-<li>staffing，OSM的任务，使用RPA，通过schedule set看到人员availability，哪段时间有空，然后让人员book他，也会和leader和manager沟通，公开透明的</li>
+<h3 id="博客"><a href="#博客" class="headerlink" title="博客"></a>博客</h3><p>今天是写博客的第一天，1年半没写了，现在要开始笔根不辍起来，定个计划</p>
+<ol>
+<li>一周出一篇博客，一个知识点，内容随意，先养成一个习惯</li>
 </ol>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/SAP/service/#more" rel="contents">
-              Read more &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
+<h3 id="书籍"><a href="#书籍" class="headerlink" title="书籍"></a>书籍</h3><p>趁着还没正式996，先看点不看会被同行看不起的书，提高一个，一天一章，按顺序看，今年肝完（先立flag，看不完明年看）</p>
+<ol>
+<li>JS高程，现在看了四章，发现面经好多都在这个上面，哭了</li>
+<li>深入理解ES6</li>
+<li>Javascript设计模式</li>
+<li>JavaScript异步编程</li>
+<li>高性能javascript</li>
+<li>学习javascript数据结构与算法</li>
+<li>你不知道的javascript</li>
+<li>JavaScript权威指南</li>
+<li>JavaScript编程精解</li>
+<li>JavaScript语言精粹</li>
+</ol>
+
+          
         
       
     </div>
@@ -1004,7 +662,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="zeuszhou.xyz/SAP/Assurance/">
+    <link itemprop="mainEntityOfPage" href="zeuszhou.xyz/uncategorized/Assurance/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="ZEUS ZHOU">
@@ -1023,7 +681,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/SAP/Assurance/" itemprop="url">SAP Value Assurance</a></h1>
+                <a class="post-title-link" href="/uncategorized/Assurance/" itemprop="url">SAP Value Assurance</a></h1>
         
 
         <div class="post-meta">
@@ -1057,28 +715,6 @@
             
           </span>
 
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/SAP/" itemprop="url" rel="index">
-                    <span itemprop="name">SAP</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
           
 
           
@@ -1117,176 +753,7 @@
 </ul>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/SAP/Assurance/#more" rel="contents">
-              Read more &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-<div>
-      
-</div>
-
-    
-
-    
-
-    
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="zeuszhou.xyz/SAP/IV/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="ZEUS ZHOU">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="ZEUS ZHOU">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/SAP/IV/" itemprop="url">SAP Integration Validation</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-10-30T20:25:33+08:00">
-                2018-10-30
-              </time>
-            
-
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Post modified&#58;</span>
-              
-              <time title="Post modified" itemprop="dateModified" datetime="2019-02-08T13:12:44+08:00">
-                2019-02-08
-              </time>
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/SAP/" itemprop="url" rel="index">
-                    <span itemprop="name">SAP</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h2 id="方法论"><a href="#方法论" class="headerlink" title="方法论"></a>方法论</h2><h5 id="五大维度："><a href="#五大维度：" class="headerlink" title="五大维度："></a>五大维度：</h5><ul>
-<li>Data consistency management  系统时间，订单以时间戳追踪，外围，内部系统，Head（列）和item（行）需要同步commit。外围系统同步订单到中央系统，中央系统不会同步到所有的外围系统。直接改中央系统，会发生问题。解决方法，每晚后台作业，抽出A,B系统数据进行对比。更新完整的信息块，logic unit of work。</li>
-<li>Exception management 提示要到位，提供引导性步骤。定位异常位置，5个小灯，哪里红了一目了然。创建instance追踪issue。SAP非常重要的问题：back office有三个时区，中国，欧洲，美国。无缝连接，不加班，晚上下班欧洲的接班，早上起来接美国的班。一般和运维的人打电话。Incident resolution 就是便利贴，需要解释清楚自己做了什么，还有什么问题，才可以接着做。</li>
-</ul>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/SAP/IV/#more" rel="contents">
+            <a class="btn" href="/uncategorized/Assurance/#more" rel="contents">
               Read more &raquo;
             </a>
           </div>
@@ -1386,7 +853,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">26</span>
+                  <span class="site-state-item-count">23</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -1397,7 +864,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">13</span>
+                  <span class="site-state-item-count">16</span>
                   <span class="site-state-item-name">categories</span>
                 </a>
               </div>
@@ -1408,7 +875,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">18</span>
+                  <span class="site-state-item-count">19</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>

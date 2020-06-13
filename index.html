@@ -308,6 +308,691 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="zeuszhou.xyz/状态管理/Redux初探/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ZEUS ZHOU">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ZEUS ZHOU">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/状态管理/Redux初探/" itemprop="url">Redux初探</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-06-13T09:48:48+08:00">
+                2020-06-13
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Post modified&#58;</span>
+              
+              <time title="Post modified" itemprop="dateModified" datetime="2020-06-13T12:39:15+08:00">
+                2020-06-13
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/状态管理/" itemprop="url" rel="index">
+                    <span itemprop="name">状态管理</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="背景概念学习"><a href="#背景概念学习" class="headerlink" title="背景概念学习"></a>背景概念学习</h3><p>Redux是flux架构的实现，受Elm启发，核心思想单向数据流<br>Redux is a predictable state container for JavaScript apps，可预测是因为reducer是一个纯函数<br>Flux概念：核心思想单项数据流，action -&gt; dispatcher -&gt; callback -&gt; store -&gt; react view -&gt; action<br>Elm概念：使用Model构建应用，也就是说Model是应用的核心。构建一个应用就是构建Model，构建更新Model的方式，以及如何构建Model到view的映射。</p>
+<h3 id="三个基本概念"><a href="#三个基本概念" class="headerlink" title="三个基本概念"></a>三个基本概念</h3><ol>
+<li>store<br>UI唯一的数据来源，react的state，store信息的变化会引起视图更新</li>
+<li>action<br>用来表述发生了什么，必须拥有type属性，可选择携带数据</li>
+<li>reducer<br>纯函数，根据action.type来作出反应，生成新的state来改变store</li>
+</ol>
+<h3 id="数据流"><a href="#数据流" class="headerlink" title="数据流"></a>数据流</h3><p>UI发生变化，比如点击按钮 -&gt; action，描述点击了按钮 -&gt; reducer处理事件，得到新的state -&gt; store被更新 -&gt; UI响应store更新<br>state通过闭包的形式存放在store中，是只读的，如果要更改state，必须通过发送action进行，action是一个普通对象，react订阅store变化，并re-render视图</p>
+<h3 id="API"><a href="#API" class="headerlink" title="API"></a>API</h3><p>store.dispatch(action) 来触发reducer<br>store.getState() 获取当前state<br>store.subscribe(listener) store更新后回调listener，回调函数里面可以调用store.getStore()来获得更新后的state<br>store.subscribe(listener) 再调用一次，取消listener</p>
+<h3 id="简化版redux实现"><a href="#简化版redux实现" class="headerlink" title="简化版redux实现"></a>简化版redux实现</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> createStore = <span class="function">(<span class="params">reducer, initialState</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> store = &#123;&#125;</span><br><span class="line">    store.state = initialState</span><br><span class="line">    store.listeners = []</span><br><span class="line">    store.subscribe = <span class="function">(<span class="params">listener</span>) =&gt;</span> &#123;</span><br><span class="line">        store.listeners.push(listener)</span><br><span class="line">    &#125;</span><br><span class="line">    store.dispatch = <span class="function">(<span class="params">store</span>) =&gt;</span> &#123;</span><br><span class="line">        store.state = reducer(store.state, action)</span><br><span class="line">        store.listeners.forEach(<span class="function"><span class="params">listener</span> =&gt;</span> listener())</span><br><span class="line">    &#125;</span><br><span class="line">    store.getState = <span class="function"><span class="params">()</span> =&gt;</span> store.state</span><br><span class="line">    <span class="keyword">return</span> store</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="Middleware"><a href="#Middleware" class="headerlink" title="Middleware"></a>Middleware</h3><p>为什么出现？<br>因为redux只能针对同步且没有副作用的操作，如果存在副作用，比如ajax请求，就需要middleware的帮助</p>
+<p>有无middleware的流程对比：<br>UI -&gt; action(plain) -&gt; reducer -&gt; state -&gt; UI<br>UI -&gt; action(side effect) -&gt; middleware -&gt; action(plain) -&gt; reducer -&gt; state -&gt; UI</p>
+<p>middleware的作用：转换异步操作，生成原始的action，这样reducer函数可以处理相应的action，从而改变state，更新UI</p>
+<h4 id="redux-thunk"><a href="#redux-thunk" class="headerlink" title="redux-thunk"></a>redux-thunk</h4><p>redux作者给出的中间件<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">createThunkMiddleware</span>(<span class="params">extraArgument</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="function">(<span class="params">&#123; dispatch, getState &#125;</span>) =&gt;</span> next =&gt; <span class="function"><span class="params">action</span> =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (<span class="keyword">typeof</span> action === <span class="string">'function'</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> action(dispatch, getState, extraArgument)</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> next(action)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> thunk = <span class="keyword">new</span> createThunkMiddleware()</span><br><span class="line">thunk.withExtraArgument = createThunkMiddleware</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> thunk</span><br></pre></td></tr></table></figure></p>
+<p>缺点：如果这个副作用action内部很复杂，需要给每个异步操作定义action，不易维护<br>流程：action(side effect) -&gt; redux-thunk监听 -&gt; 执行副作用函数 -&gt; action2(plain)</p>
+<h4 id="redux-saga"><a href="#redux-saga" class="headerlink" title="redux-saga"></a>redux-saga</h4><p>redux-saga是控制执行的generator，在redux-saga中action是原始的js对象，把所有的异步副作用操作放在了saga函数里面<br>这样既统一了action的形式，又使得异步操作集中可以被集中处理</p>
+<p>优点：action统一，可以集中处理异步操作，使用声明式的Effect，提供了更加细腻的控制流<br>流程：action1(plain) -&gt; redux-saga监听 -&gt; 执行相应的Effect方法 -&gt; 返回描述对象 -&gt; 恢复执行副作用函数 -&gt; action2(plain)<br>对比thunk，saga监听到action，不会立刻执行副作用，而是effect方法将其转换为一个描述对象，再将描述对象作为标识，再恢复执行副作用。<br>通过effect函数，可以方便测试，不需要effect函数的返回结果，只需要比较其返回的描述对象，与我们的期望描述对象是否相同</p>
+<p>基础api：</p>
+<ol>
+<li>take，监听action，返回的是监听到的action对象</li>
+<li>call，类似call，但是func可以是generator</li>
+<li>put，类似于redux原始的dispatch</li>
+<li>select，类似于redux的getState</li>
+</ol>
+<h3 id="Dva"><a href="#Dva" class="headerlink" title="Dva"></a>Dva</h3><p>是什么：<br>轻量封装，基于redux和redux-saga，内置react-react和fetch，内置loading，支持HMR</p>
+<p>解决了什么问题：<br>redux书写麻烦，概念太多，文件分离，编辑成本高，不便于组织业务模型</p>
+<h4 id="配合UMI"><a href="#配合UMI" class="headerlink" title="配合UMI"></a>配合UMI</h4><p>api：</p>
+<ol>
+<li>connect 绑定数据到组件</li>
+<li>getDvaApp 获取dva实例</li>
+<li>useDispatch 获取dispatch</li>
+<li>useSelector 获取部分数据</li>
+<li>useStore 获取store</li>
+</ol>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+<div>
+      
+</div>
+
+    
+
+    
+
+    
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-categories" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="zeuszhou.xyz/面经/刷题/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ZEUS ZHOU">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ZEUS ZHOU">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/面经/刷题/" itemprop="url">刷题</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-06-13T09:39:28+08:00">
+                2020-06-13
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Post modified&#58;</span>
+              
+              <time title="Post modified" itemprop="dateModified" datetime="2020-06-13T09:48:28+08:00">
+                2020-06-13
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/面经/" itemprop="url" rel="index">
+                    <span itemprop="name">面经</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>每周刷点题，保持手感</p>
+<p>### </p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+<div>
+      
+</div>
+
+    
+
+    
+
+    
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-categories" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="zeuszhou.xyz/前端广度/前端精读周刊/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ZEUS ZHOU">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ZEUS ZHOU">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/前端广度/前端精读周刊/" itemprop="url">前端精读周刊</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-06-12T22:46:37+08:00">
+                2020-06-12
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Post modified&#58;</span>
+              
+              <time title="Post modified" itemprop="dateModified" datetime="2020-06-13T09:50:54+08:00">
+                2020-06-13
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/前端广度/" itemprop="url" rel="index">
+                    <span itemprop="name">前端广度</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="纯函数和副作用"><a href="#纯函数和副作用" class="headerlink" title="纯函数和副作用"></a>纯函数和副作用</h3><p>副作用是指改变了其作用域外的状态<br>纯函数指的是函数的返回值仅仅由参数决定,当给同样的参数时,返回值是固定的，无其他API（包括Math, Date等）调用，无异步操作</p>
+<h3 id="有状态和无状态"><a href="#有状态和无状态" class="headerlink" title="有状态和无状态"></a>有状态和无状态</h3><p>有状态指的是函数有自己的运行状态，可以修改自己的状态<br>无状态指的是函数不管理自己的数据或状态，结果取决于参数</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+<div>
+      
+</div>
+
+    
+
+    
+
+    
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-categories" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="zeuszhou.xyz/踩坑/开发踩坑记录/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ZEUS ZHOU">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ZEUS ZHOU">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/踩坑/开发踩坑记录/" itemprop="url">开发踩坑记录</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-06-12T15:13:17+08:00">
+                2020-06-12
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Post modified&#58;</span>
+              
+              <time title="Post modified" itemprop="dateModified" datetime="2020-06-12T15:22:27+08:00">
+                2020-06-12
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/踩坑/" itemprop="url" rel="index">
+                    <span itemprop="name">踩坑</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>记录自己平时开发过程中的坑</p>
+<h3 id="2020年6月12号"><a href="#2020年6月12号" class="headerlink" title="2020年6月12号"></a>2020年6月12号</h3><ol>
+<li>chrome图片显示正常，safari和iphone看不到图片<br>原因：后台传的图片是webp，webp是谷歌开发的一种旨在加快图片加载速度的图片格式<br>图片压缩体积大约只有JPEG的2/3，说白了就是省空间<br>但safari不支持，转成png就ok了</li>
+</ol>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+<div>
+      
+</div>
+
+    
+
+    
+
+    
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-categories" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="zeuszhou.xyz/CSS/CSS3特性/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -875,7 +1560,7 @@
               
                 <span class="post-meta-item-text">Post modified&#58;</span>
               
-              <time title="Post modified" itemprop="dateModified" datetime="2020-06-12T11:20:04+08:00">
+              <time title="Post modified" itemprop="dateModified" datetime="2020-06-12T14:11:47+08:00">
                 2020-06-12
               </time>
             
@@ -969,6 +1654,15 @@
 </li>
 </ol>
 <p>原理是在effect内部执行赋值操作，使得ref的值只有在dom更新之后再改变，确保了我们的变量突变不会破坏依赖于可中断渲染的事件切片和suspense等特性</p>
+<h3 id="useCallback和useMemo的区别"><a href="#useCallback和useMemo的区别" class="headerlink" title="useCallback和useMemo的区别"></a>useCallback和useMemo的区别</h3><p>useCallback是用来优化对子组件的渲染，缓存函数的引用<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> memoizedCallback = useCallback(</span><br><span class="line">  () =&gt; &#123;</span><br><span class="line">    doSomething(a, b);</span><br><span class="line">  &#125;,</span><br><span class="line">  [a, b],</span><br><span class="line">);</span><br><span class="line"><span class="comment">// 在a，b不变的情况下，memoizedCallback的引用不变，所以这个入参函数会被缓存，从而起到优化渲染的效果</span></span><br></pre></td></tr></table></figure></p>
+<p>useMemo是用来优化当前组件高开销的计算，缓存计算数据的值<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> computeValue = useMemo(<span class="function"><span class="params">()</span> =&gt;</span> computeExpensiveValue(count), [count]);</span><br><span class="line"><span class="comment">// 只有在count改变的时候，computeExpensiveValue才会重新执行</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="自定义hooks"><a href="#自定义hooks" class="headerlink" title="自定义hooks"></a>自定义hooks</h3><p>usePrevProps<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> usePrevProps = <span class="function"><span class="params">value</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> ref = useRef()</span><br><span class="line">    useEffect(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">        ref.current = value</span><br><span class="line">    &#125;)</span><br><span class="line">    <span class="keyword">return</span> ref.current</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 使用</span></span><br><span class="line"><span class="keyword">const</span> [count, setCount] = useState(<span class="number">0</span>);</span><br><span class="line"><span class="keyword">const</span> handleCount = <span class="function"><span class="params">()</span> =&gt;</span> setCount(count + <span class="number">1</span>);</span><br><span class="line"><span class="keyword">const</span> previous = usePrevProps(handlecount)</span><br></pre></td></tr></table></figure></p>
+<h3 id="PureComponent和React-memo"><a href="#PureComponent和React-memo" class="headerlink" title="PureComponent和React.memo"></a>PureComponent和React.memo</h3><ol>
+<li><p>React.memo只适用于函数组件，如果组件在给定props的情况下渲染结果是相同的，可以包裹一个memo，react可以跳过渲染组件的操作直接复用最近一次渲染的结果<br>memo只检查props的变化，只会进行浅层对比，复杂对象可以传入第二个比较函数参数<br>和shouldComponentUpdate相反，如果props相等，会返回true，否则返回false</p>
+</li>
+<li><p>对比Component，React.PureComponent实现了shouldComponentUpdate，以浅对比prop和state的方式实现<br>如果state和props相同，render会渲染同样的内容，shouldComponentUpdate可以提高性能<br>但如果props和state是复杂的对象，会产生错误的结果</p>
+</li>
+</ol>
 
           
         
@@ -1365,869 +2059,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-categories" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="zeuszhou.xyz/CSS/CSS的知识点/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="ZEUS ZHOU">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="ZEUS ZHOU">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/CSS/CSS的知识点/" itemprop="url">CSS的知识点</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-06-01T22:33:39+08:00">
-                2020-06-01
-              </time>
-            
-
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Post modified&#58;</span>
-              
-              <time title="Post modified" itemprop="dateModified" datetime="2020-06-09T21:35:23+08:00">
-                2020-06-09
-              </time>
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/CSS/" itemprop="url" rel="index">
-                    <span itemprop="name">CSS</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h3 id="伪类和伪元素"><a href="#伪类和伪元素" class="headerlink" title="伪类和伪元素"></a>伪类和伪元素</h3><p>都是为了格式化文档树以外的信息，修饰不在文档树中的部分</p>
-<p>伪类，单冒号，a:hover 表示鼠标覆盖样式； li:nth-child 表示n个li;</p>
-<p>伪元素，双冒号，::before 让插入的内容出现在之前; ::after 让插入的内容出现在之后，可以用来清除浮动（clear both加上BFC）</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-<div>
-      
-</div>
-
-    
-
-    
-
-    
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-categories" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="zeuszhou.xyz/HTML/HTML的知识点/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="ZEUS ZHOU">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="ZEUS ZHOU">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/HTML/HTML的知识点/" itemprop="url">HTML的新学知识点</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-05-31T23:17:15+08:00">
-                2020-05-31
-              </time>
-            
-
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Post modified&#58;</span>
-              
-              <time title="Post modified" itemprop="dateModified" datetime="2020-06-01T22:29:35+08:00">
-                2020-06-01
-              </time>
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/HTML/" itemprop="url" rel="index">
-                    <span itemprop="name">HTML</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h3 id="行内元素"><a href="#行内元素" class="headerlink" title="行内元素"></a>行内元素</h3><p>行内元素设置 width 无效，height 无效（可以设置 line-height）<br>行内元素设置 margin 和 padding 不会对其他元素产生影响</p>
-<h3 id="浏览器渲染原理"><a href="#浏览器渲染原理" class="headerlink" title="浏览器渲染原理"></a>浏览器渲染原理</h3><ol>
-<li>先解析收到的文档，构建一棵dom树，遇到js会先暂停，等js运行完毕</li>
-<li>解析css，生成cssom规则树</li>
-<li>根据dom和cssom树构建渲染树</li>
-<li>渲染树布局和重排</li>
-<li>绘制阶段，遍历渲染树，并调用渲染对象的paint方法把内容显示在屏幕上</li>
-</ol>
-<h3 id="async和defer"><a href="#async和defer" class="headerlink" title="async和defer"></a>async和defer</h3><p>都可以并行加载，async加载完就执行，执行会阻塞文档解析，defer会等整个文档解析完成后，在DOMContentLoaded事件触发之前完成，按照顺序</p>
-<h3 id="文档的预解析"><a href="#文档的预解析" class="headerlink" title="文档的预解析"></a>文档的预解析</h3><p>当执行js脚本时，另一个线程会解析剩下的文档，但不会改变dom树，只解析外部资源的引用</p>
-<h3 id="css阻塞文档解析"><a href="#css阻塞文档解析" class="headerlink" title="css阻塞文档解析"></a>css阻塞文档解析</h3><p>因为js脚本执行可以请求样式信息，如果css没解析完，会得到错误的信息<br>所以如果cssom还没构建解析好，遇到js脚本，浏览器会延迟js的执行和文档的解析<br>所以浏览器会先下载和构建cssom，在执行js，再继续文档的解析</p>
-<h3 id="FOUC和白屏"><a href="#FOUC和白屏" class="headerlink" title="FOUC和白屏"></a>FOUC和白屏</h3><p>FOUC：样式闪烁，css加载时候过长或者css放在文档底部，会先呈现html，无样式内容，然后突然样式呈现<br>白屏：浏览器需要构建出dom树和cssom树才能进行渲染，所以css加载未完成或者js阻塞文档解析都可以导致白屏</p>
-<h3 id="DOMContentLoaded-事件和-Load-事件"><a href="#DOMContentLoaded-事件和-Load-事件" class="headerlink" title="DOMContentLoaded 事件和 Load 事件"></a>DOMContentLoaded 事件和 Load 事件</h3><p>DOMContentLoaded：当HTML加载和解析完就触发<br>Load：所有资源加载完后触发</p>
-<h3 id="H5新增功能"><a href="#H5新增功能" class="headerlink" title="H5新增功能"></a>H5新增功能</h3><ol>
-<li>绘画canvas</li>
-<li>video和audio元素</li>
-<li>localstorage和sessionStorage</li>
-<li>webworker</li>
-<li>websocket</li>
-<li>getCurrentPosition，获得用户当前位置</li>
-</ol>
-<h3 id="H5离线存储"><a href="#H5离线存储" class="headerlink" title="H5离线存储"></a>H5离线存储</h3><p>基于一个.appcache文件的缓存机制，通过这个文件上解析清单离线存储功能，这些资源就能被存储下来，当离线时，可以展示离线存储的数据，用HTML的头部manifest属性实现，第一次访问app会离线存储，后面每次都会对比文件是否发生变化，变化的化会更新文件</p>
-<h3 id="cookie"><a href="#cookie" class="headerlink" title="cookie"></a>cookie</h3><ol>
-<li>cookie的domain和path构成了其url，哪些地方可以获取到cookie</li>
-<li>删除cookie需要把cookie的过期时间设为过去的时间</li>
-<li>cookie的secure属性设置当请求是HTTPS或者安全协议时，才会被发送。在http协议中无法设置</li>
-<li>cookie的httponly属性规定cookie是否能够通过js访问，默认可以，只能通过服务器设置</li>
-</ol>
-<h3 id="IndexedDB"><a href="#IndexedDB" class="headerlink" title="IndexedDB"></a>IndexedDB</h3><ol>
-<li>键值对存储，NoSql，支持事务，同源，存储空间大</li>
-<li>异步，localstorage是同步</li>
-</ol>
-<h3 id="Label"><a href="#Label" class="headerlink" title="Label"></a>Label</h3><p>用于表单的聚焦，当用户选择改标签，会自动转移焦点</p>
-<h3 id="实现标签页的通信"><a href="#实现标签页的通信" class="headerlink" title="实现标签页的通信"></a>实现标签页的通信</h3><ol>
-<li>Websocket，服务器做中介</li>
-<li>ShareWorker，所有页面共享，而webworker只能每个页面一个，属于render进程</li>
-<li>localstorage，监听localstorage的变化事件来传递数据</li>
-<li>postmessage，跨页面请求数据，安全的跨源通信，需要获的对应标签页的引用</li>
-</ol>
-<h3 id="页面可见性api"><a href="#页面可见性api" class="headerlink" title="页面可见性api"></a>页面可见性api</h3><p>通过监听网页的可见性，判断网页的卸载，节省资源和耗电，可以停止播放音乐和video，结束轮询和动画<br>document.visibilityState，hidden页面不可见，visible一部分可见，prerender即将或正在渲染<br>visibilitychange事件，visibilityState改变触发</p>
-<h3 id="Canvas和SVG"><a href="#Canvas和SVG" class="headerlink" title="Canvas和SVG"></a>Canvas和SVG</h3><p>Canvas通过js来绘制2D图像，逐像素渲染，缩放时会出现锯齿或者失真<br>SVG通过XML来绘制2D图像，缩放不会失帧</p>
-<h3 id="Chrome瀑布图"><a href="#Chrome瀑布图" class="headerlink" title="Chrome瀑布图"></a>Chrome瀑布图</h3><p>紫线表示html解析完，绿线表示开始渲染<br>越矮越窄，绿线越左，性能越好</p>
-<h3 id="serviceWorker-和-PWA"><a href="#serviceWorker-和-PWA" class="headerlink" title="serviceWorker 和 PWA"></a>serviceWorker 和 PWA</h3><p>PWA：渐进式网页应用，三大特性service worker离线缓存（存储到cache storage），manifest应用清单（网页出现在手机app清单）和推送通知（服务器push给sw，sw推送给用户）<br>service worker：浏览器独立于网页运行的脚本，作用于浏览器和服务器之间，相当于代理服务器，能够直接截取和返回用户请求</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-<div>
-      
-</div>
-
-    
-
-    
-
-    
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-categories" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="zeuszhou.xyz/JS基础/Object方法总结/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="ZEUS ZHOU">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="ZEUS ZHOU">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/JS基础/Object方法总结/" itemprop="url">JS对象方法总结</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-05-31T16:30:54+08:00">
-                2020-05-31
-              </time>
-            
-
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Post modified&#58;</span>
-              
-              <time title="Post modified" itemprop="dateModified" datetime="2020-05-31T22:30:48+08:00">
-                2020-05-31
-              </time>
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/JS基础/" itemprop="url" rel="index">
-                    <span itemprop="name">JS基础</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h3 id="Object方法"><a href="#Object方法" class="headerlink" title="Object方法"></a>Object方法</h3><ol>
-<li><p>Object.assign<br>对象合并，浅拷贝，只拷贝自身属性，prototype不拷贝，视数组为对象进行处理，[1,2,3] + [4,5] = [4,5,3]</p>
-</li>
-<li><p>Object.create<br>使用指定的原型对象及其属性去创建一个新的对象</p>
-</li>
-<li><p>Object.defineProperties<br>直接在一个对象上修改一个或多个属性或者加属性（指的是内部属性）</p>
-</li>
-<li><p>Object.defineProperty<br>同上，单复数的区别</p>
-</li>
-</ol>
-<p>数据描述符｜数据属性</p>
-<ul>
-<li>Configurable：表示能否通过delete删除此属性，能否修改内部属性值</li>
-<li>Enumerable：表示该属性是否可枚举，是否可以通过for in或Object.keys()返回属性</li>
-<li>Writable：表示能否修改属性的值</li>
-<li>Value：表示该属性对应的值</li>
-</ul>
-<p>存取描述符｜访问器属性</p>
-<ul>
-<li>Configurable</li>
-<li>Enumerable</li>
-<li>get：访问对象属性时调用的函数</li>
-<li>set：改变对象属性时调用的函数<br>使用defineProperty或者defineProperties时，属性默认为false或者undefined<br>用var定义的任何变量，该属性都是false<br>字面量定义的对象，该对象内部的属性的数据描述符属性都为true<br>当writable为true，configurable为false时，修改writable和value，不会报错<br>当writable为false，configurable为true时，value可以通过defineProperty修改，但不能直接赋值修改</li>
-</ul>
-<ol start="5">
-<li>Object.getOwnPropertyDescriptor</li>
-<li><p>Object.getOwnPropertyDescriptors<br>返回指定对象上一个自有属性对应的属性描述符</p>
-</li>
-<li><p>Object.entries<br>返回键值对数组</p>
-</li>
-<li><p>obj.hasOwnProperty<br>对象自身属性是否有指定的属性</p>
-</li>
-<li><p>Object.keys<br>for in会枚举原型链上的属性，这个不会<br>不可枚举属性也不会打印</p>
-</li>
-<li><p>Object.values<br>会过滤属性名为 Symbol 值的属性</p>
-</li>
-<li><p>Object.getOwnPropertyNames<br>返回所有的属性，包括不可以枚举属性，但不包括属性名为 Symbol 值的属性</p>
-</li>
-<li><p>Object.getOwnPropertySymbols<br>返回所有Symbol属性的数组</p>
-</li>
-<li><p>Object.getPropertyOf<br>返回对象的原型</p>
-</li>
-<li><p>obj.isPrototypeOf<br>判断一个对象是否在另一个对象的原型链上</p>
-</li>
-<li><p>Object.setPrototypeOf<br>设置对象的原型对象</p>
-</li>
-<li><p>Object.is<br>判断两个值是否相等</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Object</span>.is([], []); <span class="comment">// false</span></span><br><span class="line"><span class="built_in">Object</span>.is(<span class="literal">NaN</span>, <span class="number">0</span>/<span class="number">0</span>); <span class="comment">// true</span></span><br><span class="line"><span class="built_in">Object</span>.is(<span class="number">0</span>, <span class="number">-0</span>); <span class="comment">// false</span></span><br><span class="line"><span class="built_in">Object</span>.is(<span class="number">-0</span>, <span class="number">-0</span>); <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>Object.freeze<br>冻结一个对象，对象永远不可变</p>
-</li>
-<li><p>Object.isFrozen<br>判断是否冻结</p>
-</li>
-<li><p>Object.preventExtensions<br>对象不能添加新属性，可修改删除，不能添加</p>
-</li>
-<li><p>Object.isExtensible<br>判断对象是否可扩展，seal，freeze，preventExtensions都会使其不可扩展</p>
-</li>
-<li><p>Object.seal<br>密封对象，不能添加属性，不能配置，不可删除，但可以修改属性的值</p>
-</li>
-<li><p>Object.isSealed<br>判断对象是否被密封</p>
-</li>
-</ol>
-<p>扩展（不能加属性） -&gt; 密封（不能配置，但可改值） -&gt; 冻结（不能修改值，所以啥都不能）</p>
-<h3 id="Array方法"><a href="#Array方法" class="headerlink" title="Array方法"></a>Array方法</h3><ol>
-<li>isArray 判断是否数组</li>
-<li>toString 数组转字符串</li>
-<li>valueof 返回对象原始值</li>
-<li>join 数组转字符串</li>
-<li>push </li>
-<li>pop</li>
-<li>unshift 添加头</li>
-<li>shift 删除头</li>
-<li>reverse</li>
-<li>sort</li>
-<li>concat</li>
-<li>slice</li>
-<li>splice</li>
-<li>indexOf</li>
-<li>every</li>
-<li>filter</li>
-<li>forEach</li>
-<li>map</li>
-<li>some</li>
-<li>reduce</li>
-<li>reduceRight</li>
-<li>copyWithin 从数组的指定位置拷贝元素到数组的另一个指定位置中</li>
-<li>entries</li>
-<li>fill</li>
-<li>find 返回符合传入测试（函数）条件的数组元素</li>
-<li>findIndex 返回符合传入测试（函数）条件的数组元素索引</li>
-<li>from 通过给定的对象中创建一个数组，比如set</li>
-<li>includes 判断一个数组是否包含一个指定的值</li>
-<li>keys</li>
-<li>lastIndexOf</li>
-</ol>
-<h3 id="String方法"><a href="#String方法" class="headerlink" title="String方法"></a>String方法</h3><ol>
-<li>charAt</li>
-<li>charCodeAt</li>
-<li>concat</li>
-<li>slice</li>
-<li>substr</li>
-<li>substring</li>
-<li>indexOf</li>
-<li>lastIndexOf</li>
-<li>toLowerCase</li>
-<li>toUpperCase</li>
-<li>match</li>
-<li>search</li>
-<li>replace</li>
-<li>split</li>
-<li>trim 去除字符串两边的空白</li>
-<li>localeCompare 比较两个字符串的字符顺序</li>
-<li>formCharCode</li>
-<li>valueOf</li>
-<li>includes</li>
-<li>startsWith</li>
-<li>endsWith</li>
-<li>repeat</li>
-<li>padStart 在头部补全字符串</li>
-<li>padEnd 在尾部补全字符串</li>
-</ol>
-<h3 id="Math方法"><a href="#Math方法" class="headerlink" title="Math方法"></a>Math方法</h3><ol>
-<li>Math.abs</li>
-<li>Math.ceil</li>
-<li>Math.floor</li>
-<li>Math.max</li>
-<li>Math.min</li>
-<li>Math.pow(x,y) x的y次方</li>
-<li>Math.random</li>
-<li>Math.round</li>
-<li>Math.sqrt</li>
-</ol>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-<div>
-      
-</div>
-
-    
-
-    
-
-    
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-categories" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="zeuszhou.xyz/React/React总结第一弹/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="ZEUS ZHOU">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="ZEUS ZHOU">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/React/React总结第一弹/" itemprop="url">React总结第一弹</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-05-28T22:30:10+08:00">
-                2020-05-28
-              </time>
-            
-
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Post modified&#58;</span>
-              
-              <time title="Post modified" itemprop="dateModified" datetime="2020-05-31T16:29:37+08:00">
-                2020-05-31
-              </time>
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/React/" itemprop="url" rel="index">
-                    <span itemprop="name">React</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h3 id="类组件中this指向问题"><a href="#类组件中this指向问题" class="headerlink" title="类组件中this指向问题"></a>类组件中this指向问题</h3><p>分为5种，所以还是函数组件好搞</p>
-<ol>
-<li>React.createClass，16版本已经废除，函数的this会自动绑定到组件，没了</li>
-<li>Render函数中bind，组件每次执行render会重新分配函数，影响性能，会破坏purecomponent性能，不推荐</li>
-<li>使用箭头函数，父组件刷新，都会生成一个新的箭头函数，子组件每次都会更新，和2一样，不推荐</li>
-<li>构造函数中绑定this，父组件刷新，如果props值不变，子组件就不会刷新，推荐，就是可读性不太行</li>
-<li>定义阶段使用箭头函数绑定，箭头函数会自动绑定到当前组件的作用域</li>
-</ol>
-<h3 id="关于antd表格渲染按钮"><a href="#关于antd表格渲染按钮" class="headerlink" title="关于antd表格渲染按钮"></a>关于antd表格渲染按钮</h3><p>在table的column中，直接写onclick函数回调会在渲染时直接调用，点击反而不能触发，需要改成箭头函数</p>
-<h3 id="关于set-state"><a href="#关于set-state" class="headerlink" title="关于set state"></a>关于set state</h3><p>写翻页的时候，发现set完page，page并没有立刻改变，直接拿state发请求，page还是上次的page。原来set state只是把任务交给任务队列，本身并没有执行任务，所以在那个回调函数中，set了，page也不会立刻改变，state会被batchupdate，通过dom diff之后加入到组件实例。</p>
-<h3 id="key"><a href="#key" class="headerlink" title="key"></a>key</h3><p>react遍历数组一定要带上key，直接用map的index就行，不带会警告，帮助react优化渲染，使react只是重新排列而不是重新渲染它们，可以提供性能</p>
-<h3 id="jsx的div问题"><a href="#jsx的div问题" class="headerlink" title="jsx的div问题"></a>jsx的div问题</h3><p>render函数或者三目运算，多个html元素一定要包一个div根元素，要不就报错了。<br>render函数返回一个react元素，是原生DOM组件的表示</p>
-<h3 id="Refs"><a href="#Refs" class="headerlink" title="Refs"></a>Refs</h3><p>Refs提供一种访问在render方法中创建的DOM节点或者React元素的方法。<br>在典型数据流外，强制修改子代，这个时候可以使用Refs。<br>在input添加一个ref属性，该属性的值是一个回调函数，参数是DOM元素或者组件的挂载实例。<br>该函数接受输入的实际DOM元素，然后放在实例上，这样就可以在handleSubmit内部访问它。<br>在函数组件中，通过闭包使用。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">CustomForm</span> (<span class="params">&#123;handleSubmit&#125;</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">let</span> inputElement</span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    &lt;form onSubmit=&#123;() =&gt; handleSubmit(inputElement.value)&#125;&gt;</span><br><span class="line">      &lt;input</span><br><span class="line">        type=<span class="string">'text'</span></span><br><span class="line">        ref=&#123;(input) =&gt; inputElement = input&#125; /&gt;</span><br><span class="line">      &lt;button type=<span class="string">'submit'</span>&gt;Submit&lt;<span class="regexp">/button&gt;</span></span><br><span class="line"><span class="regexp">    &lt;/</span>form&gt;</span><br><span class="line">  )</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>使用场景：</p>
-<ol>
-<li>需要管理焦点，选择文本或媒体播放时</li>
-<li>触发式动画</li>
-<li>与第三方DOM库集成</li>
-</ol>
-<h3 id="受控组件和非受控组件"><a href="#受控组件和非受控组件" class="headerlink" title="受控组件和非受控组件"></a>受控组件和非受控组件</h3><p>都是用来处理表单数据，推荐受控组件</p>
-<ol>
-<li>受控组件</li>
-</ol>
-<ul>
-<li>包含表单的组件将跟踪其状态中的输入值，并在每次回调触发时重新渲染，以这种方式由React控制其值的输入表单元素称为受控组件</li>
-<li>数据由React组件管理</li>
-<li>表单元素默认映射到状态，双向绑定，用value绑定到state</li>
-<li>必须使用onchange来绑定事件</li>
-<li>支持即时字段验证，允许有条件地禁用/启用按钮，强制输入格式</li>
-</ul>
-<ol start="2">
-<li>非受控组件</li>
-</ol>
-<ul>
-<li>非受控组件通常更易于实现，因为只需使用refs即可从 DOM 中获取值</li>
-<li>数据由DOM节点来处理</li>
-<li>容易和第三方库结合，更容易同时集成 React 和非 React 代码，可以减少代码量</li>
-<li>适用场景只有一次性取值和submit验证，其他都推荐受控组件</li>
-</ul>
-<h3 id="生命周期"><a href="#生命周期" class="headerlink" title="生命周期"></a>生命周期</h3><p>componentWillMount：render之前执行<br>componentDidMount：render之后执行<br>componentWillReceiveProps：接到props之前执行<br>shouldComponentUpdate：返回true更新，如果不需要render，返回false，提高性能的方法<br>componentWillUpdate：shouldComponentUpdate返回true，更新之前执行<br>componentDidUpdate：更新dom以响应props和state的变化<br>componentWillUnmount：用于取消任何的网络请求，或删除与组件关联的所有事件监听器</p>
-<h3 id="React-Context"><a href="#React-Context" class="headerlink" title="React Context"></a>React Context</h3><p>Context通过组件树提供一个传递数据的方法，从而避免在每一层手动的传递props属性</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-<div>
-      
-</div>
-
-    
-
-    
-
-    
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2282,7 +2113,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">26</span>
+                  <span class="site-state-item-count">23</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -2293,7 +2124,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">13</span>
+                  <span class="site-state-item-count">16</span>
                   <span class="site-state-item-name">categories</span>
                 </a>
               </div>
@@ -2304,7 +2135,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">18</span>
+                  <span class="site-state-item-count">19</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>

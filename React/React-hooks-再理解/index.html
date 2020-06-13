@@ -96,7 +96,7 @@
 <meta property="og:site_name" content="ZEUS ZHOU">
 <meta property="og:description" content="前言一句话概括hooks：不编写class的情况下，使用state和其他react特性 为什么要用hooks class版本，组件之间复用状态逻辑很难，hooks可以在不改变组件结构的情况下复用状态逻辑 class版本，复杂组件变得难以理解，hooks将组件中相互关联的部分拆分的更小，并且舍去生命周期 class版本，class难以理解，需要考虑this，绑定事件 class版本，class无法很">
 <meta property="og:locale" content="中文">
-<meta property="og:updated_time" content="2020-06-12T03:20:04.451Z">
+<meta property="og:updated_time" content="2020-06-12T06:11:47.934Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="React hooks 再理解">
 <meta name="twitter:description" content="前言一句话概括hooks：不编写class的情况下，使用state和其他react特性 为什么要用hooks class版本，组件之间复用状态逻辑很难，hooks可以在不改变组件结构的情况下复用状态逻辑 class版本，复杂组件变得难以理解，hooks将组件中相互关联的部分拆分的更小，并且舍去生命周期 class版本，class难以理解，需要考虑this，绑定事件 class版本，class无法很">
@@ -353,7 +353,7 @@
               
                 <span class="post-meta-item-text">Post modified&#58;</span>
               
-              <time title="Post modified" itemprop="dateModified" datetime="2020-06-12T11:20:04+08:00">
+              <time title="Post modified" itemprop="dateModified" datetime="2020-06-12T14:11:47+08:00">
                 2020-06-12
               </time>
             
@@ -450,6 +450,15 @@
 </li>
 </ol>
 <p>原理是在effect内部执行赋值操作，使得ref的值只有在dom更新之后再改变，确保了我们的变量突变不会破坏依赖于可中断渲染的事件切片和suspense等特性</p>
+<h3 id="useCallback和useMemo的区别"><a href="#useCallback和useMemo的区别" class="headerlink" title="useCallback和useMemo的区别"></a>useCallback和useMemo的区别</h3><p>useCallback是用来优化对子组件的渲染，缓存函数的引用<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> memoizedCallback = useCallback(</span><br><span class="line">  () =&gt; &#123;</span><br><span class="line">    doSomething(a, b);</span><br><span class="line">  &#125;,</span><br><span class="line">  [a, b],</span><br><span class="line">);</span><br><span class="line"><span class="comment">// 在a，b不变的情况下，memoizedCallback的引用不变，所以这个入参函数会被缓存，从而起到优化渲染的效果</span></span><br></pre></td></tr></table></figure></p>
+<p>useMemo是用来优化当前组件高开销的计算，缓存计算数据的值<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> computeValue = useMemo(<span class="function"><span class="params">()</span> =&gt;</span> computeExpensiveValue(count), [count]);</span><br><span class="line"><span class="comment">// 只有在count改变的时候，computeExpensiveValue才会重新执行</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="自定义hooks"><a href="#自定义hooks" class="headerlink" title="自定义hooks"></a>自定义hooks</h3><p>usePrevProps<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> usePrevProps = <span class="function"><span class="params">value</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> ref = useRef()</span><br><span class="line">    useEffect(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">        ref.current = value</span><br><span class="line">    &#125;)</span><br><span class="line">    <span class="keyword">return</span> ref.current</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 使用</span></span><br><span class="line"><span class="keyword">const</span> [count, setCount] = useState(<span class="number">0</span>);</span><br><span class="line"><span class="keyword">const</span> handleCount = <span class="function"><span class="params">()</span> =&gt;</span> setCount(count + <span class="number">1</span>);</span><br><span class="line"><span class="keyword">const</span> previous = usePrevProps(handlecount)</span><br></pre></td></tr></table></figure></p>
+<h3 id="PureComponent和React-memo"><a href="#PureComponent和React-memo" class="headerlink" title="PureComponent和React.memo"></a>PureComponent和React.memo</h3><ol>
+<li><p>React.memo只适用于函数组件，如果组件在给定props的情况下渲染结果是相同的，可以包裹一个memo，react可以跳过渲染组件的操作直接复用最近一次渲染的结果<br>memo只检查props的变化，只会进行浅层对比，复杂对象可以传入第二个比较函数参数<br>和shouldComponentUpdate相反，如果props相等，会返回true，否则返回false</p>
+</li>
+<li><p>对比Component，React.PureComponent实现了shouldComponentUpdate，以浅对比prop和state的方式实现<br>如果state和props相同，render会渲染同样的内容，shouldComponentUpdate可以提高性能<br>但如果props和state是复杂的对象，会产生错误的结果</p>
+</li>
+</ol>
 
       
     </div>
@@ -471,7 +480,7 @@
   <p><span>本文标题:</span>React hooks 再理解</a></p>
   <p><span>文章作者:</span>ZEUS ZHOU</a></p>
   <p><span>发布时间:</span>2020年06月08日 - 21:18:16</p>
-  <p><span>最后更新:</span>2020年06月12日 - 11:20:04</p>
+  <p><span>最后更新:</span>2020年06月12日 - 14:11:47</p>
   <p><span>原始链接:</span>
     <span class="copy-path"  title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="zeuszhou.xyz/React/React-hooks-再理解/"  aria-label="复制成功！"></i></span>
   </p>
@@ -640,7 +649,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">26</span>
+                  <span class="site-state-item-count">23</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -651,7 +660,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">13</span>
+                  <span class="site-state-item-count">16</span>
                   <span class="site-state-item-name">categories</span>
                 </a>
               </div>
@@ -662,7 +671,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">18</span>
+                  <span class="site-state-item-count">19</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>
@@ -742,7 +751,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#为什么要用hooks"><span class="nav-number">2.</span> <span class="nav-text">为什么要用hooks</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#模拟生命周期（memo，useRef）"><span class="nav-number">3.</span> <span class="nav-text">模拟生命周期（memo，useRef）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#useState太多怎么办（useReducer）"><span class="nav-number">4.</span> <span class="nav-text">useState太多怎么办（useReducer）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#hooks如何模拟class组件的this（useRef）"><span class="nav-number">5.</span> <span class="nav-text">hooks如何模拟class组件的this（useRef）</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#为什么要用hooks"><span class="nav-number">2.</span> <span class="nav-text">为什么要用hooks</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#模拟生命周期（memo，useRef）"><span class="nav-number">3.</span> <span class="nav-text">模拟生命周期（memo，useRef）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#useState太多怎么办（useReducer）"><span class="nav-number">4.</span> <span class="nav-text">useState太多怎么办（useReducer）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#hooks如何模拟class组件的this（useRef）"><span class="nav-number">5.</span> <span class="nav-text">hooks如何模拟class组件的this（useRef）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#useCallback和useMemo的区别"><span class="nav-number">6.</span> <span class="nav-text">useCallback和useMemo的区别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#自定义hooks"><span class="nav-number">7.</span> <span class="nav-text">自定义hooks</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#PureComponent和React-memo"><span class="nav-number">8.</span> <span class="nav-text">PureComponent和React.memo</span></a></li></ol></div>
             
 
           </div>
