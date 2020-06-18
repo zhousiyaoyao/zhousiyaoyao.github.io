@@ -712,8 +712,8 @@
               
                 <span class="post-meta-item-text">Post modified&#58;</span>
               
-              <time title="Post modified" itemprop="dateModified" datetime="2020-06-13T09:50:54+08:00">
-                2020-06-13
+              <time title="Post modified" itemprop="dateModified" datetime="2020-06-14T10:46:45+08:00">
+                2020-06-14
               </time>
             
           </span>
@@ -772,7 +772,8 @@
           
             <h3 id="纯函数和副作用"><a href="#纯函数和副作用" class="headerlink" title="纯函数和副作用"></a>纯函数和副作用</h3><p>副作用是指改变了其作用域外的状态<br>纯函数指的是函数的返回值仅仅由参数决定,当给同样的参数时,返回值是固定的，无其他API（包括Math, Date等）调用，无异步操作</p>
 <h3 id="有状态和无状态"><a href="#有状态和无状态" class="headerlink" title="有状态和无状态"></a>有状态和无状态</h3><p>有状态指的是函数有自己的运行状态，可以修改自己的状态<br>无状态指的是函数不管理自己的数据或状态，结果取决于参数</p>
-
+<h3 id="隐式类型转换"><a href="#隐式类型转换" class="headerlink" title="隐式类型转换"></a>隐式类型转换</h3><p>[] 0 “” true<br>{} NaN “[object Object]” true<br>null 0 “null” false<br>undefined NaN “undefined” false</p>
+<h3 id="状态管理库的对比"><a href="#状态管理库的对比" class="headerlink" title="状态管理库的对比"></a>状态管理库的对比</h3>
           
         
       
@@ -875,8 +876,8 @@
               
                 <span class="post-meta-item-text">Post modified&#58;</span>
               
-              <time title="Post modified" itemprop="dateModified" datetime="2020-06-12T15:22:27+08:00">
-                2020-06-12
+              <time title="Post modified" itemprop="dateModified" datetime="2020-06-18T11:32:22+08:00">
+                2020-06-18
               </time>
             
           </span>
@@ -934,8 +935,15 @@
         
           
             <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>记录自己平时开发过程中的坑</p>
-<h3 id="2020年6月12号"><a href="#2020年6月12号" class="headerlink" title="2020年6月12号"></a>2020年6月12号</h3><ol>
-<li>chrome图片显示正常，safari和iphone看不到图片<br>原因：后台传的图片是webp，webp是谷歌开发的一种旨在加快图片加载速度的图片格式<br>图片压缩体积大约只有JPEG的2/3，说白了就是省空间<br>但safari不支持，转成png就ok了</li>
+<h3 id="2020年6月的坑"><a href="#2020年6月的坑" class="headerlink" title="2020年6月的坑"></a>2020年6月的坑</h3><ol>
+<li><p>chrome图片显示正常，safari和iphone看不到图片<br>原因：后台传的图片是webp，webp是谷歌开发的一种旨在加快图片加载速度的图片格式<br>图片压缩体积大约只有JPEG的2/3，说白了就是省空间。但safari不支持，转成png就ok了</p>
+</li>
+<li><p>微信网页登陆问题<br>扫码得到code，请求登陆接口报错，发现cookie没有带上，后面发现是因为前端后端的域名不是一样的，存在cookie跨域，后手动种cookie到测试环境，后又遇到参数错误问题，和中台同学沟通加上接口才得以解决。<br>启发：报错了就问，很多时候问题不是出在你身上，脸皮厚一点。cookie的domain，跨域机制需要理解</p>
+</li>
+<li><p>useEffect取消监听<br>feed下拉切换页面后仍然生效，发现监听位置写在了index，所以切换页面也不会销毁，写在组件里就可以了，注意useEffect取消监听，依赖不写</p>
+</li>
+<li><p>setState生效问题<br>set完state不会立刻生效，还是得用当前的值</p>
+</li>
 </ol>
 
           
@@ -2113,7 +2121,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">23</span>
+                  <span class="site-state-item-count">22</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -2124,7 +2132,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">16</span>
+                  <span class="site-state-item-count">15</span>
                   <span class="site-state-item-name">categories</span>
                 </a>
               </div>
@@ -2135,7 +2143,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">19</span>
+                  <span class="site-state-item-count">18</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>

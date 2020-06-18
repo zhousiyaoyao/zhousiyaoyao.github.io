@@ -88,18 +88,18 @@
 
 
 
-<meta name="description" content="前言记录自己平时开发过程中的坑 2020年6月12号 chrome图片显示正常，safari和iphone看不到图片原因：后台传的图片是webp，webp是谷歌开发的一种旨在加快图片加载速度的图片格式图片压缩体积大约只有JPEG的2/3，说白了就是省空间但safari不支持，转成png就ok了">
+<meta name="description" content="前言记录自己平时开发过程中的坑 2020年6月的坑 chrome图片显示正常，safari和iphone看不到图片原因：后台传的图片是webp，webp是谷歌开发的一种旨在加快图片加载速度的图片格式图片压缩体积大约只有JPEG的2/3，说白了就是省空间。但safari不支持，转成png就ok了  微信网页登陆问题扫码得到code，请求登陆接口报错，发现cookie没有带上，后面发现是因为前端后端的">
 <meta name="keywords" content="踩坑">
 <meta property="og:type" content="article">
 <meta property="og:title" content="开发踩坑记录">
 <meta property="og:url" content="zeuszhou.xyz/踩坑/开发踩坑记录/index.html">
 <meta property="og:site_name" content="ZEUS ZHOU">
-<meta property="og:description" content="前言记录自己平时开发过程中的坑 2020年6月12号 chrome图片显示正常，safari和iphone看不到图片原因：后台传的图片是webp，webp是谷歌开发的一种旨在加快图片加载速度的图片格式图片压缩体积大约只有JPEG的2/3，说白了就是省空间但safari不支持，转成png就ok了">
+<meta property="og:description" content="前言记录自己平时开发过程中的坑 2020年6月的坑 chrome图片显示正常，safari和iphone看不到图片原因：后台传的图片是webp，webp是谷歌开发的一种旨在加快图片加载速度的图片格式图片压缩体积大约只有JPEG的2/3，说白了就是省空间。但safari不支持，转成png就ok了  微信网页登陆问题扫码得到code，请求登陆接口报错，发现cookie没有带上，后面发现是因为前端后端的">
 <meta property="og:locale" content="中文">
-<meta property="og:updated_time" content="2020-06-12T07:22:27.354Z">
+<meta property="og:updated_time" content="2020-06-18T03:32:22.329Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="开发踩坑记录">
-<meta name="twitter:description" content="前言记录自己平时开发过程中的坑 2020年6月12号 chrome图片显示正常，safari和iphone看不到图片原因：后台传的图片是webp，webp是谷歌开发的一种旨在加快图片加载速度的图片格式图片压缩体积大约只有JPEG的2/3，说白了就是省空间但safari不支持，转成png就ok了">
+<meta name="twitter:description" content="前言记录自己平时开发过程中的坑 2020年6月的坑 chrome图片显示正常，safari和iphone看不到图片原因：后台传的图片是webp，webp是谷歌开发的一种旨在加快图片加载速度的图片格式图片压缩体积大约只有JPEG的2/3，说白了就是省空间。但safari不支持，转成png就ok了  微信网页登陆问题扫码得到code，请求登陆接口报错，发现cookie没有带上，后面发现是因为前端后端的">
 
 
 
@@ -353,8 +353,8 @@
               
                 <span class="post-meta-item-text">Post modified&#58;</span>
               
-              <time title="Post modified" itemprop="dateModified" datetime="2020-06-12T15:22:27+08:00">
-                2020-06-12
+              <time title="Post modified" itemprop="dateModified" datetime="2020-06-18T11:32:22+08:00">
+                2020-06-18
               </time>
             
           </span>
@@ -415,8 +415,15 @@
 
       
         <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>记录自己平时开发过程中的坑</p>
-<h3 id="2020年6月12号"><a href="#2020年6月12号" class="headerlink" title="2020年6月12号"></a>2020年6月12号</h3><ol>
-<li>chrome图片显示正常，safari和iphone看不到图片<br>原因：后台传的图片是webp，webp是谷歌开发的一种旨在加快图片加载速度的图片格式<br>图片压缩体积大约只有JPEG的2/3，说白了就是省空间<br>但safari不支持，转成png就ok了</li>
+<h3 id="2020年6月的坑"><a href="#2020年6月的坑" class="headerlink" title="2020年6月的坑"></a>2020年6月的坑</h3><ol>
+<li><p>chrome图片显示正常，safari和iphone看不到图片<br>原因：后台传的图片是webp，webp是谷歌开发的一种旨在加快图片加载速度的图片格式<br>图片压缩体积大约只有JPEG的2/3，说白了就是省空间。但safari不支持，转成png就ok了</p>
+</li>
+<li><p>微信网页登陆问题<br>扫码得到code，请求登陆接口报错，发现cookie没有带上，后面发现是因为前端后端的域名不是一样的，存在cookie跨域，后手动种cookie到测试环境，后又遇到参数错误问题，和中台同学沟通加上接口才得以解决。<br>启发：报错了就问，很多时候问题不是出在你身上，脸皮厚一点。cookie的domain，跨域机制需要理解</p>
+</li>
+<li><p>useEffect取消监听<br>feed下拉切换页面后仍然生效，发现监听位置写在了index，所以切换页面也不会销毁，写在组件里就可以了，注意useEffect取消监听，依赖不写</p>
+</li>
+<li><p>setState生效问题<br>set完state不会立刻生效，还是得用当前的值</p>
+</li>
 </ol>
 
       
@@ -439,7 +446,7 @@
   <p><span>本文标题:</span>开发踩坑记录</a></p>
   <p><span>文章作者:</span>ZEUS ZHOU</a></p>
   <p><span>发布时间:</span>2020年06月12日 - 15:13:17</p>
-  <p><span>最后更新:</span>2020年06月12日 - 15:22:27</p>
+  <p><span>最后更新:</span>2020年06月18日 - 11:32:22</p>
   <p><span>原始链接:</span>
     <span class="copy-path"  title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="zeuszhou.xyz/踩坑/开发踩坑记录/"  aria-label="复制成功！"></i></span>
   </p>
@@ -608,7 +615,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">23</span>
+                  <span class="site-state-item-count">22</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -619,7 +626,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">16</span>
+                  <span class="site-state-item-count">15</span>
                   <span class="site-state-item-name">categories</span>
                 </a>
               </div>
@@ -630,7 +637,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">19</span>
+                  <span class="site-state-item-count">18</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>
@@ -710,7 +717,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2020年6月12号"><span class="nav-number">2.</span> <span class="nav-text">2020年6月12号</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2020年6月的坑"><span class="nav-number">2.</span> <span class="nav-text">2020年6月的坑</span></a></li></ol></div>
             
 
           </div>

@@ -25,7 +25,7 @@
   <entry>
     <title><![CDATA[前端精读周刊]]></title>
     <url>%2F%E5%89%8D%E7%AB%AF%E5%B9%BF%E5%BA%A6%2F%E5%89%8D%E7%AB%AF%E7%B2%BE%E8%AF%BB%E5%91%A8%E5%88%8A%2F</url>
-    <content type="text"><![CDATA[纯函数和副作用副作用是指改变了其作用域外的状态纯函数指的是函数的返回值仅仅由参数决定,当给同样的参数时,返回值是固定的，无其他API（包括Math, Date等）调用，无异步操作 有状态和无状态有状态指的是函数有自己的运行状态，可以修改自己的状态无状态指的是函数不管理自己的数据或状态，结果取决于参数]]></content>
+    <content type="text"><![CDATA[纯函数和副作用副作用是指改变了其作用域外的状态纯函数指的是函数的返回值仅仅由参数决定,当给同样的参数时,返回值是固定的，无其他API（包括Math, Date等）调用，无异步操作 有状态和无状态有状态指的是函数有自己的运行状态，可以修改自己的状态无状态指的是函数不管理自己的数据或状态，结果取决于参数 隐式类型转换[] 0 “” true{} NaN “[object Object]” truenull 0 “null” falseundefined NaN “undefined” false 状态管理库的对比]]></content>
       <categories>
         <category>前端广度</category>
       </categories>
@@ -36,7 +36,7 @@
   <entry>
     <title><![CDATA[开发踩坑记录]]></title>
     <url>%2F%E8%B8%A9%E5%9D%91%2F%E5%BC%80%E5%8F%91%E8%B8%A9%E5%9D%91%E8%AE%B0%E5%BD%95%2F</url>
-    <content type="text"><![CDATA[前言记录自己平时开发过程中的坑 2020年6月12号 chrome图片显示正常，safari和iphone看不到图片原因：后台传的图片是webp，webp是谷歌开发的一种旨在加快图片加载速度的图片格式图片压缩体积大约只有JPEG的2/3，说白了就是省空间但safari不支持，转成png就ok了]]></content>
+    <content type="text"><![CDATA[前言记录自己平时开发过程中的坑 2020年6月的坑 chrome图片显示正常，safari和iphone看不到图片原因：后台传的图片是webp，webp是谷歌开发的一种旨在加快图片加载速度的图片格式图片压缩体积大约只有JPEG的2/3，说白了就是省空间。但safari不支持，转成png就ok了 微信网页登陆问题扫码得到code，请求登陆接口报错，发现cookie没有带上，后面发现是因为前端后端的域名不是一样的，存在cookie跨域，后手动种cookie到测试环境，后又遇到参数错误问题，和中台同学沟通加上接口才得以解决。启发：报错了就问，很多时候问题不是出在你身上，脸皮厚一点。cookie的domain，跨域机制需要理解 useEffect取消监听feed下拉切换页面后仍然生效，发现监听位置写在了index，所以切换页面也不会销毁，写在组件里就可以了，注意useEffect取消监听，依赖不写 setState生效问题set完state不会立刻生效，还是得用当前的值]]></content>
       <categories>
         <category>踩坑</category>
       </categories>
@@ -232,10 +232,5 @@
       <tags>
         <tag>个人总结</tag>
       </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[SAP Value Assurance]]></title>
-    <url>%2Funcategorized%2FAssurance%2F</url>
-    <content type="text"><![CDATA[知识点 价值保障：对sap的新产品的一些服务，针对S/4 HANA On Premise S/4 HANA Cloud迭代很快，每个Q都有一个新的版本 S/4 HANA On Premise每年一个版本，1511，1610，1709，1809，基本都是9，10月份 现有的ERP在2025年maintain会结束，希望现有ERP客户向S/4 HANA 上迁移，但迁移不是一蹴而就的，底层架构不一样，表结构 SAP主要是卖软件的，不是负责实施的，但会提供服务，VA就是一个服务包，是保证客户快速有效的使用我们的产品，体现产品的价值 客户需要付license和maintain费，17%-22%，叫企业级服务，客户出问题可以给SAP ticket，SAP给支持，包括remote和onsite，来delivery 客户还可选择超过22%的钱，相当于VIP客户，可以采购更多service，分为maxattention和active embedded active embedded是少于300人天，maxattention大于300人天，COE服务的全是maxattention客户 还有一些professional service，顾问服务，因为ERP不是即插即用的，客户买了软件，装完之后，需要做后台业务上的配置，包括主数据的配置，业务流程的配置，这需要咨询，和客户的应用客户进行访谈， 把客户的想法在系统中体现出来，但COE主要还是做PE的service，VA是PE的一部分，IV也是PE的一部分。PE（premium engagement） SAP solution manager集中进行service，solman S/4 HANA现在推崇除了SAP kernel，其他所有部件都放在云上，现在并没有全部在云上，有两个版本OP和Cloud两条腿走路，APO将来会被3部分取代，S/4 kernel，IBP，还有一部分直接被简化掉。SCM采购部分会被Ariba取代，ECC里的HCM被successfactor取代，整体而言核心都放在kernel，其他全部在云上面 SAP的战略咨询是基于SAP软件的路线图，而麦肯锡咨询是偏业务 IV服务分4种： plan and safegound，最便宜，计划和保驾护航 accelerate technical implementation，技术实现 accelerate functional realization，业务实现 innovate，最贵，大于1000人天，有新的idea，和sap一起联合创新 客户基本都要自开发，写代码调用sap的接口，SAP的原则是标准的支持，自开发的不负责，有对应服务包帮你改 派你做什么service，就去SAP Jam VA link中心查相关的source Road map 一些服务包 innovation strategy &amp; roadmap: 企业战略层面规划，麦肯锡是业务方面的战略咨询，SAP是基于我们的产品的，客户的需求结合SAP将来产品路线图，来进行digital transformation。3-5年的基于sap产品的规划。针对客户包括instore客户或者新客户 value &amp; implementation strategy: 项目层面，instore base的客户，不确定搬到S/4之后，有什么好处，有一个工具叫SAP Readiness Check，让客户跑了之后检查ECC版本和S/4版本的变化。对于已有客户，有三条路，系统迁移，重实施，架构转换，基于现在的情况，哪种最合适，这是这个服务最主要的目的，根据现有的业务需求，场景以及sap产品的结合，做一个打分，来决定走哪个路线。 scoping workshop &amp; prototyping: 如果客户觉得都行，可以做个POC，来比较一下，实现一个场景来看看会发生什么变化 migration planning workshop: 客户决定做系统迁移，跟客户讨论，在技术上要做哪些准备，在业务上哪些是一定要动的，给出一个项目计划 transition planning for new implementation: 客户决定重实施 technical architecture &amp; infrastructure: 架构上的讨论 analytics architecture: 根据需求，做出分析，用哪种产品 data migration architecture: 数据迁移服务 custom code management architecture: 帮客户改自开发代码 S/4 HANA客户现状（COE内部机密）截止2018年9月17日，现在S/4HANA项目一共有4281个，上线了的是2117个 ，431个已经是refs（提供客户案例，分享给其他客户）。其中3210个是OP, 基于cloud的只有430多个，上线了的只有117个，SAP cloud的路还很长。中国有506个S/4 hana客户 （实习生没有权限看，manager培训上说的）]]></content>
   </entry>
 </search>
