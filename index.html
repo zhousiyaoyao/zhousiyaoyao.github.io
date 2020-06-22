@@ -876,8 +876,8 @@
               
                 <span class="post-meta-item-text">Post modified&#58;</span>
               
-              <time title="Post modified" itemprop="dateModified" datetime="2020-06-18T11:32:22+08:00">
-                2020-06-18
+              <time title="Post modified" itemprop="dateModified" datetime="2020-06-22T16:43:02+08:00">
+                2020-06-22
               </time>
             
           </span>
@@ -943,6 +943,14 @@
 <li><p>useEffect取消监听<br>feed下拉切换页面后仍然生效，发现监听位置写在了index，所以切换页面也不会销毁，写在组件里就可以了，注意useEffect取消监听，依赖不写</p>
 </li>
 <li><p>setState生效问题<br>set完state不会立刻生效，还是得用当前的值</p>
+</li>
+<li><p>前端传数组问题<br>数组需要用JSON.stringify，将数组对象转化成json字符串，否则会出现分开元素传递的奇怪现象</p>
+</li>
+<li><p>可替换参数问题<br>在hooks里，如果不需要render但参数需要替换，不要写在useState，直接写变量使用就可以</p>
+</li>
+<li><p>hooks用useState却不重新渲染组件问题<br>场景是用户发送评论，实时改变评论数和显示最新评论，评论是个对象，如果在更新函数里传入同一个对象时将无法触发更新。因为useState里数据务必为immutable（不可赋值的对象），解决思路就是通过slice() 返回一个新的对象去赋值。自加setCount(count + 1)</p>
+</li>
+<li><p>图片统一大小被拉伸问题<br>一句object-fit: cover解决问题，被替换的内容大小保持其宽高比，同时填充元素的整个内容框。 如果对象的宽高比与盒子的宽高比不匹配，该对象将被剪裁以适应。默认会是fill，表示拉伸以适应</p>
 </li>
 </ol>
 
