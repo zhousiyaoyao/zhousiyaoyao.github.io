@@ -876,8 +876,8 @@
               
                 <span class="post-meta-item-text">Post modified&#58;</span>
               
-              <time title="Post modified" itemprop="dateModified" datetime="2020-06-22T16:43:02+08:00">
-                2020-06-22
+              <time title="Post modified" itemprop="dateModified" datetime="2020-06-23T10:19:13+08:00">
+                2020-06-23
               </time>
             
           </span>
@@ -951,6 +951,10 @@
 <li><p>hooks用useState却不重新渲染组件问题<br>场景是用户发送评论，实时改变评论数和显示最新评论，评论是个对象，如果在更新函数里传入同一个对象时将无法触发更新。因为useState里数据务必为immutable（不可赋值的对象），解决思路就是通过slice() 返回一个新的对象去赋值。自加setCount(count + 1)</p>
 </li>
 <li><p>图片统一大小被拉伸问题<br>一句object-fit: cover解决问题，被替换的内容大小保持其宽高比，同时填充元素的整个内容框。 如果对象的宽高比与盒子的宽高比不匹配，该对象将被剪裁以适应。默认会是fill，表示拉伸以适应</p>
+</li>
+<li><p>微信内打开H5登陆报错误码10005<br>原因是微信内打开h5登陆微信的appid是微信公众号的，扫码登陆的appid是网页应用的</p>
+</li>
+<li><p>cookie跨域问题<br>cookie跨域的前提是根域得一样<br>cookie的domain表示可以访问此cookie的域名<br>假设2个域名为m.han.com 和han.com<br>在m.han.com设置cookie，不带domain属性，不会发送到han.com<br>在m.han.com设置cookie，带domain属性han.com，会发送到han.com，其他子域不可用<br>在m.han.com设置cookie，带domain属性.han.com，会发送到han.com，其他子域也可用<br>无论是客户端还是服务端，han.com都不能设置cookie到h.com<br>ajax同域请求默认会带cookie，但跨域默认不会带上cookie，客户端设置withCredentials为true才能跨域携带<br>fetch同域跨域都不会带，客户端设置credentials为include，跨域可以带，same-origin，同域可以带，omit任何请求都不带<br>Access-Control-Allow-Origin表示接受哪些域名的请求，发送cookie时，不能为*，必须指定域名<br>Access-Control-Allow-Credentials表示是否允许客户端发送cookie</p>
 </li>
 </ol>
 
