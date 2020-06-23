@@ -308,6 +308,359 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="zeuszhou.xyz/promise/Promise专辑/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ZEUS ZHOU">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ZEUS ZHOU">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/promise/Promise专辑/" itemprop="url">Promise代码专辑</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-06-07T13:05:49+08:00">
+                2020-06-07
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Post modified&#58;</span>
+              
+              <time title="Post modified" itemprop="dateModified" datetime="2020-06-07T14:55:18+08:00">
+                2020-06-07
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/promise/" itemprop="url" rel="index">
+                    <span itemprop="name">promise</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>Promise在前端的重要性不言而喻，手写promise代码在面试中出现的也越来越多，基本写不出来就拜拜了，还是得多敲一敲</p>
+<h3 id="Promise实现"><a href="#Promise实现" class="headerlink" title="Promise实现"></a>Promise实现</h3><ol>
+<li>自身属性value，reason，status，resolve的callback数组，reject的callback数组</li>
+<li>resolve方法，status为pending时，赋值value，status，执行resolve全部方法</li>
+<li>reject方法，status为pending时，赋值reason，status，执行reject全部方法</li>
+<li>执行执行器函数</li>
+<li>原型上定义then方法，传入resolve和reject作为参数</li>
+<li>status为resolve，执行resolve，为reject，执行reject，为pending时，resolve加入resolve数组，reject加入reject数组</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">myPromise</span>(<span class="params">executor</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">let</span> self = <span class="keyword">this</span></span><br><span class="line">    self.value = <span class="literal">undefined</span></span><br><span class="line">    self.reason = <span class="literal">undefined</span></span><br><span class="line">    self.status = <span class="string">'pending'</span></span><br><span class="line">    self.resolveCallback = []</span><br><span class="line">    self.rejectCallback = []</span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">resolve</span>(<span class="params">value</span>)</span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(self.status === <span class="string">'pending'</span>)&#123;</span><br><span class="line">            self.value = value</span><br><span class="line">            self.status = <span class="string">'resolved'</span></span><br><span class="line">            self.resolveCallback.forEach(<span class="function"><span class="params">fn</span> =&gt;</span> &#123;</span><br><span class="line">                fn()</span><br><span class="line">            &#125;)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">reject</span>(<span class="params">reason</span>)</span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(self.status === <span class="string">'pending'</span>)&#123;</span><br><span class="line">            self.reason = reason</span><br><span class="line">            self.status = <span class="string">'rejected'</span></span><br><span class="line">            self.rejectCallback.forEach(<span class="function"><span class="params">fn</span> =&gt;</span> &#123;</span><br><span class="line">                fn()</span><br><span class="line">            &#125;)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    executor(resolve, reject)</span><br><span class="line">&#125;</span><br><span class="line">myPromise.prototype.then = <span class="function"><span class="keyword">function</span>(<span class="params">resolve, reject</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">let</span> self = <span class="keyword">this</span></span><br><span class="line">    <span class="keyword">if</span>(self.status === <span class="string">'resolved'</span>)&#123;</span><br><span class="line">        resolve(self.value)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(self.status === <span class="string">'rejected'</span>)&#123;</span><br><span class="line">        reject(self.reason)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(self.status === <span class="string">'pending'</span>)&#123;</span><br><span class="line">        self.resolveCallback.push(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">            resolve(self.value)</span><br><span class="line">        &#125;)</span><br><span class="line">        self.rejectCallback.push(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">            reject(self.reason)</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="Promise-all实现"><a href="#Promise-all实现" class="headerlink" title="Promise all实现"></a>Promise all实现</h3><ol>
+<li>返回一个promise all，循环，每一个promise都resolve，再then</li>
+<li>如果promise 成功了，count+1，value存到res，当count等于数组长度，代表都resolve完成了，resolve promise all，传入res</li>
+<li>如果有promise reject了，直接reject promise all</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">promise_all</span>(<span class="params">promises</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(resolve, reject)&#123;</span><br><span class="line">        <span class="keyword">let</span> count = <span class="number">0</span></span><br><span class="line">        <span class="keyword">let</span> res = []</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; promises.length; i++)&#123;</span><br><span class="line">            <span class="built_in">Promise</span>.resolve(promises[i]).then(<span class="function">(<span class="params">value</span>) =&gt;</span> &#123;</span><br><span class="line">                count++</span><br><span class="line">                res[i] = value</span><br><span class="line">                <span class="keyword">if</span>(count === len)&#123;</span><br><span class="line">                    <span class="keyword">return</span> resolve(res)</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;,(reason) =&gt; &#123;</span><br><span class="line">                <span class="keyword">return</span> reject(reason)</span><br><span class="line">            &#125;)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="Promise-race实现"><a href="#Promise-race实现" class="headerlink" title="Promise race实现"></a>Promise race实现</h3><ol>
+<li>和all唯一区别，当子promise成功的时候，直接resolve，传入value</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">promise_race</span>(<span class="params">promises</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(resolve, reject)&#123;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; promises.length; i++)&#123;</span><br><span class="line">            <span class="built_in">Promise</span>.resolve(promises[i]).then(<span class="function">(<span class="params">value</span>) =&gt;</span> &#123;</span><br><span class="line">                <span class="keyword">return</span> resolve(value)</span><br><span class="line">            &#125;,(reason) =&gt; &#123;</span><br><span class="line">                <span class="keyword">return</span> reject(reason)</span><br><span class="line">            &#125;)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="Promise-并发限制"><a href="#Promise-并发限制" class="headerlink" title="Promise 并发限制"></a>Promise 并发限制</h3><p>并发限制指的时每个时刻并发执行的promise数量是固定的，10w条并发请求，最终的执行结果也一样<br>promise不是调用promiseall时执行，而是实例化promise对象的时候执行<br>所以要并发限制，只能控制promise的实例化</p>
+<ol>
+<li>从array第一个元素开始，初始化promise，ret存初始化的promise，用一个executing数组保存正在执行的promise</li>
+<li>不断初始化promise，直到limit</li>
+<li>使用promise.race，获得executing中promise的执行情况，当有一个promise执行完毕，继续初始化promise并放入executing中</li>
+<li>所有的promise都执行完毕后调用promise.all返回</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">pool</span>(<span class="params">limit, array, func</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">let</span> i = <span class="number">0</span></span><br><span class="line">    <span class="keyword">let</span> ret = [] <span class="comment">// promise数组</span></span><br><span class="line">    <span class="keyword">let</span> executing = [] <span class="comment">// promise执行数组</span></span><br><span class="line">    <span class="keyword">let</span> enqueue = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        <span class="comment">// 当array为i时，直接resolve</span></span><br><span class="line">        <span class="keyword">if</span>(array.length === i)&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="built_in">Promise</span>.resolve</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 每调用一次enqueue，初始化一个promise</span></span><br><span class="line">        <span class="keyword">let</span> item = array[i++]</span><br><span class="line">        <span class="keyword">let</span> p = <span class="built_in">Promise</span>.resolve().then(<span class="function"><span class="params">()</span> =&gt;</span> func(item, array))</span><br><span class="line">        <span class="comment">// 放入promise数组</span></span><br><span class="line">        ret.push(p)</span><br><span class="line">        <span class="comment">// promise执行完毕，从executing数组删除</span></span><br><span class="line">        <span class="keyword">let</span> e = p.then(<span class="function"><span class="params">()</span> =&gt;</span> executing.splice(executing.indexOf(e),<span class="number">1</span>))</span><br><span class="line">        <span class="comment">// 放入promise执行数组</span></span><br><span class="line">        executing.push(e)</span><br><span class="line">        <span class="comment">// 使用promise.race，当执行数组数量低于limit，实例化新的promise并执行</span></span><br><span class="line">        <span class="keyword">let</span> r = <span class="built_in">Promise</span>.resolve()</span><br><span class="line">        <span class="keyword">if</span> (executing.length &gt;= limit)&#123;</span><br><span class="line">            r = <span class="built_in">Promise</span>.race(executing)</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> r.then(<span class="function"><span class="params">()</span> =&gt;</span> enqueue())</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> enqueue().then(<span class="function"><span class="params">()</span> =&gt;</span> <span class="built_in">Promise</span>.all(ret))</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+          
+        
+      
+    </div>
+    
+    
+    
+
+<div>
+      
+</div>
+
+    
+
+    
+
+    
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-categories" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="zeuszhou.xyz/uncategorized/Proxy和Reflect初探/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ZEUS ZHOU">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ZEUS ZHOU">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/uncategorized/Proxy和Reflect初探/" itemprop="url">Proxy和Reflect初探</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-06-02T09:44:51+08:00">
+                2020-06-02
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Post modified&#58;</span>
+              
+              <time title="Post modified" itemprop="dateModified" datetime="2020-06-02T10:29:38+08:00">
+                2020-06-02
+              </time>
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="Proxy"><a href="#Proxy" class="headerlink" title="Proxy"></a>Proxy</h3><p>在访问对象之前建立一道拦截，任何访问该对象的操作都会通过这个拦截，执行proxy里的方法<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> pro = <span class="keyword">new</span> <span class="built_in">Proxy</span>(target, handler)</span><br></pre></td></tr></table></figure></p>
+<p>new proxy表示proxy实例，target表示要拦截的对象，handler表示拦截的方法</p>
+<p>handler有13种：</p>
+<ol>
+<li>get(target, propKey, receiver) receiver可选</li>
+<li>set(target, propKey, value, receiver) receiver可选</li>
+<li>has</li>
+<li>apply</li>
+<li>ownKeys</li>
+<li>construct</li>
+<li>isExtensible</li>
+<li>deleteProperty</li>
+<li>defineProperty</li>
+<li>getPropertyOf</li>
+<li>setPropertyOf</li>
+<li>preventExtensions</li>
+<li>getOwnPropertyDescriptor</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> obj = &#123;</span><br><span class="line">    name: <span class="string">"siyao"</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">let</span> handler = &#123;</span><br><span class="line">    get: <span class="function">(<span class="params">obj, name, </span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">const</span> name = <span class="string">"我喜欢"</span> + obj.name</span><br><span class="line">        <span class="keyword">return</span> name</span><br><span class="line">    &#125;,</span><br><span class="line">    set: <span class="function">(<span class="params">obj, name, value, </span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">"还名字了"</span>)</span><br><span class="line">        obj[name] = value</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">let</span> proxy = <span class="keyword">new</span> <span class="built_in">Proxy</span>(obj, handler)</span><br><span class="line"><span class="keyword">let</span> newObj = <span class="built_in">Object</span>.create(proxy) <span class="comment">// 同上</span></span><br><span class="line"><span class="built_in">console</span>.log(proxy.name)</span><br><span class="line">obj.name = <span class="string">"xiangchan"</span></span><br><span class="line"><span class="built_in">console</span>.log(proxy.name)</span><br></pre></td></tr></table></figure>
+<h3 id="Reflect"><a href="#Reflect" class="headerlink" title="Reflect"></a>Reflect</h3><p>ES6为操作对象而提供的API，用来调用对象的默认行为</p>
+<ol>
+<li>拥有proxy所有13种代理方法，静态形式存在，基本和Object同名方法相同，返回bool，语义性更好</li>
+<li>无论proxy怎么修改默认行为，总是可以用Reflect对应的方法获取默认行为</li>
+<li>修改某些Object方法的返回结果，使其更合理，比如Object.defineProperty无法定义属性会报错，Reflect.defineProperty会返回false</li>
+<li>把Object操作变成函数行为，比如name in obj， delete obj[name]变成Reflect.deleteProperty和Reflect.has</li>
+</ol>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+<div>
+      
+</div>
+
+    
+
+    
+
+    
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-categories" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="zeuszhou.xyz/CSS/CSS的知识点/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2002,417 +2355,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-categories" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="zeuszhou.xyz/性能优化/性能优化/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="ZEUS ZHOU">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="ZEUS ZHOU">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/性能优化/性能优化/" itemprop="url">时尚版性能优化</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-05-22T21:15:57+08:00">
-                2020-05-22
-              </time>
-            
-
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Post modified&#58;</span>
-              
-              <time title="Post modified" itemprop="dateModified" datetime="2020-05-23T10:51:07+08:00">
-                2020-05-23
-              </time>
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/性能优化/" itemprop="url" rel="index">
-                    <span itemprop="name">性能优化</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>前端性能优化的目的不是追求一味的快，而是优化用户的体验，即使没有实质化的优化，让用户产生性能快的错觉，也是性能优化，用户觉得快，就是真的快，比如加loading。</p>
-<h3 id="加载优化（大部分）"><a href="#加载优化（大部分）" class="headerlink" title="加载优化（大部分）"></a>加载优化（大部分）</h3><ol>
-<li><strong>首屏loading</strong>：html-webpack-plugin，js执行期间加入提示，在文件中插入loading图</li>
-<li><strong>预渲染</strong>：prerender-spa-plugin，模拟浏览器获取首屏的html结构，在本地模拟浏览器环境，预先执行我们的打包文件，这样通过解析可以获取首屏的html，在正常环境中，可以返回预先解析好的HTML</li>
-<li><strong>开启HTTP2</strong>：浏览器并发限制一次性6次请求，http2二进制分帧进行通信，多路复用，只需一个tcp通道，请求和响应可以双向通信，头部压缩，只发送差异数据，维护头信息表，以后只发索引号。服务器推送，无需请求，减少多次请求的耗时</li>
-<li><strong>开启浏览器缓存</strong>：给第三方库设置强缓存，SplitChunksPlugin来做拆包，需要将应用基础库和特定依赖库分离。当chunk在强缓存期但服务器代码变了，需要通知客户端，需要每次引入script脚本的时候去服务器更新，并开启hashchunk，作用是当chunk变化时，hash值也会变，所以不变就命中缓存，变了重新请求</li>
-<li><strong>骨架图</strong>：antd的骨架屏Skeleton，vue的SkeletonWebpackPlugin，让骨架屏的css分离，直接作为内联style处理到html，提高载入速度</li>
-<li><strong>Tree shaking</strong>：通过程序流分析找出你代码中无用的代码并剔除，webpack4自带，坑Babel转译，因为需要es5的module，需要手动关闭commonjs；坑2第三方库不可控，因为有些只有es5版本</li>
-<li><strong>路由分割优化</strong>：只加载当前页面的代码，比如component: ()=&gt; import(‘@components/login’), 这样登陆页会被单独打包</li>
-<li><strong>组件懒加载</strong>：在页面的加载中只渲染部分必须的组件,而其余的组件可以按需加载。基于lazy+suspense，比如把echart的图进行懒加载</li>
-<li><strong>组件预加载</strong>：在用户的鼠标还处于hover状态的时候就开始触发图表资源的加载,通常情况下当用户点击结束之后,加载也基本完成,这个时候图表会很顺利地渲染出来,不会出现延迟</li>
-<li><strong>keep alive</strong>：vue中，在页面跳转后不销毁组件，先保存组件对应的实例到内存，当页面需要再次渲染时，可以利用这个缓存。但实例过多容易出现内存泄漏，注意调用deactivated销毁。react官网宣布不会加类似api，但可以用redux状态缓存（不推荐），或者React Keep Alive这个库</li>
-<li><strong>图片懒加载</strong>：页面内未出现在可视区域内的图片先不做加载，等到滚动到可视区域后再去加载。可见区域监听滚动事件</li>
-<li><strong>资源压缩</strong>：服务端启动gzip</li>
-<li><strong>CDN</strong>：静态资源走CDN，使用户就近获取内容，降低访问时延，减轻了源站的负载。静态资源不需要cookie，把静态资源和主页面置于不同的域名下，可以避免请求中携带不必要的cookie（同一个域名下的所有请求，都会携带一个相同的cookie，设置不当就会很大）</li>
-<li><strong>雪碧图，icon</strong>：这个不解释</li>
-</ol>
-<h3 id="执行优化（小部分）"><a href="#执行优化（小部分）" class="headerlink" title="执行优化（小部分）"></a>执行优化（小部分）</h3><p>动画一般是性能的重灾区，需要大量的计算和渲染，主要有三种方式：</p>
-<ol>
-<li>Canvas</li>
-<li>CSS3</li>
-<li>Dom</li>
-</ol>
-<p>动画优化方案：</p>
-<ol>
-<li><strong>Dom优化之Dom+js</strong>：容易引起回流和重绘，优化就是不用Dom+js做动画</li>
-<li><strong>CSS3优化之动画放在同一图层（合成层）</strong>：图层的概念，浏览器渲染页面，会把页面分成很多图层，对每个图层的节点计算样式，生成图形和位置，再把节点绘制到图层位图中，图层作为纹理上传至GPU，图层重组生成屏幕图像。将动画放在一个独立图层,这样可以避免动画效果影响其他渲染层的元素。比如iframe，video，3D或2D canvas，flash，3D transform，backface-visibility 为 hidden等</li>
-<li><strong>CSS3优化之避免重绘和回流</strong>：多使用transform和opacity来实现动画效果</li>
-<li><strong>CSS3优化之GPU加速</strong>：浏览器把一部分渲染任务丢给GPU。这部分css元素会提升到合成层，使得当页面上只有这个元素发生变换(transform)的时候其余元素不需要重新渲染。opacity，translate，rotate和scale会触发硬件加速，opacity号称性能最好的属性之一。</li>
-<li><strong>CSS3优化之will change</strong>：will-change，最好的方式，设置为opacity，transform或上下左右，允许我们提前告知浏览器可能会对元素进行哪些操作，让浏览器去优化并提前处理那些潜在的比较消耗性能的操作比如在动画开始之前，提前处理元素的动画行为。过多使用会占用计算机资源，且需要留足够时间，变更失效需要移除。</li>
-<li><strong>Canvas优化之requestAnimationFrame</strong>：setInterval定时完成动画不可靠，容易掉帧。requestAnimationFrame性能好，将所有动画放到一个浏览器重绘周期里去做，这样可以保存cpu循环次数，提高性能。开销更小，浏览器专门为动画提供的效果，运行时浏览器会自动优化方法的调用，如果页面不是激活状态，动画会暂停，节省了cpu开销</li>
-<li><strong>Canvas优化之离屏canvas</strong>：离屏canvas当成一个缓存区。把需要重复绘制的画面数据进行缓存起来，减少调用 canvas的 API的消耗。</li>
-<li><strong>Canvas优化之避免浮点运算</strong>：浮点数可能会使元素抖动或者抗锯齿失真</li>
-<li><strong>Canvas优化之减少调用Canvas API</strong>：通过适量js原生计算减少canvas API的调用，粒子效果少用圆，最好用方形</li>
-<li><strong>Web woker</strong>：分担主线程的压力</li>
-</ol>
-<p>大量数据性能优化方案：</p>
-<ol>
-<li><strong>虚拟列表</strong>：只渲染可视区域的数据，startIndex，endIndex，计算startOffset</li>
-<li><strong>webwork</strong>：完全和UI线程（主线程）并行的执行js代码，从而不会阻塞UI，它和主线程是通过 onmessage 和 postMessage 接口进行通信的。当主线程在处理界面事件时，worker 可以在后台运行，帮你处理大量的数据计算，当计算完成，将计算结果返回给主线程，由主线程更新 DOM 元素</li>
-</ol>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-<div>
-      
-</div>
-
-    
-
-    
-
-    
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-categories" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="zeuszhou.xyz/React/架构/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="ZEUS ZHOU">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="ZEUS ZHOU">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/React/架构/" itemprop="url">React Fiber初探</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-05-16T09:34:00+08:00">
-                2020-05-16
-              </time>
-            
-
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Post modified&#58;</span>
-              
-              <time title="Post modified" itemprop="dateModified" datetime="2020-05-16T14:08:35+08:00">
-                2020-05-16
-              </time>
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/React/" itemprop="url" rel="index">
-                    <span itemprop="name">React</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h3 id="scheduler"><a href="#scheduler" class="headerlink" title="scheduler"></a>scheduler</h3><ol>
-<li>fiber reconcifer的过程，决定什么时候做什么</li>
-<li>stack reconcifer是一气呵成的，但需要考虑一些情况，不是所有的state更新都要实时显示，不同state更新的优先级应该不同，高优先级可以打断低优先级</li>
-<li>在fiber reconcifer，每次做一个小任务，再回主线程看看有没有更高优先级的任务需要处理，有的话优先执行，没有的话继续</li>
-</ol>
-<p>假如我们安排100ms来更新视图和虚拟dom，40ms给浏览器做其他事情，如果我们不需要100ms来更新或者浏览器需要超过40ms，就需要进行时间的调度，浏览器有一些api可供选择</p>
-<ol>
-<li>requestAnimationFrame：帧数控制调用，做动画</li>
-<li>requestIdleCallback：闲时调用</li>
-<li>web worker：多线程调用</li>
-<li>intersectionObserver：进入可视区调用，比如虚拟列表</li>
-</ol>
-<p>客户端线程执行任务以帧为单位，30-60不会影响用户体验，每两个帧之间主线程会有空闲，这时候requestIdleCallback可以调用回调，执行任务。</p>
-<ul>
-<li>requestIdleCallback来处理低优先级任务，提高deadline，任务执行限制时间来切分任务，避免长时间执行，导致阻塞UI渲染而掉帧</li>
-<li>requestAnimationFrame处理高优先级任务</li>
-</ul>
-<h3 id="stack-reconciler"><a href="#stack-reconciler" class="headerlink" title="stack reconciler"></a>stack reconciler</h3><ol>
-<li>工作流程类似函数调用，从父节点进行遍历，找出不同，才能找出需要修改的信息，传递给renderer，进行渲染，再显示在屏幕上</li>
-<li>这个过程主线程被react占住，大型项目中会出现屏幕卡顿</li>
-<li>代码中有元素的创建或者更新，react会根据这些元素创建虚拟dom，diff算法，更新真实dom，dom的更新是同步的，也就意味着在diff过程中，发现不同的instance，立刻执行dom操作</li>
-</ol>
-<h3 id="fiber-reconciler"><a href="#fiber-reconciler" class="headerlink" title="fiber reconciler"></a>fiber reconciler</h3><ol>
-<li>操作可以分成小部分，可以被中断</li>
-<li>fiber有四个属性，stateNode管理instance自身的特性，通过child（第一个孩子）和sibling（右边的兄弟）表示下一个工作单位，return（父节点）表示返回结果需要合并的目标。整个结构是个链表树，每个fiber单位执行完，会查看是否拥有主线程时间片，有的话继续，没有的话先处理高优先级事务</li>
-<li>页面渲染，react生成一个fiber tree，类似虚拟dom树，同时维护一个workInProgressTree，用于计算更新</li>
-</ol>
-<h3 id="fiber工作流程"><a href="#fiber工作流程" class="headerlink" title="fiber工作流程"></a>fiber工作流程</h3><ol>
-<li>组件更新，更新的state加入当前组件的update queue，交给scheduler</li>
-<li>使用requestIdleCallback api，浏览器不支持用pollyfill，scheduler根据主线程的情况处理这次update</li>
-<li>reconciliation过程得到时间片，进入work loop（让react在计算状态和等待状态间切换）</li>
-<li>每个loop需要追踪下一个工作单元和当前还能占据主线程的时间</li>
-<li>第一个loop，下一个待处理单元为根节点，因为根节点对应的update队列为空，直接将根节点复制到workInProgrssTree</li>
-<li>再复制其子节点，子节点向其父节点返回，标志父节点处理结束，此时react检查时间片是否用完，没有用完处理下一个</li>
-<li><p>子节点包含更新，react会调用setState的updater函数获得最新state值，需要传入一个函数</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">setState(&#123;&#125;, callback); <span class="comment">// stack conciler</span></span><br><span class="line">setState(<span class="function"><span class="params">()</span> =&gt;</span> &#123; <span class="keyword">return</span> &#123;&#125; &#125;, callback); <span class="comment">// fiber conciler</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>得到最新的state，react会更新props和state，调用render，得到elements，然后决定是否可以重用，需要更新的节点会打上标签</p>
-</li>
-<li>如果此时用户点击放大字体的按钮，操作不能立即实现，因为时间片被react占住。处理完一个节点看时间够不够用。</li>
-<li>通过shouldComponentUpdate钩子可以根据传入的props判断其是否需要改变，返回ture表示要，打上标签</li>
-<li>react会维护一个effect list列表，记录所有标签元素</li>
-<li>当所有节点标记完成，react将workInProgressTree标记为pendingCommit，可以进入commit阶段</li>
-<li>此时还是检查时间够不够用，够时间的话根据effect list更新Dom</li>
-<li>此时workInProgress和DOM保持一致，交换current和workInProgress两个指针</li>
-<li>commit完执行componentDidMount函数</li>
-</ol>
-<h3 id="fiber优先级策略"><a href="#fiber优先级策略" class="headerlink" title="fiber优先级策略"></a>fiber优先级策略</h3><p>核心：低优先级会被高优先级操作打断，并让主线程执行高优先级的更新，当主线程重新分配给低优先级的操作时，会重新开始<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  NoWork: <span class="number">0</span>, <span class="comment">// No work is pending.</span></span><br><span class="line">  SynchronousPriority: <span class="number">1</span>, <span class="comment">// For controlled text inputs. Synchronous side-effects.</span></span><br><span class="line">  AnimationPriority: <span class="number">2</span>, <span class="comment">// Needs to complete before the next frame.</span></span><br><span class="line">  HighPriority: <span class="number">3</span>, <span class="comment">// Interaction that needs to complete pretty soon to feel responsive.</span></span><br><span class="line">  LowPriority: <span class="number">4</span>, <span class="comment">// Data fetching, or result from updating stores.</span></span><br><span class="line">  OffscreenPriority: <span class="number">5</span>, <span class="comment">// Won't be visible but do the work in case it becomes visible.</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-<div>
-      
-</div>
-
-    
-
-    
-
-    
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2467,7 +2409,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">22</span>
+                  <span class="site-state-item-count">24</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -2478,7 +2420,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">15</span>
+                  <span class="site-state-item-count">17</span>
                   <span class="site-state-item-name">categories</span>
                 </a>
               </div>
@@ -2489,7 +2431,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">18</span>
+                  <span class="site-state-item-count">20</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>
