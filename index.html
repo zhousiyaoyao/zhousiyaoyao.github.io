@@ -308,7 +308,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="zeuszhou.xyz/面试/春招面经总结/">
+    <link itemprop="mainEntityOfPage" href="zeuszhou.xyz/面试/前端算法面经题总结（长期更新）/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="ZEUS ZHOU">
@@ -327,7 +327,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/面试/春招面经总结/" itemprop="url">手写面经题总结（长期更新）</a></h1>
+                <a class="post-title-link" href="/面试/前端算法面经题总结（长期更新）/" itemprop="url">前端算法面经题总结（长期更新）</a></h1>
         
 
         <div class="post-meta">
@@ -339,8 +339,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-06-23T17:01:43+08:00">
-                2020-06-23
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-06-24T22:34:07+08:00">
+                2020-06-24
               </time>
             
 
@@ -355,7 +355,7 @@
               
                 <span class="post-meta-item-text">Post modified&#58;</span>
               
-              <time title="Post modified" itemprop="dateModified" datetime="2020-06-24T19:11:10+08:00">
+              <time title="Post modified" itemprop="dateModified" datetime="2020-06-24T22:51:05+08:00">
                 2020-06-24
               </time>
             
@@ -413,43 +413,509 @@
       
         
           
-            <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>前端的经典手写面试题</p>
-<h3 id="闭包题"><a href="#闭包题" class="headerlink" title="闭包题"></a>闭包题</h3><ol>
-<li>实现一个函数，每次调用返回下一个质数，要求不使用全局变量，且函数本身不接受任何参数<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> getPrime = (<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> count = <span class="number">1</span></span><br><span class="line">  <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    count = count + <span class="number">1</span></span><br><span class="line">    <span class="keyword">if</span>(isPrime(count))&#123;</span><br><span class="line">      <span class="keyword">return</span> count</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">      <span class="keyword">return</span> getPrime()</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)()</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">isPrime</span>(<span class="params">n</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">2</span>; i &lt; n; i++)</span><br><span class="line">      <span class="keyword">if</span> (n % i == <span class="number">0</span>)</span><br><span class="line">          <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">  <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
+            <h4 id="1-二叉树路径总和"><a href="#1-二叉树路径总和" class="headerlink" title="1. 二叉树路径总和"></a>1. 二叉树路径总和</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 返回bool 112</span></span><br><span class="line"><span class="keyword">var</span> pathSum = <span class="function"><span class="keyword">function</span>(<span class="params">root, sum</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(root === <span class="literal">null</span>) <span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line">    <span class="keyword">if</span>(root.left === <span class="literal">null</span> &amp;&amp; root.right === <span class="literal">null</span>) <span class="keyword">return</span> root.val == sum</span><br><span class="line">    <span class="keyword">return</span> pathSum(root.left, sum - root.val) || pathSum(root.right, sum - root.val) </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 返回二维数组 113</span></span><br><span class="line"><span class="keyword">var</span> pathSum = <span class="function"><span class="keyword">function</span>(<span class="params">root, sum</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">let</span> res = []</span><br><span class="line">    help(root, sum, res, [])</span><br><span class="line">    <span class="keyword">return</span> res</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">help</span>(<span class="params">root, sum, res, arr</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(root === <span class="literal">null</span>)&#123;</span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line">    &#125;</span><br><span class="line">    arr.push(root.val)</span><br><span class="line">    <span class="keyword">if</span>(root.left === <span class="literal">null</span> &amp;&amp; root.right === <span class="literal">null</span> &amp;&amp; root.val === sum) &#123;</span><br><span class="line">        res.push([...arr])</span><br><span class="line">    &#125;</span><br><span class="line">    help(root.left, sum - root.val, res, arr)</span><br><span class="line">    help(root.right, sum - root.val, res, arr)</span><br><span class="line">    arr.pop()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+          
+        
+      
+    </div>
+    
+    
+    
+
+<div>
+      
+</div>
+
+    
+
+    
+
+    
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-categories" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="zeuszhou.xyz/面试/CSS手写面经题总结（长期更新）/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ZEUS ZHOU">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ZEUS ZHOU">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/面试/CSS手写面经题总结（长期更新）/" itemprop="url">CSS手写面经题总结（长期更新）</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-06-24T22:01:57+08:00">
+                2020-06-24
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Post modified&#58;</span>
+              
+              <time title="Post modified" itemprop="dateModified" datetime="2020-06-24T23:03:53+08:00">
+                2020-06-24
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/面试/" itemprop="url" rel="index">
+                    <span itemprop="name">面试</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h4 id="1-实现css弹幕"><a href="#1-实现css弹幕" class="headerlink" title="1.实现css弹幕"></a>1.实现css弹幕</h4><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&lt;div class="block"&gt;我是弹幕&lt;/div&gt;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.block</span>&#123;</span><br><span class="line">    <span class="attribute">position</span>:absolute;</span><br><span class="line">    <span class="attribute">animation</span>:barrage <span class="number">1s</span> linear <span class="number">5s</span>;</span><br><span class="line"> &#125;</span><br><span class="line"></span><br><span class="line"> @<span class="keyword">keyframes</span> barrage&#123;</span><br><span class="line">    <span class="selector-tag">from</span>&#123;</span><br><span class="line">      <span class="attribute">left</span>:<span class="number">100%</span>;</span><br><span class="line">      <span class="comment">/* transform:translateX(0); */</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="selector-tag">to</span>&#123;</span><br><span class="line">      <span class="attribute">left</span>:<span class="number">0</span>;</span><br><span class="line">      <span class="comment">/* transform:translateX(100%); */</span></span><br><span class="line">    &#125;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+<h4 id="2-实现图像旋转"><a href="#2-实现图像旋转" class="headerlink" title="2.实现图像旋转"></a>2.实现图像旋转</h4><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">@<span class="keyword">keyframes</span> spin &#123;</span><br><span class="line">  <span class="selector-tag">from</span> &#123;</span><br><span class="line">      <span class="attribute">transform</span>: <span class="built_in">rotate</span>(0deg)</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="selector-tag">to</span> &#123;</span><br><span class="line">      <span class="attribute">transform</span>: <span class="built_in">rotate</span>(-360deg)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-tag">div</span> &#123;</span><br><span class="line">  <span class="attribute">animation</span>: spin <span class="number">10s</span> linear infinite</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="3-实现图片懒加载"><a href="#3-实现图片懒加载" class="headerlink" title="3.实现图片懒加载"></a>3.实现图片懒加载</h4><h4 id="4-实现模态框"><a href="#4-实现模态框" class="headerlink" title="4.实现模态框"></a>4.实现模态框</h4>
+          
+        
+      
+    </div>
+    
+    
+    
+
+<div>
+      
+</div>
+
+    
+
+    
+
+    
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-categories" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="zeuszhou.xyz/面试/React面经题总结（长期更新）/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ZEUS ZHOU">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ZEUS ZHOU">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/面试/React面经题总结（长期更新）/" itemprop="url">React面经题总结（长期更新）</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-06-24T21:56:55+08:00">
+                2020-06-24
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Post modified&#58;</span>
+              
+              <time title="Post modified" itemprop="dateModified" datetime="2020-06-24T22:02:26+08:00">
+                2020-06-24
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/面试/" itemprop="url" rel="index">
+                    <span itemprop="name">面试</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <ol>
+<li>setState的原理</li>
+<li>react生命周期</li>
+<li>虚拟dom</li>
+<li>diff算法</li>
+<li></li>
 </ol>
-<h3 id="函数式编程"><a href="#函数式编程" class="headerlink" title="函数式编程"></a>函数式编程</h3><ol>
-<li><p>compose，函数式的写法和非函数式的写法</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> add1 = <span class="function">(<span class="params">x</span>) =&gt;</span> x + <span class="number">1</span></span><br><span class="line"><span class="keyword">const</span> mul3 = <span class="function">(<span class="params">x</span>) =&gt;</span> x * <span class="number">3</span></span><br><span class="line"><span class="keyword">const</span> div2 = <span class="function">(<span class="params">x</span>) =&gt;</span> x / <span class="number">2</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">compose</span>(<span class="params">...fn</span>)</span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="function"><span class="params">x</span> =&gt;</span> fn.reduceRight(<span class="function">(<span class="params">pre,cur</span>) =&gt;</span> cur(pre), x)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">compose</span>(<span class="params">...fn</span>)</span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params">parameter</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">var</span> i = fn.length - <span class="number">1</span>; i &gt;= <span class="number">0</span>; i--)&#123;</span><br><span class="line">      parameter = fn[i](parameter)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> parameter</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">const</span> operate = compose(div2, mul3, add1, add1)</span><br><span class="line"><span class="built_in">console</span>.log(operate(<span class="number">0</span>)) <span class="comment">// =&gt; 相当于 div2(mul3(add1(add1(0))))</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>函数柯里化</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// es5展开版</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">curry</span>(<span class="params">fn, ...thisArgs</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params">...args</span>)</span>&#123;</span><br><span class="line">      <span class="keyword">if</span>(args.length + thisArgs.length &lt; fn.length)&#123;</span><br><span class="line">        <span class="keyword">return</span> curry(fn, ...thisArgs.concat(args))</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">return</span> fn.apply(<span class="keyword">this</span>, thisArgs.concat(args))</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"><span class="keyword">const</span> add = curry(<span class="function">(<span class="params">a, b, c</span>) =&gt;</span> a + b + c)</span><br><span class="line"><span class="built_in">console</span>.log(add(<span class="number">1</span>,<span class="number">1</span>)(<span class="number">2</span>))</span><br><span class="line"></span><br><span class="line"><span class="comment">// es5紧凑版</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">curry</span> (<span class="params">fn, arr = []</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> fn.length === arr.length ? fn.apply(<span class="literal">null</span>, arr) : <span class="function"><span class="keyword">function</span> (<span class="params">...args</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> curry (fn, arr.concat(args))</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">const</span> add = curry(<span class="function">(<span class="params">a, b, c</span>) =&gt;</span> a + b + c)</span><br><span class="line"><span class="built_in">console</span>.log(add(<span class="number">1</span>,<span class="number">1</span>)(<span class="number">2</span>))</span><br><span class="line"></span><br><span class="line"><span class="comment">// es6一行版</span></span><br><span class="line"><span class="keyword">const</span> curry = <span class="function">(<span class="params">fn, arr = []</span>) =&gt;</span> fn.length === arr.length ? fn(...arr) : <span class="function">(<span class="params">...args</span>) =&gt;</span> curry(fn, [...arr, ...args])</span><br><span class="line"><span class="keyword">const</span> add = curry(<span class="function">(<span class="params">a, b, c</span>) =&gt;</span> a + b + c)</span><br><span class="line"><span class="built_in">console</span>.log(add(<span class="number">1</span>,<span class="number">1</span>)(<span class="number">2</span>))</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>链式调用</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 成语接龙</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">wordschain</span>(<span class="params">word</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> words = word</span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">chain</span>(<span class="params">word</span>) </span>&#123;</span><br><span class="line">        words += <span class="string">' -&gt; '</span> + word</span><br><span class="line">        <span class="keyword">return</span> chain</span><br><span class="line">    &#125;</span><br><span class="line">    chain.valueOf = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> words</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> chain</span><br><span class="line">&#125;</span><br><span class="line">wordschain(<span class="string">'胸有成竹'</span>)(<span class="string">'竹报平安'</span>)(<span class="string">'安富尊荣'</span>).valueOf()</span><br><span class="line"></span><br><span class="line"><span class="comment">// 年龄</span></span><br><span class="line"><span class="keyword">var</span> Person = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;&#125;;</span><br><span class="line">Person.prototype.set = <span class="function"><span class="keyword">function</span> (<span class="params">age</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.age = <span class="number">10</span>; </span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>; <span class="comment">//this调用位置决定其词法作用域</span></span><br><span class="line">&#125;</span><br><span class="line">Person.prototype.get = <span class="function"><span class="keyword">function</span> (<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">var</span> age = <span class="keyword">this</span>.age;</span><br><span class="line">    <span class="keyword">if</span>(age &lt; <span class="number">6</span>)&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">'我还是个宝宝'</span>;</span><br><span class="line">    &#125;<span class="keyword">else</span> <span class="keyword">if</span>(age &lt; <span class="number">18</span>)&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">'我还是个少年'</span>;</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">     <span class="comment">//……</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> person = <span class="keyword">new</span> Person();</span><br><span class="line">person.set(<span class="number">10</span>).get(); <span class="comment">// '我还是个少年'</span></span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<h3 id="防抖和节流"><a href="#防抖和节流" class="headerlink" title="防抖和节流"></a>防抖和节流</h3><ol>
-<li><p>防抖</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">debounce</span>(<span class="params">func, wait</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> timeout = <span class="literal">null</span>;</span><br><span class="line">  <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">var</span> context = <span class="keyword">this</span></span><br><span class="line">    <span class="keyword">var</span> args = <span class="built_in">arguments</span></span><br><span class="line">    <span class="keyword">if</span>(timeout)&#123;</span><br><span class="line">      clearTimeout(timeout)</span><br><span class="line">    &#125;</span><br><span class="line">    timeout = setTimeout(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">      func.apply(<span class="keyword">this</span>, <span class="built_in">arguments</span>)</span><br><span class="line">    &#125;, wait)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>节流三种写法</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 时间戳版，第一次执行，最后一次触发不执行</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">throttle</span>(<span class="params">func, wait</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> prev = <span class="built_in">Date</span>.now()</span><br><span class="line">  <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> context = <span class="keyword">this</span></span><br><span class="line">    <span class="keyword">var</span> args = <span class="built_in">arguments</span></span><br><span class="line">    <span class="keyword">var</span> now = <span class="built_in">Date</span>.now()</span><br><span class="line">    <span class="keyword">if</span> (now - prev &gt;= wait) &#123;</span><br><span class="line">      func.apply(context, args)</span><br><span class="line">      prev = <span class="built_in">Date</span>.now()</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 计时器版，第一次不执行，最后一次触发执行</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">throttle</span>(<span class="params">func, wait</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> timeout = <span class="literal">null</span></span><br><span class="line">  <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">var</span> context = <span class="keyword">this</span></span><br><span class="line">    <span class="keyword">var</span> args = <span class="built_in">arguments</span></span><br><span class="line">    <span class="keyword">if</span> (!timeout) &#123;</span><br><span class="line">      timeout = setTimeout(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        func.apply(context, args)</span><br><span class="line">        timeout = <span class="literal">null</span></span><br><span class="line">      &#125;, wait)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 结合版，第一次执行，最后一次触发也执行</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">throttle</span>(<span class="params">func, wait</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> timout = <span class="literal">null</span></span><br><span class="line">  <span class="keyword">var</span> prev = <span class="built_in">Date</span>.now()</span><br><span class="line">  <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> now = <span class="built_in">Date</span>.now()</span><br><span class="line">    <span class="keyword">var</span> context = <span class="keyword">this</span></span><br><span class="line">    <span class="keyword">var</span> args = <span class="built_in">arguments</span></span><br><span class="line">    <span class="keyword">var</span> remaining = wait - (now - prev)</span><br><span class="line">    clearTimeout(timeout)</span><br><span class="line">    <span class="keyword">if</span> (remaining &lt;= <span class="number">0</span>) &#123;</span><br><span class="line">      func.apply(context, args)</span><br><span class="line">      now = <span class="built_in">Date</span>.now()</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      timeout = setTimeout(func, remaining)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<h3 id="Promise题"><a href="#Promise题" class="headerlink" title="Promise题"></a>Promise题</h3><p>参考promise专辑</p>
-<ul>
-<li><a href="https://zeuszhou.xyz/promise/Promise%E4%B8%93%E8%BE%91/">Promise</a></li>
-</ul>
-<h3 id="CSS题"><a href="#CSS题" class="headerlink" title="CSS题"></a>CSS题</h3><ol>
-<li><p>实现css弹幕</p>
-<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&lt;div class="block"&gt;我是弹幕&lt;/div&gt;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.block</span>&#123;</span><br><span class="line">    <span class="attribute">position</span>:absolute;</span><br><span class="line">    <span class="attribute">animation</span>:barrage <span class="number">1s</span> linear <span class="number">5s</span>;</span><br><span class="line"> &#125;</span><br><span class="line"></span><br><span class="line"> @<span class="keyword">keyframes</span> barrage&#123;</span><br><span class="line">    <span class="selector-tag">from</span>&#123;</span><br><span class="line">      <span class="attribute">left</span>:<span class="number">100%</span>;</span><br><span class="line">      <span class="comment">/* transform:translateX(0); */</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="selector-tag">to</span>&#123;</span><br><span class="line">      <span class="attribute">left</span>:<span class="number">0</span>;</span><br><span class="line">      <span class="comment">/* transform:translateX(100%); */</span></span><br><span class="line">    &#125;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>实现图像旋转</p>
-<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">@<span class="keyword">keyframes</span> spin &#123;</span><br><span class="line">  <span class="selector-tag">from</span> &#123;</span><br><span class="line">      <span class="attribute">transform</span>: <span class="built_in">rotate</span>(0deg)</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="selector-tag">to</span> &#123;</span><br><span class="line">      <span class="attribute">transform</span>: <span class="built_in">rotate</span>(-360deg)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-tag">div</span> &#123;</span><br><span class="line">  <span class="attribute">animation</span>: spin <span class="number">10s</span> linear infinite</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<h3 id="Leetcode题"><a href="#Leetcode题" class="headerlink" title="Leetcode题"></a>Leetcode题</h3><h3 id="前端基础题"><a href="#前端基础题" class="headerlink" title="前端基础题"></a>前端基础题</h3>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+<div>
+      
+</div>
+
+    
+
+    
+
+    
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-categories" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="zeuszhou.xyz/面试/JS手写面经题总结/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ZEUS ZHOU">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ZEUS ZHOU">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/面试/JS手写面经题总结/" itemprop="url">JS手写面经题总结（长期更新）</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-06-23T17:01:43+08:00">
+                2020-06-23
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Post modified&#58;</span>
+              
+              <time title="Post modified" itemprop="dateModified" datetime="2020-06-24T23:03:29+08:00">
+                2020-06-24
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/面试/" itemprop="url" rel="index">
+                    <span itemprop="name">面试</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>JS的经典手写面试题</p>
+<h4 id="1-实现一个函数，每次调用返回下一个质数，要求不使用全局变量，且函数本身不接受任何参数"><a href="#1-实现一个函数，每次调用返回下一个质数，要求不使用全局变量，且函数本身不接受任何参数" class="headerlink" title="1.实现一个函数，每次调用返回下一个质数，要求不使用全局变量，且函数本身不接受任何参数"></a>1.实现一个函数，每次调用返回下一个质数，要求不使用全局变量，且函数本身不接受任何参数</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> getPrime = (<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> count = <span class="number">1</span></span><br><span class="line">  <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    count = count + <span class="number">1</span></span><br><span class="line">    <span class="keyword">if</span>(isPrime(count))&#123;</span><br><span class="line">      <span class="keyword">return</span> count</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">      <span class="keyword">return</span> getPrime()</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)()</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">isPrime</span>(<span class="params">n</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">2</span>; i &lt; n; i++)</span><br><span class="line">      <span class="keyword">if</span> (n % i == <span class="number">0</span>)</span><br><span class="line">          <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">  <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="2-compose，函数式的写法和非函数式的写法"><a href="#2-compose，函数式的写法和非函数式的写法" class="headerlink" title="2.compose，函数式的写法和非函数式的写法"></a>2.compose，函数式的写法和非函数式的写法</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> add1 = <span class="function">(<span class="params">x</span>) =&gt;</span> x + <span class="number">1</span></span><br><span class="line"><span class="keyword">const</span> mul3 = <span class="function">(<span class="params">x</span>) =&gt;</span> x * <span class="number">3</span></span><br><span class="line"><span class="keyword">const</span> div2 = <span class="function">(<span class="params">x</span>) =&gt;</span> x / <span class="number">2</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">compose</span>(<span class="params">...fn</span>)</span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="function"><span class="params">x</span> =&gt;</span> fn.reduceRight(<span class="function">(<span class="params">pre,cur</span>) =&gt;</span> cur(pre), x)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">compose</span>(<span class="params">...fn</span>)</span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params">parameter</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">var</span> i = fn.length - <span class="number">1</span>; i &gt;= <span class="number">0</span>; i--)&#123;</span><br><span class="line">      parameter = fn[i](parameter)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> parameter</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">const</span> operate = compose(div2, mul3, add1, add1)</span><br><span class="line"><span class="built_in">console</span>.log(operate(<span class="number">0</span>)) <span class="comment">// =&gt; 相当于 div2(mul3(add1(add1(0))))</span></span><br></pre></td></tr></table></figure>
+<h4 id="3-函数柯里化"><a href="#3-函数柯里化" class="headerlink" title="3.函数柯里化"></a>3.函数柯里化</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// es5展开版</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">curry</span>(<span class="params">fn, ...thisArgs</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params">...args</span>)</span>&#123;</span><br><span class="line">      <span class="keyword">if</span>(args.length + thisArgs.length &lt; fn.length)&#123;</span><br><span class="line">        <span class="keyword">return</span> curry(fn, ...thisArgs.concat(args))</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">return</span> fn.apply(<span class="keyword">this</span>, thisArgs.concat(args))</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"><span class="keyword">const</span> add = curry(<span class="function">(<span class="params">a, b, c</span>) =&gt;</span> a + b + c)</span><br><span class="line"><span class="built_in">console</span>.log(add(<span class="number">1</span>,<span class="number">1</span>)(<span class="number">2</span>))</span><br><span class="line"></span><br><span class="line"><span class="comment">// es5紧凑版</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">curry</span> (<span class="params">fn, arr = []</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> fn.length === arr.length ? fn.apply(<span class="literal">null</span>, arr) : <span class="function"><span class="keyword">function</span> (<span class="params">...args</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> curry (fn, arr.concat(args))</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">const</span> add = curry(<span class="function">(<span class="params">a, b, c</span>) =&gt;</span> a + b + c)</span><br><span class="line"><span class="built_in">console</span>.log(add(<span class="number">1</span>,<span class="number">1</span>)(<span class="number">2</span>))</span><br><span class="line"></span><br><span class="line"><span class="comment">// es6一行版</span></span><br><span class="line"><span class="keyword">const</span> curry = <span class="function">(<span class="params">fn, arr = []</span>) =&gt;</span> fn.length === arr.length ? fn(...arr) : <span class="function">(<span class="params">...args</span>) =&gt;</span> curry(fn, [...arr, ...args])</span><br><span class="line"><span class="keyword">const</span> add = curry(<span class="function">(<span class="params">a, b, c</span>) =&gt;</span> a + b + c)</span><br><span class="line"><span class="built_in">console</span>.log(add(<span class="number">1</span>,<span class="number">1</span>)(<span class="number">2</span>))</span><br></pre></td></tr></table></figure>
+<h4 id="4-链式调用"><a href="#4-链式调用" class="headerlink" title="4.链式调用"></a>4.链式调用</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 成语接龙</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">wordschain</span>(<span class="params">word</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> words = word</span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">chain</span>(<span class="params">word</span>) </span>&#123;</span><br><span class="line">        words += <span class="string">' -&gt; '</span> + word</span><br><span class="line">        <span class="keyword">return</span> chain</span><br><span class="line">    &#125;</span><br><span class="line">    chain.valueOf = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> words</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> chain</span><br><span class="line">&#125;</span><br><span class="line">wordschain(<span class="string">'胸有成竹'</span>)(<span class="string">'竹报平安'</span>)(<span class="string">'安富尊荣'</span>).valueOf()</span><br><span class="line"></span><br><span class="line"><span class="comment">// 年龄</span></span><br><span class="line"><span class="keyword">var</span> Person = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;&#125;;</span><br><span class="line">Person.prototype.set = <span class="function"><span class="keyword">function</span> (<span class="params">age</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.age = <span class="number">10</span>; </span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>; <span class="comment">//this调用位置决定其词法作用域</span></span><br><span class="line">&#125;</span><br><span class="line">Person.prototype.get = <span class="function"><span class="keyword">function</span> (<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">var</span> age = <span class="keyword">this</span>.age;</span><br><span class="line">    <span class="keyword">if</span>(age &lt; <span class="number">6</span>)&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">'我还是个宝宝'</span>;</span><br><span class="line">    &#125;<span class="keyword">else</span> <span class="keyword">if</span>(age &lt; <span class="number">18</span>)&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">'我还是个少年'</span>;</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">     <span class="comment">//……</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> person = <span class="keyword">new</span> Person();</span><br><span class="line">person.set(<span class="number">10</span>).get(); <span class="comment">// '我还是个少年'</span></span><br></pre></td></tr></table></figure>
+<h4 id="5-防抖"><a href="#5-防抖" class="headerlink" title="5.防抖"></a>5.防抖</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">debounce</span>(<span class="params">func, wait</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> timeout = <span class="literal">null</span>;</span><br><span class="line">  <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">var</span> context = <span class="keyword">this</span></span><br><span class="line">    <span class="keyword">var</span> args = <span class="built_in">arguments</span></span><br><span class="line">    <span class="keyword">if</span>(timeout)&#123;</span><br><span class="line">      clearTimeout(timeout)</span><br><span class="line">    &#125;</span><br><span class="line">    timeout = setTimeout(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">      func.apply(<span class="keyword">this</span>, <span class="built_in">arguments</span>)</span><br><span class="line">    &#125;, wait)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="6-节流三种写法"><a href="#6-节流三种写法" class="headerlink" title="6.节流三种写法"></a>6.节流三种写法</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 时间戳版，第一次执行，最后一次触发不执行</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">throttle</span>(<span class="params">func, wait</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> prev = <span class="built_in">Date</span>.now()</span><br><span class="line">  <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> context = <span class="keyword">this</span></span><br><span class="line">    <span class="keyword">var</span> args = <span class="built_in">arguments</span></span><br><span class="line">    <span class="keyword">var</span> now = <span class="built_in">Date</span>.now()</span><br><span class="line">    <span class="keyword">if</span> (now - prev &gt;= wait) &#123;</span><br><span class="line">      func.apply(context, args)</span><br><span class="line">      prev = <span class="built_in">Date</span>.now()</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 计时器版，第一次不执行，最后一次触发执行</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">throttle</span>(<span class="params">func, wait</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> timeout = <span class="literal">null</span></span><br><span class="line">  <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">var</span> context = <span class="keyword">this</span></span><br><span class="line">    <span class="keyword">var</span> args = <span class="built_in">arguments</span></span><br><span class="line">    <span class="keyword">if</span> (!timeout) &#123;</span><br><span class="line">      timeout = setTimeout(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        func.apply(context, args)</span><br><span class="line">        timeout = <span class="literal">null</span></span><br><span class="line">      &#125;, wait)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 结合版，第一次执行，最后一次触发也执行</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">throttle</span>(<span class="params">func, wait</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> timout = <span class="literal">null</span></span><br><span class="line">  <span class="keyword">var</span> prev = <span class="built_in">Date</span>.now()</span><br><span class="line">  <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> now = <span class="built_in">Date</span>.now()</span><br><span class="line">    <span class="keyword">var</span> context = <span class="keyword">this</span></span><br><span class="line">    <span class="keyword">var</span> args = <span class="built_in">arguments</span></span><br><span class="line">    <span class="keyword">var</span> remaining = wait - (now - prev)</span><br><span class="line">    clearTimeout(timeout)</span><br><span class="line">    <span class="keyword">if</span> (remaining &lt;= <span class="number">0</span>) &#123;</span><br><span class="line">      func.apply(context, args)</span><br><span class="line">      now = <span class="built_in">Date</span>.now()</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      timeout = setTimeout(func, remaining)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="7-Promise最大并发数请求batchGet-arr-batchnum-3-timeout-3"><a href="#7-Promise最大并发数请求batchGet-arr-batchnum-3-timeout-3" class="headerlink" title="7.Promise最大并发数请求batchGet(arr, batchnum=3, timeout=3)"></a>7.Promise最大并发数请求batchGet(arr, batchnum=3, timeout=3)</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">batchGet</span>(<span class="params">arr, batchnum, timeout, fetch</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">let</span> i = <span class="number">0</span></span><br><span class="line">  <span class="keyword">let</span> ret = []</span><br><span class="line">  <span class="keyword">let</span> executing = []</span><br><span class="line">  <span class="keyword">let</span> enqueue = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(arr.length === i)&#123;</span><br><span class="line">      <span class="keyword">return</span> <span class="built_in">Promise</span>.resolve</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">let</span> item = array[i++]</span><br><span class="line">    <span class="keyword">let</span> p = <span class="built_in">Promise</span>.resolve.then(<span class="function"><span class="params">()</span> =&gt;</span> fetch(item))</span><br><span class="line">    ret.push(p)</span><br><span class="line">    <span class="keyword">let</span> e = p.then(<span class="function"><span class="params">()</span> =&gt;</span> executing.splice(executing.indexOf(e),<span class="number">1</span>))</span><br><span class="line">    executing.push(e)</span><br><span class="line">    <span class="keyword">let</span> r = <span class="built_in">Promise</span>.resolve()</span><br><span class="line">    <span class="keyword">if</span> (executing.length &gt;= batchnum) &#123;</span><br><span class="line">      r = <span class="built_in">Promise</span>.race(executing)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> r.then(<span class="function"><span class="params">()</span> =&gt;</span> enqueue())</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> enqueue().then(<span class="function"><span class="params">()</span> =&gt;</span> <span class="built_in">Promise</span>.all(ret))</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="8-EventEmitter"><a href="#8-EventEmitter" class="headerlink" title="8.EventEmitter"></a>8.EventEmitter</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">EventEmitter</span> </span>&#123;</span><br><span class="line">  <span class="keyword">constructor</span>()&#123;</span><br><span class="line">    <span class="keyword">this</span>.topics = &#123;&#125;</span><br><span class="line">  &#125;</span><br><span class="line">  on (event, callback) &#123;</span><br><span class="line">    <span class="keyword">this</span>.topics[event] ? <span class="keyword">this</span>.topics[event].push(callback) : <span class="keyword">this</span>.topics[event] = [callback]</span><br><span class="line">  &#125;</span><br><span class="line">  emit (event, ...args) &#123;</span><br><span class="line">    <span class="keyword">this</span>.topics[event] &amp;&amp; <span class="keyword">this</span>.topics[event].forEach(<span class="function"><span class="params">cb</span> =&gt;</span> cb(...args))</span><br><span class="line">  &#125;</span><br><span class="line">  off (event) &#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">this</span>.topics[event])&#123;</span><br><span class="line">      <span class="keyword">delete</span> <span class="keyword">this</span>.topics[event]</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  once (event, callback) &#123;</span><br><span class="line">    <span class="keyword">this</span>.on(event, (...args) -&gt; &#123;</span><br><span class="line">      callback(...args)</span><br><span class="line">      <span class="keyword">this</span>.off(event)</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="9-Reduce实现map"><a href="#9-Reduce实现map" class="headerlink" title="9. Reduce实现map"></a>9. Reduce实现map</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Array</span>.prototype.map = <span class="function"><span class="keyword">function</span> (<span class="params">callback</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> arr = <span class="keyword">this</span></span><br><span class="line">  <span class="keyword">return</span> arr.reduce(<span class="function">(<span class="params">acc, cur, i</span>) =&gt;</span> &#123;</span><br><span class="line">    acc.push(callback(cur, i, arr))</span><br><span class="line">    <span class="keyword">return</span> acc</span><br><span class="line">  &#125;, [])</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="10-手写双向绑定"><a href="#10-手写双向绑定" class="headerlink" title="10. 手写双向绑定"></a>10. 手写双向绑定</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> input = <span class="built_in">document</span>.getElementById(<span class="string">"Input"</span>);</span><br><span class="line"><span class="keyword">let</span> text = <span class="built_in">document</span>.getElementById(<span class="string">"text"</span>);</span><br><span class="line"><span class="keyword">let</span> data = &#123;</span><br><span class="line">  value: <span class="string">""</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">Object</span>.defineProperty(data, <span class="string">"value"</span>, &#123;</span><br><span class="line">  set: <span class="function"><span class="keyword">function</span>(<span class="params">val</span>) </span>&#123;</span><br><span class="line">    text.innerHTML = val</span><br><span class="line">    input.value = val</span><br><span class="line">  &#125;,</span><br><span class="line">  get: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> input.value</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br><span class="line">input.oninput = <span class="function"><span class="keyword">function</span>(<span class="params">e</span>)</span>&#123;</span><br><span class="line">  data.value = e.target.value</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
           
         
       
@@ -1558,579 +2024,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-categories" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="zeuszhou.xyz/函数式编程/函数式编程/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="ZEUS ZHOU">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="ZEUS ZHOU">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/函数式编程/函数式编程/" itemprop="url">函数式编程</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-06-08T21:28:56+08:00">
-                2020-06-08
-              </time>
-            
-
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Post modified&#58;</span>
-              
-              <time title="Post modified" itemprop="dateModified" datetime="2020-06-24T15:08:43+08:00">
-                2020-06-24
-              </time>
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/函数式编程/" itemprop="url" rel="index">
-                    <span itemprop="name">函数式编程</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h3 id="特点"><a href="#特点" class="headerlink" title="特点"></a>特点</h3><ol>
-<li><p>函数是一等公民<br>函数当成赋值给变量，当成参数传给函数或者当成返回值返回</p>
-</li>
-<li><p>只用表达式，不用语句，每一步都是纯运算，而且有返回值<br>表达式是单纯的运算过程，总有返回值<br>语句是执行某种操作，没有返回值</p>
-</li>
-<li><p>没有副作用<br>副作用指的是函数内部与外部互动，比如修改全局变量的值，产生运算以外的其他结果</p>
-</li>
-<li><p>引用透明<br>函数的运行不依赖于外部变量或状态，只要输入的参数相同，所得的返回值总是相同</p>
-</li>
-</ol>
-<h3 id="好处"><a href="#好处" class="headerlink" title="好处"></a>好处</h3><ol>
-<li>代码简洁，开发快速</li>
-<li>接近自然语言，易于理解</li>
-<li>代码管理方便，每个函数可以当成独立单元</li>
-<li>易于并发编程，不存在锁的问题</li>
-<li>代码的热升级</li>
-</ol>
-<h3 id="具体应用"><a href="#具体应用" class="headerlink" title="具体应用"></a>具体应用</h3><p>1. </p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-<div>
-      
-</div>
-
-    
-
-    
-
-    
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-categories" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="zeuszhou.xyz/React/React-hooks-再理解/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="ZEUS ZHOU">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="ZEUS ZHOU">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/React/React-hooks-再理解/" itemprop="url">React hooks 再理解</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-06-08T21:18:16+08:00">
-                2020-06-08
-              </time>
-            
-
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Post modified&#58;</span>
-              
-              <time title="Post modified" itemprop="dateModified" datetime="2020-06-12T14:11:47+08:00">
-                2020-06-12
-              </time>
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/React/" itemprop="url" rel="index">
-                    <span itemprop="name">React</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>一句话概括hooks：不编写class的情况下，使用state和其他react特性</p>
-<h3 id="为什么要用hooks"><a href="#为什么要用hooks" class="headerlink" title="为什么要用hooks"></a>为什么要用hooks</h3><ol>
-<li>class版本，组件之间复用状态逻辑很难，hooks可以在不改变组件结构的情况下复用状态逻辑</li>
-<li>class版本，复杂组件变得难以理解，hooks将组件中相互关联的部分拆分的更小，并且舍去生命周期</li>
-<li>class版本，class难以理解，需要考虑this，绑定事件</li>
-<li>class版本，class无法很好的压缩，并且会使得热重载出现不稳定的情况</li>
-<li>hooks组件不会被实例化，渲染性能得到提高</li>
-</ol>
-<h3 id="模拟生命周期（memo，useRef）"><a href="#模拟生命周期（memo，useRef）" class="headerlink" title="模拟生命周期（memo，useRef）"></a>模拟生命周期（memo，useRef）</h3><ol>
-<li><p>shouldComponentUpdate<br>React.memo 包裹一个组件来对它的 props 进行浅比较<br>但这不是一个 hooks，因为它的写法和 hooks 不同<br>其实React.memo 等效于 PureComponent，但它只比较 props。</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> MyComponent = React.memo(</span><br><span class="line">    _MyComponent,</span><br><span class="line">    (prevProps, nextProps) =&gt; nextProps.count !== prevProps.count</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>componentDidUpdate<br>useRef 在组件中创建“实例变量”<br>它作为一个标志来指示组件是否处于挂载或更新阶段<br>当组件更新完成后在会执行 else 里面的内容，以此来单独模拟 componentDidUpdate。</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> mounted = useRef()</span><br><span class="line">useEffect(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">if</span>(!mounted.current) &#123;</span><br><span class="line">        mounted.current = <span class="literal">true</span></span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">"这里写代码"</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>componentWillUnmount<br>当在 useEffect 的回调函数中返回一个函数时<br>这个函数会在组件卸载前被调用<br>我们可以在这里面清除定时器或事件监听器</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">useEffect(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">"will mount"</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;, [])</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<h3 id="useState太多怎么办（useReducer）"><a href="#useState太多怎么办（useReducer）" class="headerlink" title="useState太多怎么办（useReducer）"></a>useState太多怎么办（useReducer）</h3><p>问：useState太多怎么办<br>答：对象属性赋值 or useReducer</p>
-<p>相比于useState, useReducer</p>
-<ol>
-<li>更容易管理大量状态</li>
-<li>更容易被其他开发者理解</li>
-<li>更容易做测试, 所有的跟 state 相关的业务逻辑代码都可以放到一个单独的函数</li>
-</ol>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> [state, dispatch] = useReducer(reducer, initialArg, init);</span><br><span class="line"><span class="comment">// diapatch 一个 action，使用 reducer 来更新 state</span></span><br></pre></td></tr></table></figure>
-<h3 id="hooks如何模拟class组件的this（useRef）"><a href="#hooks如何模拟class组件的this（useRef）" class="headerlink" title="hooks如何模拟class组件的this（useRef）"></a>hooks如何模拟class组件的this（useRef）</h3><p>函数组件和class组件一个区别在于：函数组件可以捕获渲染时所用的值，而class组件用this会捕获到最新的值。<br>本质是因为react的props是immutable的，永远不会改变，而class组件的this是会变的，这也就意味着，this永远会拿最新的值。<br>所以问题来了</p>
-<ol>
-<li><p>用class组件如何拿到捕获渲染时所用的值<br>方法一：在调用事件前，读取this.props，然后显示传给回调函数<br>方法二：使用闭包，把this.props赋给props，然后操作props</p>
-</li>
-<li><p>用function组件如何拿到最新的值<br>使用ref，ref可以方便的保存任何值，类似于实例字段的方式，useRef在每次渲染后会返回同一个ref对象<br>变更.current属性不会引发组件重新渲染，所以current属性就像一个可以放东西的盒子，放最新的值</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Pra</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">const</span> [age, setAge] = useState()</span><br><span class="line">    <span class="keyword">const</span> lastAge = useRef();</span><br><span class="line">    useEffect(<span class="function"><span class="params">()</span>=&gt;</span>&#123;</span><br><span class="line">        lastAge.current = age</span><br><span class="line">    &#125;)</span><br><span class="line">    <span class="keyword">const</span> showAge = <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(lastAge.current)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<p>原理是在effect内部执行赋值操作，使得ref的值只有在dom更新之后再改变，确保了我们的变量突变不会破坏依赖于可中断渲染的事件切片和suspense等特性</p>
-<h3 id="useCallback和useMemo的区别"><a href="#useCallback和useMemo的区别" class="headerlink" title="useCallback和useMemo的区别"></a>useCallback和useMemo的区别</h3><p>useCallback是用来优化对子组件的渲染，缓存函数的引用<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> memoizedCallback = useCallback(</span><br><span class="line">  () =&gt; &#123;</span><br><span class="line">    doSomething(a, b);</span><br><span class="line">  &#125;,</span><br><span class="line">  [a, b],</span><br><span class="line">);</span><br><span class="line"><span class="comment">// 在a，b不变的情况下，memoizedCallback的引用不变，所以这个入参函数会被缓存，从而起到优化渲染的效果</span></span><br></pre></td></tr></table></figure></p>
-<p>useMemo是用来优化当前组件高开销的计算，缓存计算数据的值<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> computeValue = useMemo(<span class="function"><span class="params">()</span> =&gt;</span> computeExpensiveValue(count), [count]);</span><br><span class="line"><span class="comment">// 只有在count改变的时候，computeExpensiveValue才会重新执行</span></span><br></pre></td></tr></table></figure></p>
-<h3 id="自定义hooks"><a href="#自定义hooks" class="headerlink" title="自定义hooks"></a>自定义hooks</h3><p>usePrevProps<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> usePrevProps = <span class="function"><span class="params">value</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> ref = useRef()</span><br><span class="line">    useEffect(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">        ref.current = value</span><br><span class="line">    &#125;)</span><br><span class="line">    <span class="keyword">return</span> ref.current</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 使用</span></span><br><span class="line"><span class="keyword">const</span> [count, setCount] = useState(<span class="number">0</span>);</span><br><span class="line"><span class="keyword">const</span> handleCount = <span class="function"><span class="params">()</span> =&gt;</span> setCount(count + <span class="number">1</span>);</span><br><span class="line"><span class="keyword">const</span> previous = usePrevProps(handlecount)</span><br></pre></td></tr></table></figure></p>
-<h3 id="PureComponent和React-memo"><a href="#PureComponent和React-memo" class="headerlink" title="PureComponent和React.memo"></a>PureComponent和React.memo</h3><ol>
-<li><p>React.memo只适用于函数组件，如果组件在给定props的情况下渲染结果是相同的，可以包裹一个memo，react可以跳过渲染组件的操作直接复用最近一次渲染的结果<br>memo只检查props的变化，只会进行浅层对比，复杂对象可以传入第二个比较函数参数<br>和shouldComponentUpdate相反，如果props相等，会返回true，否则返回false</p>
-</li>
-<li><p>对比Component，React.PureComponent实现了shouldComponentUpdate，以浅对比prop和state的方式实现<br>如果state和props相同，render会渲染同样的内容，shouldComponentUpdate可以提高性能<br>但如果props和state是复杂的对象，会产生错误的结果</p>
-</li>
-</ol>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-<div>
-      
-</div>
-
-    
-
-    
-
-    
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-categories" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="zeuszhou.xyz/promise/Promise专辑/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="ZEUS ZHOU">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="ZEUS ZHOU">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/promise/Promise专辑/" itemprop="url">Promise代码专辑</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-06-07T13:05:49+08:00">
-                2020-06-07
-              </time>
-            
-
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Post modified&#58;</span>
-              
-              <time title="Post modified" itemprop="dateModified" datetime="2020-06-07T14:55:18+08:00">
-                2020-06-07
-              </time>
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/promise/" itemprop="url" rel="index">
-                    <span itemprop="name">promise</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>Promise在前端的重要性不言而喻，手写promise代码在面试中出现的也越来越多，基本写不出来就拜拜了，还是得多敲一敲</p>
-<h3 id="Promise实现"><a href="#Promise实现" class="headerlink" title="Promise实现"></a>Promise实现</h3><ol>
-<li>自身属性value，reason，status，resolve的callback数组，reject的callback数组</li>
-<li>resolve方法，status为pending时，赋值value，status，执行resolve全部方法</li>
-<li>reject方法，status为pending时，赋值reason，status，执行reject全部方法</li>
-<li>执行执行器函数</li>
-<li>原型上定义then方法，传入resolve和reject作为参数</li>
-<li>status为resolve，执行resolve，为reject，执行reject，为pending时，resolve加入resolve数组，reject加入reject数组</li>
-</ol>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">myPromise</span>(<span class="params">executor</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">let</span> self = <span class="keyword">this</span></span><br><span class="line">    self.value = <span class="literal">undefined</span></span><br><span class="line">    self.reason = <span class="literal">undefined</span></span><br><span class="line">    self.status = <span class="string">'pending'</span></span><br><span class="line">    self.resolveCallback = []</span><br><span class="line">    self.rejectCallback = []</span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">resolve</span>(<span class="params">value</span>)</span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(self.status === <span class="string">'pending'</span>)&#123;</span><br><span class="line">            self.value = value</span><br><span class="line">            self.status = <span class="string">'resolved'</span></span><br><span class="line">            self.resolveCallback.forEach(<span class="function"><span class="params">fn</span> =&gt;</span> &#123;</span><br><span class="line">                fn()</span><br><span class="line">            &#125;)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">reject</span>(<span class="params">reason</span>)</span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(self.status === <span class="string">'pending'</span>)&#123;</span><br><span class="line">            self.reason = reason</span><br><span class="line">            self.status = <span class="string">'rejected'</span></span><br><span class="line">            self.rejectCallback.forEach(<span class="function"><span class="params">fn</span> =&gt;</span> &#123;</span><br><span class="line">                fn()</span><br><span class="line">            &#125;)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    executor(resolve, reject)</span><br><span class="line">&#125;</span><br><span class="line">myPromise.prototype.then = <span class="function"><span class="keyword">function</span>(<span class="params">resolve, reject</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">let</span> self = <span class="keyword">this</span></span><br><span class="line">    <span class="keyword">if</span>(self.status === <span class="string">'resolved'</span>)&#123;</span><br><span class="line">        resolve(self.value)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(self.status === <span class="string">'rejected'</span>)&#123;</span><br><span class="line">        reject(self.reason)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(self.status === <span class="string">'pending'</span>)&#123;</span><br><span class="line">        self.resolveCallback.push(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">            resolve(self.value)</span><br><span class="line">        &#125;)</span><br><span class="line">        self.rejectCallback.push(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">            reject(self.reason)</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="Promise-all实现"><a href="#Promise-all实现" class="headerlink" title="Promise all实现"></a>Promise all实现</h3><ol>
-<li>返回一个promise all，循环，每一个promise都resolve，再then</li>
-<li>如果promise 成功了，count+1，value存到res，当count等于数组长度，代表都resolve完成了，resolve promise all，传入res</li>
-<li>如果有promise reject了，直接reject promise all</li>
-</ol>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">promise_all</span>(<span class="params">promises</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(resolve, reject)&#123;</span><br><span class="line">        <span class="keyword">let</span> count = <span class="number">0</span></span><br><span class="line">        <span class="keyword">let</span> res = []</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; promises.length; i++)&#123;</span><br><span class="line">            <span class="built_in">Promise</span>.resolve(promises[i]).then(<span class="function">(<span class="params">value</span>) =&gt;</span> &#123;</span><br><span class="line">                count++</span><br><span class="line">                res[i] = value</span><br><span class="line">                <span class="keyword">if</span>(count === len)&#123;</span><br><span class="line">                    <span class="keyword">return</span> resolve(res)</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;,(reason) =&gt; &#123;</span><br><span class="line">                <span class="keyword">return</span> reject(reason)</span><br><span class="line">            &#125;)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="Promise-race实现"><a href="#Promise-race实现" class="headerlink" title="Promise race实现"></a>Promise race实现</h3><ol>
-<li>和all唯一区别，当子promise成功的时候，直接resolve，传入value</li>
-</ol>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">promise_race</span>(<span class="params">promises</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(resolve, reject)&#123;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; promises.length; i++)&#123;</span><br><span class="line">            <span class="built_in">Promise</span>.resolve(promises[i]).then(<span class="function">(<span class="params">value</span>) =&gt;</span> &#123;</span><br><span class="line">                <span class="keyword">return</span> resolve(value)</span><br><span class="line">            &#125;,(reason) =&gt; &#123;</span><br><span class="line">                <span class="keyword">return</span> reject(reason)</span><br><span class="line">            &#125;)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="Promise-并发限制"><a href="#Promise-并发限制" class="headerlink" title="Promise 并发限制"></a>Promise 并发限制</h3><p>并发限制指的时每个时刻并发执行的promise数量是固定的，10w条并发请求，最终的执行结果也一样<br>promise不是调用promiseall时执行，而是实例化promise对象的时候执行<br>所以要并发限制，只能控制promise的实例化</p>
-<ol>
-<li>从array第一个元素开始，初始化promise，ret存初始化的promise，用一个executing数组保存正在执行的promise</li>
-<li>不断初始化promise，直到limit</li>
-<li>使用promise.race，获得executing中promise的执行情况，当有一个promise执行完毕，继续初始化promise并放入executing中</li>
-<li>所有的promise都执行完毕后调用promise.all返回</li>
-</ol>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">pool</span>(<span class="params">limit, array, func</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">let</span> i = <span class="number">0</span></span><br><span class="line">    <span class="keyword">let</span> ret = [] <span class="comment">// promise数组</span></span><br><span class="line">    <span class="keyword">let</span> executing = [] <span class="comment">// promise执行数组</span></span><br><span class="line">    <span class="keyword">let</span> enqueue = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        <span class="comment">// 当array为i时，直接resolve</span></span><br><span class="line">        <span class="keyword">if</span>(array.length === i)&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="built_in">Promise</span>.resolve</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 每调用一次enqueue，初始化一个promise</span></span><br><span class="line">        <span class="keyword">let</span> item = array[i++]</span><br><span class="line">        <span class="keyword">let</span> p = <span class="built_in">Promise</span>.resolve().then(<span class="function"><span class="params">()</span> =&gt;</span> func(item, array))</span><br><span class="line">        <span class="comment">// 放入promise数组</span></span><br><span class="line">        ret.push(p)</span><br><span class="line">        <span class="comment">// promise执行完毕，从executing数组删除</span></span><br><span class="line">        <span class="keyword">let</span> e = p.then(<span class="function"><span class="params">()</span> =&gt;</span> executing.splice(executing.indexOf(e),<span class="number">1</span>))</span><br><span class="line">        <span class="comment">// 放入promise执行数组</span></span><br><span class="line">        executing.push(e)</span><br><span class="line">        <span class="comment">// 使用promise.race，当执行数组数量低于limit，实例化新的promise并执行</span></span><br><span class="line">        <span class="keyword">let</span> r = <span class="built_in">Promise</span>.resolve()</span><br><span class="line">        <span class="keyword">if</span> (executing.length &gt;= limit)&#123;</span><br><span class="line">            r = <span class="built_in">Promise</span>.race(executing)</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> r.then(<span class="function"><span class="params">()</span> =&gt;</span> enqueue())</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> enqueue().then(<span class="function"><span class="params">()</span> =&gt;</span> <span class="built_in">Promise</span>.all(ret))</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-          
-        
-      
-    </div>
-    
-    
-    
-
-<div>
-      
-</div>
-
-    
-
-    
-
-    
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2185,7 +2078,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">23</span>
+                  <span class="site-state-item-count">26</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>

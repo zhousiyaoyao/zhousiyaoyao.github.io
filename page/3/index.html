@@ -308,6 +308,582 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="zeuszhou.xyz/浏览器/Chrome浏览器/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ZEUS ZHOU">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ZEUS ZHOU">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/浏览器/Chrome浏览器/" itemprop="url">Chrome浏览器</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-05-25T21:15:07+08:00">
+                2020-05-25
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Post modified&#58;</span>
+              
+              <time title="Post modified" itemprop="dateModified" datetime="2020-05-26T14:28:07+08:00">
+                2020-05-26
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/浏览器/" itemprop="url" rel="index">
+                    <span itemprop="name">浏览器</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>今天面了一个试，暴露出了很多问题，感觉自己有些知识建立在虚无缥缈之上，没有根基，也不连贯，还是需要多总结和学习。<br>面试官问了一下chrome的进程和线程，自己是凭感觉回答的，天天和chrome打交道，却不太了解有点不行，需要好好的学习一个。</p>
+<h3 id="浏览器结构"><a href="#浏览器结构" class="headerlink" title="浏览器结构"></a>浏览器结构</h3><ol>
+<li>用户界面</li>
+<li>浏览器引擎</li>
+<li>渲染引擎（Webkit，Blink，Trident）</li>
+<li>网络模块</li>
+<li>js引擎（V8）</li>
+<li>界面后端</li>
+<li>数据存储</li>
+</ol>
+<h3 id="多进程架构浏览器"><a href="#多进程架构浏览器" class="headerlink" title="多进程架构浏览器"></a>多进程架构浏览器</h3><p>Chrome浏览器使用多个进程来隔离不同的网页。因此在Chrome中打开一个网页相当于起了一个进程。<br>原因第一是安全，因为进程间不会共享资源和地址空间，而线程之间有可能会恶意修改或者获取非授权数据等复杂的安全问题。<br>原因第二是把所有网页都放进一个进程的浏览器面临在健壮性，响应速度，安全性方面的挑战，一个tab崩，浏览器全崩</p>
+<h3 id="Chrome的进程"><a href="#Chrome的进程" class="headerlink" title="Chrome的进程"></a>Chrome的进程</h3><p>打开chrome的任务管理器可以发现，他有很多进程</p>
+<ol>
+<li>浏览器进程，占用CPU最多，控制chrome应用程序，包括地址栏，书签，后退和前进按钮等，还有权限管理例如网络请求和文件访问</li>
+<li>渲染器进程，控制选项卡内，网站里显示的全部内容</li>
+<li>插件进程，chrome的插件，比如flash</li>
+<li>GPU进程，专门用来处理GPU任务</li>
+<li>扩展进程，执行的各种应用插件，例如掘金</li>
+<li>标签页进程，每一个标签页也是一个进程</li>
+<li>实用进程，比如网络或者声音</li>
+</ol>
+<h3 id="Chrome内核（渲染进程）的多线程"><a href="#Chrome内核（渲染进程）的多线程" class="headerlink" title="Chrome内核（渲染进程）的多线程"></a>Chrome内核（渲染进程）的多线程</h3><p>浏览器内核是通过取得页面内容、整理信息（应用CSS）、计算和组合最终输出可视化的图像结果，通常也被称为渲染引擎。每个tab网页都有由其独立的渲染引擎实例。</p>
+<ol>
+<li>GUI渲染线程，负责渲染html元素，当需要重绘或者回流时执行，js引擎会导致GUI引擎挂起，也就是冻结</li>
+<li>js引擎线程，解析js脚本，运行代码</li>
+<li>定时触发器线程，因为js是单线程，如果处于阻塞状态会影响计时的准确，因此需要单独的线程进行计时</li>
+<li>事件触发线程，事件被触发时，事件线程会把事件添加到待处理事件的队尾，等待js引擎的处理。</li>
+<li>异步http请求线程，在XMLHttpRequest在连接后是通过浏览器新开一个线程请求， 将检测到状态变更时，如果设置有回调函数，异步线程就产生状态变更事件放到 JavaScript引擎的处理队列中等待处理。</li>
+</ol>
+<p><strong>js引擎与GUI线程是互斥的</strong>：因为js可以操作dom，如果修改的同时渲染界面，那么渲染线程前后获得的元素数据就不一样。<br>所以当js执行时，gui会被挂起，gui更新会被保存到一个队列里，等引擎线程空闲时立即被执行。<br>所以JS执行的时间过长，就会造成页面的渲染不连贯。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+<div>
+      
+</div>
+
+    
+
+    
+
+    
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-categories" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="zeuszhou.xyz/设计模式/前端设计模式/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ZEUS ZHOU">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ZEUS ZHOU">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/设计模式/前端设计模式/" itemprop="url">前端设计模式</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-05-23T17:49:17+08:00">
+                2020-05-23
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Post modified&#58;</span>
+              
+              <time title="Post modified" itemprop="dateModified" datetime="2020-05-23T20:28:32+08:00">
+                2020-05-23
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/设计模式/" itemprop="url" rel="index">
+                    <span itemprop="name">设计模式</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="设计模式原则"><a href="#设计模式原则" class="headerlink" title="设计模式原则"></a>设计模式原则</h3><ol>
+<li><strong>单一职责</strong>，一个程序只做一件事，功能过于复杂就取消，每个部分保持独立</li>
+<li><strong>开放闭合原则</strong>，对扩展开放，对修改封闭，增加需求时，扩展新代码，而非修改已有代码</li>
+<li><strong>里氏替换原则</strong>，子类能够覆盖父类，父类能出现的地方，子类就能出现</li>
+<li><strong>接口隔离原则</strong>，保持接口的单一独立，类似单一职责原则，这里更关注接口</li>
+<li><strong>依赖倒转原则</strong>，面向接口编程，依赖于抽象而不依赖于具体，使用方只关注接口而不关注具体类的实现</li>
+</ol>
+<h3 id="单例模式"><a href="#单例模式" class="headerlink" title="单例模式"></a>单例模式</h3><p>一个类只能构造出唯一的实例<br>比如弹窗，无论点击多少，都只被创建一次<br>实现方法为先判断实例存在与否，不存在创建再返回，存在直接返回，保证一个类只有一个实例</p>
+<h3 id="策略模式"><a href="#策略模式" class="headerlink" title="策略模式"></a>策略模式</h3><p>根据参数的不同可以命中不同的策略<br>两部分组成，策略类封装具体算法，环境类接受客户请求，随后将请求委托给某一个策略类</p>
+<h3 id="代理模式"><a href="#代理模式" class="headerlink" title="代理模式"></a>代理模式</h3><p>代理对象和本体对象具有一致的接口<br>为一个对象提供一个代用品或占位符，以便控制对它的访问<br>比如某一个花销很大的操作，可以先用虚拟代理的方式延迟到需要它的时候才创建，比如图片懒加载</p>
+<h3 id="迭代器模式"><a href="#迭代器模式" class="headerlink" title="迭代器模式"></a>迭代器模式</h3><p>能获取聚合对象的顺序和元素</p>
+<h3 id="发布订阅模式"><a href="#发布订阅模式" class="headerlink" title="发布订阅模式"></a>发布订阅模式</h3><p>PubSub</p>
+<h3 id="命令模式"><a href="#命令模式" class="headerlink" title="命令模式"></a>命令模式</h3><p>不同对象间约定好响应的接口</p>
+<h3 id="组合模式"><a href="#组合模式" class="headerlink" title="组合模式"></a>组合模式</h3><p>组合模式在对象间形成一致对待的树形结构</p>
+<h3 id="模版方法模式"><a href="#模版方法模式" class="headerlink" title="模版方法模式"></a>模版方法模式</h3><p>父类中定好执行顺序</p>
+<h3 id="享元模式"><a href="#享元模式" class="headerlink" title="享元模式"></a>享元模式</h3><p>减少创建实例的个数</p>
+<h3 id="职责链模式"><a href="#职责链模式" class="headerlink" title="职责链模式"></a>职责链模式</h3><p>通过请求第一个条件，会持续执行后续的条件，直到返回结果为止</p>
+<h3 id="中介者模式"><a href="#中介者模式" class="headerlink" title="中介者模式"></a>中介者模式</h3><p>对象和对象之间借助第三方中介者进行通信<br>比如购物车需求，有商品选择表单，颜色选择表单和购买数量表单，都会触发change事件，可以通过中介者来转发处理这个事件</p>
+<h3 id="装饰者模式"><a href="#装饰者模式" class="headerlink" title="装饰者模式"></a>装饰者模式</h3><p>动态的给函数赋能</p>
+<h3 id="状态模式"><a href="#状态模式" class="headerlink" title="状态模式"></a>状态模式</h3><p>每个状态建立一个类，状态改变会产生不同的行为</p>
+<h3 id="适配者模式"><a href="#适配者模式" class="headerlink" title="适配者模式"></a>适配者模式</h3><p>一种数据结构改成另一种数据结构</p>
+<h3 id="观察者模式"><a href="#观察者模式" class="headerlink" title="观察者模式"></a>观察者模式</h3><p>当观察对象发生变化时，自动调用相关函数</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+<div>
+      
+</div>
+
+    
+
+    
+
+    
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-categories" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="zeuszhou.xyz/性能优化/性能优化/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ZEUS ZHOU">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ZEUS ZHOU">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/性能优化/性能优化/" itemprop="url">时尚版性能优化</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-05-22T21:15:57+08:00">
+                2020-05-22
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Post modified&#58;</span>
+              
+              <time title="Post modified" itemprop="dateModified" datetime="2020-05-23T10:51:07+08:00">
+                2020-05-23
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/性能优化/" itemprop="url" rel="index">
+                    <span itemprop="name">性能优化</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>前端性能优化的目的不是追求一味的快，而是优化用户的体验，即使没有实质化的优化，让用户产生性能快的错觉，也是性能优化，用户觉得快，就是真的快，比如加loading。</p>
+<h3 id="加载优化（大部分）"><a href="#加载优化（大部分）" class="headerlink" title="加载优化（大部分）"></a>加载优化（大部分）</h3><ol>
+<li><strong>首屏loading</strong>：html-webpack-plugin，js执行期间加入提示，在文件中插入loading图</li>
+<li><strong>预渲染</strong>：prerender-spa-plugin，模拟浏览器获取首屏的html结构，在本地模拟浏览器环境，预先执行我们的打包文件，这样通过解析可以获取首屏的html，在正常环境中，可以返回预先解析好的HTML</li>
+<li><strong>开启HTTP2</strong>：浏览器并发限制一次性6次请求，http2二进制分帧进行通信，多路复用，只需一个tcp通道，请求和响应可以双向通信，头部压缩，只发送差异数据，维护头信息表，以后只发索引号。服务器推送，无需请求，减少多次请求的耗时</li>
+<li><strong>开启浏览器缓存</strong>：给第三方库设置强缓存，SplitChunksPlugin来做拆包，需要将应用基础库和特定依赖库分离。当chunk在强缓存期但服务器代码变了，需要通知客户端，需要每次引入script脚本的时候去服务器更新，并开启hashchunk，作用是当chunk变化时，hash值也会变，所以不变就命中缓存，变了重新请求</li>
+<li><strong>骨架图</strong>：antd的骨架屏Skeleton，vue的SkeletonWebpackPlugin，让骨架屏的css分离，直接作为内联style处理到html，提高载入速度</li>
+<li><strong>Tree shaking</strong>：通过程序流分析找出你代码中无用的代码并剔除，webpack4自带，坑Babel转译，因为需要es5的module，需要手动关闭commonjs；坑2第三方库不可控，因为有些只有es5版本</li>
+<li><strong>路由分割优化</strong>：只加载当前页面的代码，比如component: ()=&gt; import(‘@components/login’), 这样登陆页会被单独打包</li>
+<li><strong>组件懒加载</strong>：在页面的加载中只渲染部分必须的组件,而其余的组件可以按需加载。基于lazy+suspense，比如把echart的图进行懒加载</li>
+<li><strong>组件预加载</strong>：在用户的鼠标还处于hover状态的时候就开始触发图表资源的加载,通常情况下当用户点击结束之后,加载也基本完成,这个时候图表会很顺利地渲染出来,不会出现延迟</li>
+<li><strong>keep alive</strong>：vue中，在页面跳转后不销毁组件，先保存组件对应的实例到内存，当页面需要再次渲染时，可以利用这个缓存。但实例过多容易出现内存泄漏，注意调用deactivated销毁。react官网宣布不会加类似api，但可以用redux状态缓存（不推荐），或者React Keep Alive这个库</li>
+<li><strong>图片懒加载</strong>：页面内未出现在可视区域内的图片先不做加载，等到滚动到可视区域后再去加载。可见区域监听滚动事件</li>
+<li><strong>资源压缩</strong>：服务端启动gzip</li>
+<li><strong>CDN</strong>：静态资源走CDN，使用户就近获取内容，降低访问时延，减轻了源站的负载。静态资源不需要cookie，把静态资源和主页面置于不同的域名下，可以避免请求中携带不必要的cookie（同一个域名下的所有请求，都会携带一个相同的cookie，设置不当就会很大）</li>
+<li><strong>雪碧图，icon</strong>：这个不解释</li>
+</ol>
+<h3 id="执行优化（小部分）"><a href="#执行优化（小部分）" class="headerlink" title="执行优化（小部分）"></a>执行优化（小部分）</h3><p>动画一般是性能的重灾区，需要大量的计算和渲染，主要有三种方式：</p>
+<ol>
+<li>Canvas</li>
+<li>CSS3</li>
+<li>Dom</li>
+</ol>
+<p>动画优化方案：</p>
+<ol>
+<li><strong>Dom优化之Dom+js</strong>：容易引起回流和重绘，优化就是不用Dom+js做动画</li>
+<li><strong>CSS3优化之动画放在同一图层（合成层）</strong>：图层的概念，浏览器渲染页面，会把页面分成很多图层，对每个图层的节点计算样式，生成图形和位置，再把节点绘制到图层位图中，图层作为纹理上传至GPU，图层重组生成屏幕图像。将动画放在一个独立图层,这样可以避免动画效果影响其他渲染层的元素。比如iframe，video，3D或2D canvas，flash，3D transform，backface-visibility 为 hidden等</li>
+<li><strong>CSS3优化之避免重绘和回流</strong>：多使用transform和opacity来实现动画效果</li>
+<li><strong>CSS3优化之GPU加速</strong>：浏览器把一部分渲染任务丢给GPU。这部分css元素会提升到合成层，使得当页面上只有这个元素发生变换(transform)的时候其余元素不需要重新渲染。opacity，translate，rotate和scale会触发硬件加速，opacity号称性能最好的属性之一。</li>
+<li><strong>CSS3优化之will change</strong>：will-change，最好的方式，设置为opacity，transform或上下左右，允许我们提前告知浏览器可能会对元素进行哪些操作，让浏览器去优化并提前处理那些潜在的比较消耗性能的操作比如在动画开始之前，提前处理元素的动画行为。过多使用会占用计算机资源，且需要留足够时间，变更失效需要移除。</li>
+<li><strong>Canvas优化之requestAnimationFrame</strong>：setInterval定时完成动画不可靠，容易掉帧。requestAnimationFrame性能好，将所有动画放到一个浏览器重绘周期里去做，这样可以保存cpu循环次数，提高性能。开销更小，浏览器专门为动画提供的效果，运行时浏览器会自动优化方法的调用，如果页面不是激活状态，动画会暂停，节省了cpu开销</li>
+<li><strong>Canvas优化之离屏canvas</strong>：离屏canvas当成一个缓存区。把需要重复绘制的画面数据进行缓存起来，减少调用 canvas的 API的消耗。</li>
+<li><strong>Canvas优化之避免浮点运算</strong>：浮点数可能会使元素抖动或者抗锯齿失真</li>
+<li><strong>Canvas优化之减少调用Canvas API</strong>：通过适量js原生计算减少canvas API的调用，粒子效果少用圆，最好用方形</li>
+<li><strong>Web woker</strong>：分担主线程的压力</li>
+</ol>
+<p>大量数据性能优化方案：</p>
+<ol>
+<li><strong>虚拟列表</strong>：只渲染可视区域的数据，startIndex，endIndex，计算startOffset</li>
+<li><strong>webwork</strong>：完全和UI线程（主线程）并行的执行js代码，从而不会阻塞UI，它和主线程是通过 onmessage 和 postMessage 接口进行通信的。当主线程在处理界面事件时，worker 可以在后台运行，帮你处理大量的数据计算，当计算完成，将计算结果返回给主线程，由主线程更新 DOM 元素</li>
+</ol>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+<div>
+      
+</div>
+
+    
+
+    
+
+    
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-categories" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="zeuszhou.xyz/React/架构/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -912,7 +1488,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">23</span>
+                  <span class="site-state-item-count">26</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
