@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="zeuszhou.xyz/"/>
-  <updated>2020-06-27T03:35:31.897Z</updated>
+  <updated>2020-07-02T03:13:01.104Z</updated>
   <id>zeuszhou.xyz/</id>
   
   <author>
@@ -15,6 +15,32 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>写在快手实习结束</title>
+    <link href="zeuszhou.xyz/%E4%B8%AA%E4%BA%BA%E6%80%BB%E7%BB%93/%E5%86%99%E5%9C%A8%E5%BF%AB%E6%89%8B%E5%AE%9E%E4%B9%A0%E7%BB%93%E6%9D%9F/"/>
+    <id>zeuszhou.xyz/个人总结/写在快手实习结束/</id>
+    <published>2020-07-02T02:13:09.000Z</published>
+    <updated>2020-07-02T03:13:01.104Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>今天是2020年7月2号，早上一起来发现kim号没了，心情非常之开心，终于可以放一个月假了。</p><h3 id="做了什么"><a href="#做了什么" class="headerlink" title="做了什么"></a>做了什么</h3><p>因为所在的部门是个孵化项目，加上前端人手很少（只有我和另外一个实习生），在这期间承担了很多的工作：</p><ul><li>五一活动页面</li><li>CMS后台的迁移及新需求开发</li><li>电量中心开发</li><li>引流页面开发</li></ul><h3 id="学到了什么"><a href="#学到了什么" class="headerlink" title="学到了什么"></a>学到了什么</h3><p>技术方面，2个月以来，平均每天commit超过5次（如果自己的github能这么勤奋就好了科科），学会了react hooks，<br>typescript，熟悉了umi全家桶，css的使用也更加熟练，大量的实践让我对之前不太理解的理论知识有了更深刻的认识。<br>在引流页面开发上，自己协调资源完成了代码编写-配置CICD打包镜像-上线-域名配置-多个中台联调-微信后台配置等一系列工作。<br>代码规范方面也得到了改善。</p><p>业务方面，我了解到与人沟通的重要性。刚刚入职时，我以为做技术遇到的挑战会来自于完成某个功能，然鹅实际上，我发现配合和<br>沟通才是更加重要的，如何与pm，ui，后台，中台，mentor，运营沟通，减少沟通成本，减少信息不对称，沟通不到位的情况。<br>曾经花了2个礼拜，协调后台，中台，微信后台，运维等各方资源来做需求，结果最后刚刚调通，却被pm砍掉了需求，真是造化弄人，这个教训告诉我，<br>沟通的重要性，弄清楚的需求再下手，而不是只听mentor的一句话。</p><h3 id="遇到的屏颈"><a href="#遇到的屏颈" class="headerlink" title="遇到的屏颈"></a>遇到的屏颈</h3><ol><li>业务和项目不复杂，相似的功能做多了，也没有想着尝试新的方法重新实现，陷入了舒适圈，有时候感觉自己就是个无情的切图机器</li><li>没有时间（有时候也不想）来反思或者优化项目，review code也是浮于表面</li><li>他人的代码读的不多，对best practice了解较少</li><li>代码抽象也做的不够，没有花时间对已完成的项目进行重构，切完这个项目又换下一个项目，最多时候手上三个项目切换着做</li><li>没有特长，这一点是最致命的，什么都会一些，但都不够精</li><li>相关的源码也没有花时间去细细钻研，只是在一个会用的阶段</li></ol><h3 id="总结的解决方法"><a href="#总结的解决方法" class="headerlink" title="总结的解决方法"></a>总结的解决方法</h3><ol><li>加入一个前端大组，多review他人的code，多尝试新的实现思路</li><li>多考虑代码的简洁性，健壮性，可读性和抽象</li><li>抓紧放假的一个月时间，对vue的源码进行研读，最好可以react和vue对比着看</li><li>找到自己前端领域感兴趣的点，然后进行钻研，要有一个和别人不一样的地方</li></ol>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h3 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h3&gt;&lt;p&gt;今天是2020年7月2号，早上一起来发现kim号没了，心情非常之开心，终于可以放一个月假了。&lt;/p&gt;
+&lt;h3 id=&quot;做了什么&quot;&gt;&lt;a hr
+      
+    
+    </summary>
+    
+      <category term="个人总结" scheme="zeuszhou.xyz/categories/%E4%B8%AA%E4%BA%BA%E6%80%BB%E7%BB%93/"/>
+    
+    
+      <category term="个人总结" scheme="zeuszhou.xyz/tags/%E4%B8%AA%E4%BA%BA%E6%80%BB%E7%BB%93/"/>
+    
+  </entry>
   
   <entry>
     <title>计网安全操作系统面试题总结(长期更新)</title>
@@ -509,32 +535,6 @@
     
     
       <category term="TypeScript" scheme="zeuszhou.xyz/tags/TypeScript/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>操作系统总结</title>
-    <link href="zeuszhou.xyz/CS%E5%9F%BA%E7%A1%80/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E6%80%BB%E7%BB%93/"/>
-    <id>zeuszhou.xyz/CS基础/操作系统总结/</id>
-    <published>2020-05-26T09:32:59.000Z</published>
-    <updated>2020-05-28T09:53:10.623Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>几次面试都是因为操作系统完全没看，非常尴尬，看到这些知识，想起了在武大的快乐时光，自己的操作系统课本都送人了，还是得总结一个</p><h3 id="OS四大特征"><a href="#OS四大特征" class="headerlink" title="OS四大特征"></a>OS四大特征</h3><ol><li>并发：同时发生（并行：不同时，但连续，交替执行）</li><li>共享：分互斥共享和同时共享，一段时间内只允许一个进程访问的资源叫做独占资源或者临界资源</li><li>异步：类似js的异步</li><li>虚拟：空分复用技术（虚拟存储器），时分复用技术（虚拟处理器）</li></ol><p>指令是CPU能识别和执行的最基本命令，分为特权指令和非特权指令，内核程序才能执行特权指令，普通程序执行非特权指令。<br>CPU也有内核态和用户态两种状态。</p><h3 id="进程"><a href="#进程" class="headerlink" title="进程"></a>进程</h3><p>定义： 进程是具有独立功能的程序在数据集合上运行的过程，分配资源的基本单位，内存地址空间相互独立</p><p>每个进程都有一个进程控制块PCB来描述进程的各种信息，包括PID，UID，状态，优先级，指针，寄存器值等等</p><p>进程的基本状态：运行（占有CPU，在CPU上运行），就绪（缺空闲CPU）和阻塞（等待某事件）<br>进程的另外2种2状态：创建态（正在初始化PCB），终止态（撤销PCB，资源回收）</p><p>状态转换：运行进入阻塞是主动的（系统调用），阻塞进入就绪是被动的（其他都弄好了，就差CPU了），阻塞不能直接进入运行，就绪也不能直接进入阻塞（因为运行时才能主动请求）</p><p>原语：不可被中断的原子操作，使用关中断指令和开中断指令实现，先关再开</p><p>进程的通信：</p><ol><li>共享存储：互斥的，内存画出一块共享区</li><li>管道：半双工，某一时间段只能实现单向传输，双向需要2个管道。字符流形式，管道写满时，write被阻塞，数据都读完时，read被阻塞。如果没写满，就不让读，没空就不让写。读进程只有一个。</li><li>消息传递：格式化的消息为单位，通过发送消息/接受消息两个原语进行通信，包括信息头和尾</li><li>间接通信：通过中介者信箱来进行通信</li></ol><p>同步：某些进程的执行必须先于另一些进程<br>互斥：当某个进程使用某种资源时，其他进程必须等待<br>信号量：解决进程的同步和互斥，由剩余资源和阻塞队列的地址组成<br>生成者消费者问题：生产者的作用是生成一定量数据到缓存区，消费者消耗这些数据，保证生产者不会在满时加入数据，消费者不会在空时消耗数据，用互斥信号量实现互斥访问，同步信号量表示还可以生成多少产品和消耗多少产品</p><h3 id="线程"><a href="#线程" class="headerlink" title="线程"></a>线程</h3><p>定义：进程并发多个事件的能力，基本的CPU执行单位，程序执行流的最小单位，进程可以并发，进程的线程也可以并发，引入线程后，进程只作为除CPU外的系统资源分配单位。线程的切换比进程的切换开销小。</p><h3 id="内存"><a href="#内存" class="headerlink" title="内存"></a>内存</h3><p>内存是计算机硬件与CPU沟通的桥梁，中转站，程序执行前要先放到内存中才能被CPU处理<br>CPU通过内存的存储单元编址来找到执行程序的数据</p><p>连续分配：用户进程分配必须是一个连续的内存空间，包括动态分区分配，缺点是会产生内存碎片<br>非连续分配<br>动态分区分配：不会预先划分内存分区，而是动态的建立分区</p><p>空闲分区表：分区号，分区大小，起始地址，状态<br>首次适应算法：每次从低地址开始查找，找到第一个满足大小的空闲分区<br>最佳适应算法：从空闲分区表中找到最小的适合分配的分区块来满足需求<br>基本分页存储：把内存空间分成一个个大小相等的分区，每个分区是一个页框，进程的页与内存的页有一一对应关系</p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;h3 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h3&gt;&lt;p&gt;几次面试都是因为操作系统完全没看，非常尴尬，看到这些知识，想起了在武大的快乐时光，自己的操作系统课本都送人了，还是得总结一个&lt;/p&gt;
-&lt;h3
-      
-    
-    </summary>
-    
-      <category term="CS基础" scheme="zeuszhou.xyz/categories/CS%E5%9F%BA%E7%A1%80/"/>
-    
-    
-      <category term="CS基础" scheme="zeuszhou.xyz/tags/CS%E5%9F%BA%E7%A1%80/"/>
     
   </entry>
   

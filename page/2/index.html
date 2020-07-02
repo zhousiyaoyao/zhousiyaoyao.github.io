@@ -308,6 +308,185 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="zeuszhou.xyz/CSS/CSS3特性/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ZEUS ZHOU">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ZEUS ZHOU">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/CSS/CSS3特性/" itemprop="url">CSS3特性</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-06-09T21:35:08+08:00">
+                2020-06-09
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Post modified&#58;</span>
+              
+              <time title="Post modified" itemprop="dateModified" datetime="2020-06-10T09:57:23+08:00">
+                2020-06-10
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/CSS/" itemprop="url" rel="index">
+                    <span itemprop="name">CSS</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>比起前端的其他知识点，CSS容易被忽略，然而实际做项目中，CSS可真是太重要了，系统学一学对于开发效率来说有很大提升</p>
+<h3 id="选择器"><a href="#选择器" class="headerlink" title="选择器"></a>选择器</h3><ol>
+<li>E:nth-child(n)系列</li>
+<li>E:enabled, E:disabled, E:checked</li>
+<li>E:first-of-type系列,选择属于其父元素的首个E元素的每个E元素</li>
+<li>[attribute^=value]系列，选择某元素attribute属性是以value开头的</li>
+<li>E::selection: 选择被用户选取的元素部分</li>
+</ol>
+<h3 id="Transition"><a href="#Transition" class="headerlink" title="Transition"></a>Transition</h3><p>元素改变样式的过渡效果<br>transition-property: 规定应用过渡的CSS属性的名称。<br>transition-duration: 规定完成过渡效果需要多长时间。<br>transition-delay: 规定过渡效果何时开始，默认是0。<br>transition-timing-function: 规定过渡效果的时间曲线，默认是”ease”，还有linear、ease-in、ease-out、ease-in-out和cubic-bezier等过渡类型。<br>transition: 简写属性，用于在一个属性中设置四个过渡属性。<br><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">div</span> &#123; </span><br><span class="line">    <span class="attribute">transition</span>: width <span class="number">1s</span> linear <span class="number">2s</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>第一个1s是持续时间，第二个是从何时开始</p>
+<h3 id="Transform"><a href="#Transform" class="headerlink" title="Transform"></a>Transform</h3><p>Transform用来向元素应用各种2D和3D转换，该属性允许我们对元素进行旋转、缩放、移动或倾斜等操作。</p>
+<p>none: 定义不进行转换。<br>matrix(n,n,n,n,n,n): 定义2D转换，使用六个值的矩阵。<br>matrix3d(n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n): 定义3D转换，使用16个值的4x4矩阵。<br>translate(x,y): 定义2D位移转换。<br>translate3d(x,y,z): 定义3D位移转换。<br>translateX(x): 定义位移转换，只是用X轴的值。<br>translateY(y): 定义位移转换，只是用Y轴的值。<br>translateZ(z): 定义3D位移转换，只是用Z轴的值。<br>scale(x,y): 定义2D缩放转换。<br>scale3d(x,y,z): 定义3D缩放转换。<br>scaleX(x): 通过设置X轴的值来定义缩放转换。<br>scaleY(y): 通过设置Y轴的值来定义缩放转换。<br>scaleZ(z): 通过设置Z轴的值来定义3D缩放转换。<br>rotate(angle): 定义2D旋转，在参数中规定角度。<br>rotate3d(x,y,z,angle): 定义3D旋转。<br>rotateX(angle): 定义沿着X轴的3D旋转。<br>rotateY(angle): 定义沿着Y轴的3D旋转。<br>rotateZ(angle): 定义沿着Z轴的3D旋转。<br>skew(x-angle,y-angle): 定义沿着X和Y轴的2D倾斜转换。<br>skewX(angle): 定义沿着X轴的2D倾斜转换。<br>skewY(angle): 定义沿着Y轴的2D倾斜转换。<br>perspective(n): 为3D转换元素定义透视视图。</p>
+<h3 id="Animation"><a href="#Animation" class="headerlink" title="Animation"></a>Animation</h3><p>CSS3的Animation制作动画我们可以省去复杂的js代码.</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* 旋转 */</span></span><br><span class="line">@<span class="keyword">keyframes</span> spin &#123;</span><br><span class="line">    <span class="selector-tag">from</span> &#123;</span><br><span class="line">        <span class="attribute">transform</span>: <span class="built_in">rotate</span>(0deg)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="selector-tag">to</span> &#123;</span><br><span class="line">        <span class="attribute">transform</span>: <span class="built_in">rotate</span>(360deg)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-tag">div</span> &#123;</span><br><span class="line">    <span class="attribute">animation</span>: spin <span class="number">1s</span> linear infinite</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/* 弹幕 */</span></span><br><span class="line">@<span class="keyword">keyframes</span> bar &#123;</span><br><span class="line">    <span class="selector-tag">from</span> &#123;</span><br><span class="line">        <span class="attribute">left</span>: <span class="number">100%</span>;</span><br><span class="line">        transform: translate3d(0,0,0);;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="selector-tag">to</span> &#123;</span><br><span class="line">        <span class="attribute">left</span>: <span class="number">0</span>;</span><br><span class="line">        <span class="attribute">transform</span>: <span class="built_in">translate3d</span>(-100%,0,0);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-tag">div</span> &#123;</span><br><span class="line">    <span class="attribute">position</span>:absolute;</span><br><span class="line">    <span class="attribute">animation</span>: bar <span class="number">1s</span> linear <span class="number">0s</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="Border"><a href="#Border" class="headerlink" title="Border"></a>Border</h3><p>border-radius 圆角<br>box-shadow 添加阴影<br>border-image 绘制边框</p>
+<h3 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h3><p>background-clip属性用于确定背景画区，通常情况，背景都是覆盖整个元素的，利用这个属性可以设定背景颜色或图片的覆盖范围<br>background-origin，用于确定背景的位置，通常与background-position联合使用<br>background-size，常用来调整背景图片的大小<br>background-break，控制背景怎样在这些不同的盒子中显示</p>
+<h3 id="文字效果"><a href="#文字效果" class="headerlink" title="文字效果"></a>文字效果</h3><p>word-wrap 属性允许您允许文本强制文本进行换行<br>text-overflow 设置或检索当当前行超过指定容器的边界时如何显示，ellipsis逗号<br>text-shadow 可向文本应用阴影。能够规定水平阴影、垂直阴影、模糊距离，以及阴影的颜色</p>
+<p>text-decoration CSS3里面开始支持对文字的更深层次的渲染，具体有三个属性可供设置<br>text-fill-color: 设置文字内部填充颜色<br>text-stroke-color: 设置文字边界填充颜色<br>text-stroke-width: 设置文字边界宽度</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+<div>
+      
+</div>
+
+    
+
+    
+
+    
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-categories" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="zeuszhou.xyz/模块化/CommonJS和ES6Module的区别/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2126,192 +2305,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-categories" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="zeuszhou.xyz/CS基础/操作系统总结/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="ZEUS ZHOU">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="ZEUS ZHOU">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/CS基础/操作系统总结/" itemprop="url">操作系统总结</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-05-26T17:32:59+08:00">
-                2020-05-26
-              </time>
-            
-
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Post modified&#58;</span>
-              
-              <time title="Post modified" itemprop="dateModified" datetime="2020-05-28T17:53:10+08:00">
-                2020-05-28
-              </time>
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/CS基础/" itemprop="url" rel="index">
-                    <span itemprop="name">CS基础</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>几次面试都是因为操作系统完全没看，非常尴尬，看到这些知识，想起了在武大的快乐时光，自己的操作系统课本都送人了，还是得总结一个</p>
-<h3 id="OS四大特征"><a href="#OS四大特征" class="headerlink" title="OS四大特征"></a>OS四大特征</h3><ol>
-<li>并发：同时发生（并行：不同时，但连续，交替执行）</li>
-<li>共享：分互斥共享和同时共享，一段时间内只允许一个进程访问的资源叫做独占资源或者临界资源</li>
-<li>异步：类似js的异步</li>
-<li>虚拟：空分复用技术（虚拟存储器），时分复用技术（虚拟处理器）</li>
-</ol>
-<p>指令是CPU能识别和执行的最基本命令，分为特权指令和非特权指令，内核程序才能执行特权指令，普通程序执行非特权指令。<br>CPU也有内核态和用户态两种状态。</p>
-<h3 id="进程"><a href="#进程" class="headerlink" title="进程"></a>进程</h3><p>定义： 进程是具有独立功能的程序在数据集合上运行的过程，分配资源的基本单位，内存地址空间相互独立</p>
-<p>每个进程都有一个进程控制块PCB来描述进程的各种信息，包括PID，UID，状态，优先级，指针，寄存器值等等</p>
-<p>进程的基本状态：运行（占有CPU，在CPU上运行），就绪（缺空闲CPU）和阻塞（等待某事件）<br>进程的另外2种2状态：创建态（正在初始化PCB），终止态（撤销PCB，资源回收）</p>
-<p>状态转换：运行进入阻塞是主动的（系统调用），阻塞进入就绪是被动的（其他都弄好了，就差CPU了），阻塞不能直接进入运行，就绪也不能直接进入阻塞（因为运行时才能主动请求）</p>
-<p>原语：不可被中断的原子操作，使用关中断指令和开中断指令实现，先关再开</p>
-<p>进程的通信：</p>
-<ol>
-<li>共享存储：互斥的，内存画出一块共享区</li>
-<li>管道：半双工，某一时间段只能实现单向传输，双向需要2个管道。字符流形式，管道写满时，write被阻塞，数据都读完时，read被阻塞。如果没写满，就不让读，没空就不让写。读进程只有一个。</li>
-<li>消息传递：格式化的消息为单位，通过发送消息/接受消息两个原语进行通信，包括信息头和尾</li>
-<li>间接通信：通过中介者信箱来进行通信</li>
-</ol>
-<p>同步：某些进程的执行必须先于另一些进程<br>互斥：当某个进程使用某种资源时，其他进程必须等待<br>信号量：解决进程的同步和互斥，由剩余资源和阻塞队列的地址组成<br>生成者消费者问题：生产者的作用是生成一定量数据到缓存区，消费者消耗这些数据，保证生产者不会在满时加入数据，消费者不会在空时消耗数据，用互斥信号量实现互斥访问，同步信号量表示还可以生成多少产品和消耗多少产品</p>
-<h3 id="线程"><a href="#线程" class="headerlink" title="线程"></a>线程</h3><p>定义：进程并发多个事件的能力，基本的CPU执行单位，程序执行流的最小单位，进程可以并发，进程的线程也可以并发，引入线程后，进程只作为除CPU外的系统资源分配单位。线程的切换比进程的切换开销小。</p>
-<h3 id="内存"><a href="#内存" class="headerlink" title="内存"></a>内存</h3><p>内存是计算机硬件与CPU沟通的桥梁，中转站，程序执行前要先放到内存中才能被CPU处理<br>CPU通过内存的存储单元编址来找到执行程序的数据</p>
-<p>连续分配：用户进程分配必须是一个连续的内存空间，包括动态分区分配，缺点是会产生内存碎片<br>非连续分配<br>动态分区分配：不会预先划分内存分区，而是动态的建立分区</p>
-<p>空闲分区表：分区号，分区大小，起始地址，状态<br>首次适应算法：每次从低地址开始查找，找到第一个满足大小的空闲分区<br>最佳适应算法：从空闲分区表中找到最小的适合分配的分区块来满足需求<br>基本分页存储：把内存空间分成一个个大小相等的分区，每个分区是一个页框，进程的页与内存的页有一一对应关系</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-<div>
-      
-</div>
-
-    
-
-    
-
-    
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2366,7 +2359,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">27</span>
+                  <span class="site-state-item-count">28</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -2377,7 +2370,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">16</span>
+                  <span class="site-state-item-count">17</span>
                   <span class="site-state-item-name">categories</span>
                 </a>
               </div>
