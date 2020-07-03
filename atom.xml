@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="zeuszhou.xyz/"/>
-  <updated>2020-07-03T07:19:47.352Z</updated>
+  <updated>2020-07-03T13:02:42.393Z</updated>
   <id>zeuszhou.xyz/</id>
   
   <author>
@@ -15,6 +15,33 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Vue2.0源码之编译</title>
+    <link href="zeuszhou.xyz/%E6%BA%90%E7%A0%81/Vue2-0%E6%BA%90%E7%A0%81%E4%B9%8B%E7%BC%96%E8%AF%91/"/>
+    <id>zeuszhou.xyz/源码/Vue2-0源码之编译/</id>
+    <published>2020-07-03T08:57:31.000Z</published>
+    <updated>2020-07-03T13:02:42.393Z</updated>
+    
+    <content type="html"><![CDATA[<p>编译指的是从模版到render函数这一过程</p><p>vue.js 提供 Runtime + Complier （运行时编译）和 Runtime Only（不包括编译代码，用webpack的vue-loader预先完成编译）两个版本的选择</p><h3 id="mount-platforms-web-entry-runtime-with-compiler"><a href="#mount-platforms-web-entry-runtime-with-compiler" class="headerlink" title="$mount platforms/web/entry-runtime-with-compiler"></a>$mount platforms/web/entry-runtime-with-compiler</h3><p>挂载vm</p><ol><li>vue不能挂载在body或者html这种根节点上</li><li>如果没有render方法，会把el或者template字符串转换成render方法</li><li>接受el作为第一个参数，表示挂载的元素，可以为字符串，可以为DOM对象，如果是字符串，在浏览器环境下会调用query转换为DOM对象</li><li>hydrating是第二个参数，与服务端渲染有关</li><li>会调用mountComponent方法</li></ol><h3 id="mountComponent-core-instance-lifecycle"><a href="#mountComponent-core-instance-lifecycle" class="headerlink" title="mountComponent core/instance/lifecycle"></a>mountComponent core/instance/lifecycle</h3><p>完成整个渲染工作</p><ol><li>实例化一个渲染watcher，主要作用一：初始化时执行回调函数，调用updateComponent方法，在此方法中调用vm._render方法生成虚拟Node，最终调用vm._update更新DOM。主要作用二：当vm实例中的监测的数据发生变化的时候执行回调函数</li><li>vm.$node表示Vue实例的父虚拟Node，所以它为null时表示当前为根vue的实例</li><li>当vm.$node为null时，设置vm._ismounted为true，表示这个实例已经挂载了，同时执行mounted钩子函数</li></ol><h3 id="compileToFunctions-platforms-web-compiler-index"><a href="#compileToFunctions-platforms-web-compiler-index" class="headerlink" title="compileToFunctions platforms/web/compiler/index"></a>compileToFunctions platforms/web/compiler/index</h3><p>把模版template编译生成render以及staticRenderFns</p><h3 id="createCompiler-compiler-index"><a href="#createCompiler-compiler-index" class="headerlink" title="createCompiler compiler/index"></a>createCompiler compiler/index</h3><p>调用createCompilerCreator的返回</p><h3 id="createCompilerCreator-compiler-create-compiler"><a href="#createCompilerCreator-compiler-create-compiler" class="headerlink" title="createCompilerCreator compiler/create-compiler"></a>createCompilerCreator compiler/create-compiler</h3><p>返回一个createCompiler函数，接受baseOptions作为参数，返回compile和compilerToFunctions，compilerToFunctions是调用createCompilerToFunctionFn的返回值</p><h3 id="createCompilerToFunctionFn-compiler-to-function"><a href="#createCompilerToFunctionFn-compiler-to-function" class="headerlink" title="createCompilerToFunctionFn compiler/to-function"></a>createCompilerToFunctionFn compiler/to-function</h3><p>接受template，options和vm作为参数</p><h3 id="compile-compiler-create-compiler"><a href="#compile-compiler-create-compiler" class="headerlink" title="compile compiler/create-compiler"></a>compile compiler/create-compiler</h3><p>在执行createCompilerToFunctionFn时作为参数传进，先处理配置参数</p><h3 id="baseCompile-compiler-index"><a href="#baseCompile-compiler-index" class="headerlink" title="baseCompile compiler/index"></a>baseCompile compiler/index</h3><p>执行createCompilerCreator时作为参数传入，为编译的入口</p><ol><li>解析模版字符串生成AST</li><li>优化语法树</li><li>生成代码</li></ol><h3 id="编译入口如此负责的原因"><a href="#编译入口如此负责的原因" class="headerlink" title="编译入口如此负责的原因"></a>编译入口如此负责的原因</h3><p>vue在不同平台都会有编译的过程，不同平台配置baseOptions会有所不同，但同一平台每次编译的配置都一样，为了不让这些配置在每次编译过程都通过参数传入，vue利用函数柯里化实现了baseOptions的参数保留，同时把基础的编译过程函数抽出来，把真正的编译过程和其他逻辑比如对编译配置处理，缓存处理等剥离出来</p><h3 id="parse-compiler-parser-index"><a href="#parse-compiler-parser-index" class="headerlink" title="parse compiler/parser/index"></a>parse compiler/parser/index</h3>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;编译指的是从模版到render函数这一过程&lt;/p&gt;
+&lt;p&gt;vue.js 提供 Runtime + Complier （运行时编译）和 Runtime Only（不包括编译代码，用webpack的vue-loader预先完成编译）两个版本的选择&lt;/p&gt;
+&lt;h3 id=&quot;mou
+      
+    
+    </summary>
+    
+      <category term="源码" scheme="zeuszhou.xyz/categories/%E6%BA%90%E7%A0%81/"/>
+    
+    
+      <category term="源码" scheme="zeuszhou.xyz/tags/%E6%BA%90%E7%A0%81/"/>
+    
+  </entry>
   
   <entry>
     <title>React合成事件</title>
@@ -507,33 +534,6 @@
     
     
       <category term="JS基础" scheme="zeuszhou.xyz/tags/JS%E5%9F%BA%E7%A1%80/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>React总结第一弹</title>
-    <link href="zeuszhou.xyz/React/React%E6%80%BB%E7%BB%93%E7%AC%AC%E4%B8%80%E5%BC%B9/"/>
-    <id>zeuszhou.xyz/React/React总结第一弹/</id>
-    <published>2020-05-28T14:30:10.000Z</published>
-    <updated>2020-05-31T08:29:37.136Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="类组件中this指向问题"><a href="#类组件中this指向问题" class="headerlink" title="类组件中this指向问题"></a>类组件中this指向问题</h3><p>分为5种，所以还是函数组件好搞</p><ol><li>React.createClass，16版本已经废除，函数的this会自动绑定到组件，没了</li><li>Render函数中bind，组件每次执行render会重新分配函数，影响性能，会破坏purecomponent性能，不推荐</li><li>使用箭头函数，父组件刷新，都会生成一个新的箭头函数，子组件每次都会更新，和2一样，不推荐</li><li>构造函数中绑定this，父组件刷新，如果props值不变，子组件就不会刷新，推荐，就是可读性不太行</li><li>定义阶段使用箭头函数绑定，箭头函数会自动绑定到当前组件的作用域</li></ol><h3 id="关于antd表格渲染按钮"><a href="#关于antd表格渲染按钮" class="headerlink" title="关于antd表格渲染按钮"></a>关于antd表格渲染按钮</h3><p>在table的column中，直接写onclick函数回调会在渲染时直接调用，点击反而不能触发，需要改成箭头函数</p><h3 id="关于set-state"><a href="#关于set-state" class="headerlink" title="关于set state"></a>关于set state</h3><p>写翻页的时候，发现set完page，page并没有立刻改变，直接拿state发请求，page还是上次的page。原来set state只是把任务交给任务队列，本身并没有执行任务，所以在那个回调函数中，set了，page也不会立刻改变，state会被batchupdate，通过dom diff之后加入到组件实例。</p><h3 id="key"><a href="#key" class="headerlink" title="key"></a>key</h3><p>react遍历数组一定要带上key，直接用map的index就行，不带会警告，帮助react优化渲染，使react只是重新排列而不是重新渲染它们，可以提供性能</p><h3 id="jsx的div问题"><a href="#jsx的div问题" class="headerlink" title="jsx的div问题"></a>jsx的div问题</h3><p>render函数或者三目运算，多个html元素一定要包一个div根元素，要不就报错了。<br>render函数返回一个react元素，是原生DOM组件的表示</p><h3 id="Refs"><a href="#Refs" class="headerlink" title="Refs"></a>Refs</h3><p>Refs提供一种访问在render方法中创建的DOM节点或者React元素的方法。<br>在典型数据流外，强制修改子代，这个时候可以使用Refs。<br>在input添加一个ref属性，该属性的值是一个回调函数，参数是DOM元素或者组件的挂载实例。<br>该函数接受输入的实际DOM元素，然后放在实例上，这样就可以在handleSubmit内部访问它。<br>在函数组件中，通过闭包使用。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">CustomForm</span> (<span class="params">&#123;handleSubmit&#125;</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">let</span> inputElement</span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    &lt;form onSubmit=&#123;() =&gt; handleSubmit(inputElement.value)&#125;&gt;</span><br><span class="line">      &lt;input</span><br><span class="line">        type=<span class="string">'text'</span></span><br><span class="line">        ref=&#123;(input) =&gt; inputElement = input&#125; /&gt;</span><br><span class="line">      &lt;button type=<span class="string">'submit'</span>&gt;Submit&lt;<span class="regexp">/button&gt;</span></span><br><span class="line"><span class="regexp">    &lt;/</span>form&gt;</span><br><span class="line">  )</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p><p>使用场景：</p><ol><li>需要管理焦点，选择文本或媒体播放时</li><li>触发式动画</li><li>与第三方DOM库集成</li></ol><h3 id="受控组件和非受控组件"><a href="#受控组件和非受控组件" class="headerlink" title="受控组件和非受控组件"></a>受控组件和非受控组件</h3><p>都是用来处理表单数据，推荐受控组件</p><ol><li>受控组件</li></ol><ul><li>包含表单的组件将跟踪其状态中的输入值，并在每次回调触发时重新渲染，以这种方式由React控制其值的输入表单元素称为受控组件</li><li>数据由React组件管理</li><li>表单元素默认映射到状态，双向绑定，用value绑定到state</li><li>必须使用onchange来绑定事件</li><li>支持即时字段验证，允许有条件地禁用/启用按钮，强制输入格式</li></ul><ol start="2"><li>非受控组件</li></ol><ul><li>非受控组件通常更易于实现，因为只需使用refs即可从 DOM 中获取值</li><li>数据由DOM节点来处理</li><li>容易和第三方库结合，更容易同时集成 React 和非 React 代码，可以减少代码量</li><li>适用场景只有一次性取值和submit验证，其他都推荐受控组件</li></ul><h3 id="生命周期"><a href="#生命周期" class="headerlink" title="生命周期"></a>生命周期</h3><p>componentWillMount：render之前执行<br>componentDidMount：render之后执行<br>componentWillReceiveProps：接到props之前执行<br>shouldComponentUpdate：返回true更新，如果不需要render，返回false，提高性能的方法<br>componentWillUpdate：shouldComponentUpdate返回true，更新之前执行<br>componentDidUpdate：更新dom以响应props和state的变化<br>componentWillUnmount：用于取消任何的网络请求，或删除与组件关联的所有事件监听器</p><h3 id="React-Context"><a href="#React-Context" class="headerlink" title="React Context"></a>React Context</h3><p>Context通过组件树提供一个传递数据的方法，从而避免在每一层手动的传递props属性</p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;h3 id=&quot;类组件中this指向问题&quot;&gt;&lt;a href=&quot;#类组件中this指向问题&quot; class=&quot;headerlink&quot; title=&quot;类组件中this指向问题&quot;&gt;&lt;/a&gt;类组件中this指向问题&lt;/h3&gt;&lt;p&gt;分为5种，所以还是函数组件好搞&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;R
-      
-    
-    </summary>
-    
-      <category term="React" scheme="zeuszhou.xyz/categories/React/"/>
-    
-    
-      <category term="React" scheme="zeuszhou.xyz/tags/React/"/>
     
   </entry>
   

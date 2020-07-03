@@ -75,7 +75,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="源码," />
 
 
 
@@ -88,17 +88,18 @@
 
 
 
-<meta name="description" content="Keep Learning">
-<meta name="keywords" content="java web">
-<meta property="og:type" content="website">
-<meta property="og:title" content="ZEUS ZHOU">
-<meta property="og:url" content="zeuszhou.xyz/archives/2020/page/5/index.html">
+<meta name="description" content="编译指的是从模版到render函数这一过程 vue.js 提供 Runtime + Complier （运行时编译）和 Runtime Only（不包括编译代码，用webpack的vue-loader预先完成编译）两个版本的选择 $mount platforms/web/entry-runtime-with-compiler挂载vm  vue不能挂载在body或者html这种根节点上 如果没有re">
+<meta name="keywords" content="源码">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Vue2.0源码之编译">
+<meta property="og:url" content="zeuszhou.xyz/源码/Vue2-0源码之编译/index.html">
 <meta property="og:site_name" content="ZEUS ZHOU">
-<meta property="og:description" content="Keep Learning">
+<meta property="og:description" content="编译指的是从模版到render函数这一过程 vue.js 提供 Runtime + Complier （运行时编译）和 Runtime Only（不包括编译代码，用webpack的vue-loader预先完成编译）两个版本的选择 $mount platforms/web/entry-runtime-with-compiler挂载vm  vue不能挂载在body或者html这种根节点上 如果没有re">
 <meta property="og:locale" content="中文">
+<meta property="og:updated_time" content="2020-07-03T13:02:42.393Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="ZEUS ZHOU">
-<meta name="twitter:description" content="Keep Learning">
+<meta name="twitter:title" content="Vue2.0源码之编译">
+<meta name="twitter:description" content="编译指的是从模版到render函数这一过程 vue.js 提供 Runtime + Complier （运行时编译）和 Runtime Only（不包括编译代码，用webpack的vue-loader预先完成编译）两个版本的选择 $mount platforms/web/entry-runtime-with-compiler挂载vm  vue不能挂载在body或者html这种根节点上 如果没有re">
 
 
 
@@ -128,13 +129,13 @@
 
 
 
-  <link rel="canonical" href="zeuszhou.xyz/archives/2020/page/5/"/>
+  <link rel="canonical" href="zeuszhou.xyz/源码/Vue2-0源码之编译/"/>
 
 
 
 
 
-  <title>Archive | ZEUS ZHOU</title>
+  <title>Vue2.0源码之编译 | ZEUS ZHOU</title>
   
 
 
@@ -153,7 +154,7 @@
     
   
 
-  <div class="container sidebar-position-left page-archive">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
 <a href="https://github.com/zhousiyaoyao"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_orange_ff7600.png" alt="Fork me on GitHub"></a>
@@ -293,152 +294,280 @@
           <div id="content" class="content">
             
 
-  
-  
-  
-  <div class="post-block archive">
-    <div id="posts" class="posts-collapse">
-      <span class="archive-move-on"></span>
+  <div id="posts" class="posts-expand">
+    
 
-      <span class="archive-page-counter">
+  
+
+  
+  
+  
+
+  <article class="post post-type-categories" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="zeuszhou.xyz/源码/Vue2-0源码之编译/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ZEUS ZHOU">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ZEUS ZHOU">
+    </span>
+
+    
+      <header class="post-header">
+
         
         
+          <h1 class="post-title" itemprop="name headline">Vue2.0源码之编译</h1>
         
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-07-03T16:57:31+08:00">
+                2020-07-03
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Post modified&#58;</span>
+              
+              <time title="Post modified" itemprop="dateModified" datetime="2020-07-03T21:02:42+08:00">
+                2020-07-03
+              </time>
+            
+          </span>
+
           
-        
-        Um..! 30 posts in total. Keep on posting.
-      </span>
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/源码/" itemprop="url" rel="index">
+                    <span itemprop="name">源码</span>
+                  </a>
+                </span>
 
-      
-
-        
-        
-        
-
-        
+                
+                
+              
+            </span>
           
-          <div class="collection-title">
-            <h1 class="archive-year" id="archive-year-2020">2020</h1>
-          </div>
-        
-        
 
-        
+          
+            
+          
 
-  <article class="post post-type-categories" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+          
+          
 
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/CSS/CSS3特性/" itemprop="url">
-              
-                <span itemprop="name">CSS3特性</span>
-              
-            </a>
-        
-      </h2>
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>  阅读数
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2020-06-09T21:35:08+08:00"
-              content="2020-06-09" >
-          06-09
-        </time>
-      </div>
+          
 
-    </header>
-  </article>
+          
 
+        </div>
+      </header>
+    
 
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-categories" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/模块化/CommonJS和ES6Module的区别/" itemprop="url">
-              
-                <span itemprop="name">CommonJS和ES6 Module的区别</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2020-06-09T15:08:31+08:00"
-              content="2020-06-09" >
-          06-09
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
       
 
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-categories" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/函数式编程/函数式编程/" itemprop="url">
-              
-                <span itemprop="name">函数式编程</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2020-06-08T21:28:56+08:00"
-              content="2020-06-08" >
-          06-08
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
       
-
+        <p>编译指的是从模版到render函数这一过程</p>
+<p>vue.js 提供 Runtime + Complier （运行时编译）和 Runtime Only（不包括编译代码，用webpack的vue-loader预先完成编译）两个版本的选择</p>
+<h3 id="mount-platforms-web-entry-runtime-with-compiler"><a href="#mount-platforms-web-entry-runtime-with-compiler" class="headerlink" title="$mount platforms/web/entry-runtime-with-compiler"></a>$mount platforms/web/entry-runtime-with-compiler</h3><p>挂载vm</p>
+<ol>
+<li>vue不能挂载在body或者html这种根节点上</li>
+<li>如果没有render方法，会把el或者template字符串转换成render方法</li>
+<li>接受el作为第一个参数，表示挂载的元素，可以为字符串，可以为DOM对象，如果是字符串，在浏览器环境下会调用query转换为DOM对象</li>
+<li>hydrating是第二个参数，与服务端渲染有关</li>
+<li>会调用mountComponent方法</li>
+</ol>
+<h3 id="mountComponent-core-instance-lifecycle"><a href="#mountComponent-core-instance-lifecycle" class="headerlink" title="mountComponent core/instance/lifecycle"></a>mountComponent core/instance/lifecycle</h3><p>完成整个渲染工作</p>
+<ol>
+<li>实例化一个渲染watcher，主要作用一：初始化时执行回调函数，调用updateComponent方法，在此方法中调用vm._render方法生成虚拟Node，最终调用vm._update更新DOM。主要作用二：当vm实例中的监测的数据发生变化的时候执行回调函数</li>
+<li>vm.$node表示Vue实例的父虚拟Node，所以它为null时表示当前为根vue的实例</li>
+<li>当vm.$node为null时，设置vm._ismounted为true，表示这个实例已经挂载了，同时执行mounted钩子函数</li>
+</ol>
+<h3 id="compileToFunctions-platforms-web-compiler-index"><a href="#compileToFunctions-platforms-web-compiler-index" class="headerlink" title="compileToFunctions platforms/web/compiler/index"></a>compileToFunctions platforms/web/compiler/index</h3><p>把模版template编译生成render以及staticRenderFns</p>
+<h3 id="createCompiler-compiler-index"><a href="#createCompiler-compiler-index" class="headerlink" title="createCompiler compiler/index"></a>createCompiler compiler/index</h3><p>调用createCompilerCreator的返回</p>
+<h3 id="createCompilerCreator-compiler-create-compiler"><a href="#createCompilerCreator-compiler-create-compiler" class="headerlink" title="createCompilerCreator compiler/create-compiler"></a>createCompilerCreator compiler/create-compiler</h3><p>返回一个createCompiler函数，接受baseOptions作为参数，返回compile和compilerToFunctions，compilerToFunctions是调用createCompilerToFunctionFn的返回值</p>
+<h3 id="createCompilerToFunctionFn-compiler-to-function"><a href="#createCompilerToFunctionFn-compiler-to-function" class="headerlink" title="createCompilerToFunctionFn compiler/to-function"></a>createCompilerToFunctionFn compiler/to-function</h3><p>接受template，options和vm作为参数</p>
+<h3 id="compile-compiler-create-compiler"><a href="#compile-compiler-create-compiler" class="headerlink" title="compile compiler/create-compiler"></a>compile compiler/create-compiler</h3><p>在执行createCompilerToFunctionFn时作为参数传进，先处理配置参数</p>
+<h3 id="baseCompile-compiler-index"><a href="#baseCompile-compiler-index" class="headerlink" title="baseCompile compiler/index"></a>baseCompile compiler/index</h3><p>执行createCompilerCreator时作为参数传入，为编译的入口</p>
+<ol>
+<li>解析模版字符串生成AST</li>
+<li>优化语法树</li>
+<li>生成代码</li>
+</ol>
+<h3 id="编译入口如此负责的原因"><a href="#编译入口如此负责的原因" class="headerlink" title="编译入口如此负责的原因"></a>编译入口如此负责的原因</h3><p>vue在不同平台都会有编译的过程，不同平台配置baseOptions会有所不同，但同一平台每次编译的配置都一样，为了不让这些配置在每次编译过程都通过参数传入，vue利用函数柯里化实现了baseOptions的参数保留，同时把基础的编译过程函数抽出来，把真正的编译过程和其他逻辑比如对编译配置处理，缓存处理等剥离出来</p>
+<h3 id="parse-compiler-parser-index"><a href="#parse-compiler-parser-index" class="headerlink" title="parse compiler/parser/index"></a>parse compiler/parser/index</h3>
+      
     </div>
+    
+    
+    
+
+<div>
+      
+        
+<div class="my_post_copyright">
+  <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+  
+  <!-- JS库 sweetalert 可修改路径 -->
+  <script type="text/javascript" src="http://jslibs.wuxubj.cn/sweetalert_mini/jquery-1.7.1.min.js"></script>
+  <script src="http://jslibs.wuxubj.cn/sweetalert_mini/sweetalert.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="http://jslibs.wuxubj.cn/sweetalert_mini/sweetalert.mini.css">
+
+  <p><span>本文标题:</span>Vue2.0源码之编译</a></p>
+  <p><span>文章作者:</span>ZEUS ZHOU</a></p>
+  <p><span>发布时间:</span>2020年07月03日 - 16:57:31</p>
+  <p><span>最后更新:</span>2020年07月03日 - 21:02:42</p>
+  <p><span>原始链接:</span>
+    <span class="copy-path"  title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="zeuszhou.xyz/源码/Vue2-0源码之编译/"  aria-label="复制成功！"></i></span>
+  </p>
+  <p><span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">署名-非商业性使用-禁止演绎 4.0 国际</a> 转载请保留原文链接及作者。</p>  
+</div>
+<script> 
+    var clipboard = new Clipboard('.fa-clipboard');
+    clipboard.on('success', $(function(){
+      $(".fa-clipboard").click(function(){
+        swal({   
+          title: "",   
+          text: '复制成功',   
+          html: false,
+          timer: 500,   
+          showConfirmButton: false
+        });
+      });
+    }));  
+</script>
+
+      
+</div>
+
+    
+
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>Post author:</strong>
+    ZEUS ZHOU
+  </li>
+  <li class="post-copyright-link">
+    <strong>Post link:</strong>
+    <a href="zeuszhou.xyz/源码/Vue2-0源码之编译/" title="Vue2.0源码之编译">zeuszhou.xyz/源码/Vue2-0源码之编译/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>Copyright Notice: </strong>
+    All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 4.0</a> unless stating additionally.
+  </li>
+</ul>
+
+      </div>
+    
+
+    <div>
+      
+        <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束-------------</div>
+    
+</div>
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/源码/" rel="tag"><i class="fa fa-tag"></i> 源码</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/React/React合成事件/" rel="next" title="React合成事件">
+                <i class="fa fa-chevron-left"></i> React合成事件
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
-
-  
-  <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/archives/2020/page/4/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/archives/2020/">1</a><span class="space">&hellip;</span><a class="page-number" href="/archives/2020/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/archives/2020/page/6/">6</a><span class="space">&hellip;</span><a class="page-number" href="/archives/2020/page/10/">10</a><a class="extend next" rel="next" href="/archives/2020/page/6/"><i class="fa fa-angle-right"></i></a>
-  </nav>
+  </article>
 
 
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -446,6 +575,10 @@
 
 
           
+
+  
+
+
 
         </div>
         
@@ -466,8 +599,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -578,6 +720,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#mount-platforms-web-entry-runtime-with-compiler"><span class="nav-number">1.</span> <span class="nav-text">$mount platforms/web/entry-runtime-with-compiler</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#mountComponent-core-instance-lifecycle"><span class="nav-number">2.</span> <span class="nav-text">mountComponent core/instance/lifecycle</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#compileToFunctions-platforms-web-compiler-index"><span class="nav-number">3.</span> <span class="nav-text">compileToFunctions platforms/web/compiler/index</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#createCompiler-compiler-index"><span class="nav-number">4.</span> <span class="nav-text">createCompiler compiler/index</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#createCompilerCreator-compiler-create-compiler"><span class="nav-number">5.</span> <span class="nav-text">createCompilerCreator compiler/create-compiler</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#createCompilerToFunctionFn-compiler-to-function"><span class="nav-number">6.</span> <span class="nav-text">createCompilerToFunctionFn compiler/to-function</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#compile-compiler-create-compiler"><span class="nav-number">7.</span> <span class="nav-text">compile compiler/create-compiler</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#baseCompile-compiler-index"><span class="nav-number">8.</span> <span class="nav-text">baseCompile compiler/index</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#编译入口如此负责的原因"><span class="nav-number">9.</span> <span class="nav-text">编译入口如此负责的原因</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#parse-compiler-parser-index"><span class="nav-number">10.</span> <span class="nav-text">parse compiler/parser/index</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -731,6 +889,10 @@
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 

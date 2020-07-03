@@ -1,6 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[Vue2.0源码之编译]]></title>
+    <url>%2F%E6%BA%90%E7%A0%81%2FVue2-0%E6%BA%90%E7%A0%81%E4%B9%8B%E7%BC%96%E8%AF%91%2F</url>
+    <content type="text"><![CDATA[编译指的是从模版到render函数这一过程 vue.js 提供 Runtime + Complier （运行时编译）和 Runtime Only（不包括编译代码，用webpack的vue-loader预先完成编译）两个版本的选择 $mount platforms/web/entry-runtime-with-compiler挂载vm vue不能挂载在body或者html这种根节点上 如果没有render方法，会把el或者template字符串转换成render方法 接受el作为第一个参数，表示挂载的元素，可以为字符串，可以为DOM对象，如果是字符串，在浏览器环境下会调用query转换为DOM对象 hydrating是第二个参数，与服务端渲染有关 会调用mountComponent方法 mountComponent core/instance/lifecycle完成整个渲染工作 实例化一个渲染watcher，主要作用一：初始化时执行回调函数，调用updateComponent方法，在此方法中调用vm._render方法生成虚拟Node，最终调用vm._update更新DOM。主要作用二：当vm实例中的监测的数据发生变化的时候执行回调函数 vm.$node表示Vue实例的父虚拟Node，所以它为null时表示当前为根vue的实例 当vm.$node为null时，设置vm._ismounted为true，表示这个实例已经挂载了，同时执行mounted钩子函数 compileToFunctions platforms/web/compiler/index把模版template编译生成render以及staticRenderFns createCompiler compiler/index调用createCompilerCreator的返回 createCompilerCreator compiler/create-compiler返回一个createCompiler函数，接受baseOptions作为参数，返回compile和compilerToFunctions，compilerToFunctions是调用createCompilerToFunctionFn的返回值 createCompilerToFunctionFn compiler/to-function接受template，options和vm作为参数 compile compiler/create-compiler在执行createCompilerToFunctionFn时作为参数传进，先处理配置参数 baseCompile compiler/index执行createCompilerCreator时作为参数传入，为编译的入口 解析模版字符串生成AST 优化语法树 生成代码 编译入口如此负责的原因vue在不同平台都会有编译的过程，不同平台配置baseOptions会有所不同，但同一平台每次编译的配置都一样，为了不让这些配置在每次编译过程都通过参数传入，vue利用函数柯里化实现了baseOptions的参数保留，同时把基础的编译过程函数抽出来，把真正的编译过程和其他逻辑比如对编译配置处理，缓存处理等剥离出来 parse compiler/parser/index]]></content>
+      <categories>
+        <category>源码</category>
+      </categories>
+      <tags>
+        <tag>源码</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[React合成事件]]></title>
     <url>%2FReact%2FReact%E5%90%88%E6%88%90%E4%BA%8B%E4%BB%B6%2F</url>
     <content type="text"><![CDATA[合成事件与原生事件的区别React并不是将click事件直接绑定在dom上面，而是采用事件冒泡的形式冒泡到document上面（不是react组件对应的dom），然后React将事件封装给正式的函数处理运行 中间层SyntheticEvent如果在dom上绑多了事件处理函数，页面的响应和内存占用会受到影响，React为了避免这类dom事件的滥用，同时屏蔽底层不同浏览器之间的事件系统差异，实现了一个中间层Synthetic 当用户为onclick添加函数时，react并没有将click事件绑定到dom上 而是在document处监听所有支持的事件，当事件发生并冒泡至document处时，React将事件封装交给中间层Synrthetic 当事件触发时，用使用统一的分发函数dispatchEvent将指定函数执行 React通过队列的形式，从触发的组件向父组件回溯，然后调用jsx中定义的callback React通过对象池的形式管理合成事件对象的创建和销毁，减少了垃圾的生成和新对象内存的分配，提高了性能 当同时绑定原生和合成事件，原生绑定会快于合成事件 源码分析mountComponent和updateComponent：组件的创建与更新，都会调用_updateDOMProperties方法，对jsx中声明的组件属性进行处理 enqueuePutListener：负责注册JSX中声明的事件，一方面将事件注册到document这个原生dom上，一方面采用事务队列的方式调用putListener将注册的事件存储起来，以供事件触发时回调。 listenTo负责注册事件，解决了不同浏览器间捕获和冒泡不兼容的问题。调用trapCapturedEvent和trapBubbledEvent注册捕获和冒泡事件 EventPluginHub负责事件存储，入口在putListener，事件存储在listenerBank对象中，按照事件名和React组件对象进行二维划分 当事件触发时，document上addEventListener注册的callback会被触发，从前面事件注册部分发现，此时回调函数为ReactEventListener.dispatchEvent，它是事件分发的入口 handleTopLevelImpl是事件分发的核心，实现了一套冒泡机制，从触发事件的对象开始，向父元素回溯，依次调用它们注册的事件callback _handleTopLevel负责事件处理和调用，一方面利用浏览器回传的原生事件构造出react合成事件，另一方面用队列的方式处理events 构造合成事件：EventPluginRegistry.plugins默认包括5种plugins，不同的plugin针对不同的事件有特殊的处理。 从event对象池中取出合成事件对象，利用对象池思想，可以大大降低对象创建和销毁的时间，提高性能。 对象创建好后，我们会将其添加到events队列之中，因为事件回调会用这个队列，用accumulate方法添加到events，将新创建的合成对象的引用添加到之前创建好的events队列即可 批处理合成事件：react以队列的形式处理合成事件，方法入口为runEventQueueInBatch]]></content>
