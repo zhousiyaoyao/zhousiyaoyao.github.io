@@ -308,6 +308,188 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="zeuszhou.xyz/React/React合成事件/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ZEUS ZHOU">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ZEUS ZHOU">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/React/React合成事件/" itemprop="url">React合成事件</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-07-02T15:04:39+08:00">
+                2020-07-02
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Post modified&#58;</span>
+              
+              <time title="Post modified" itemprop="dateModified" datetime="2020-07-03T15:19:47+08:00">
+                2020-07-03
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/React/" itemprop="url" rel="index">
+                    <span itemprop="name">React</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="合成事件与原生事件的区别"><a href="#合成事件与原生事件的区别" class="headerlink" title="合成事件与原生事件的区别"></a>合成事件与原生事件的区别</h3><p>React并不是将click事件直接绑定在dom上面，而是采用事件冒泡的形式冒泡到document上面（不是react组件对应的dom），然后React将事件封装给正式的函数处理运行</p>
+<h3 id="中间层SyntheticEvent"><a href="#中间层SyntheticEvent" class="headerlink" title="中间层SyntheticEvent"></a>中间层SyntheticEvent</h3><p>如果在dom上绑多了事件处理函数，页面的响应和内存占用会受到影响，React为了避免这类dom事件的滥用，同时屏蔽底层不同浏览器之间的事件系统差异，实现了一个中间层Synthetic</p>
+<ol>
+<li>当用户为onclick添加函数时，react并没有将click事件绑定到dom上</li>
+<li>而是在document处监听所有支持的事件，当事件发生并冒泡至document处时，React将事件封装交给中间层Synrthetic</li>
+<li>当事件触发时，用使用统一的分发函数dispatchEvent将指定函数执行</li>
+<li>React通过队列的形式，从触发的组件向父组件回溯，然后调用jsx中定义的callback</li>
+<li>React通过对象池的形式管理合成事件对象的创建和销毁，减少了垃圾的生成和新对象内存的分配，提高了性能</li>
+</ol>
+<p>当同时绑定原生和合成事件，原生绑定会快于合成事件</p>
+<h3 id="源码分析"><a href="#源码分析" class="headerlink" title="源码分析"></a>源码分析</h3><p>mountComponent和updateComponent：组件的创建与更新，都会调用_updateDOMProperties方法，对jsx中声明的组件属性进行处理</p>
+<p>enqueuePutListener：负责注册JSX中声明的事件，一方面将事件注册到document这个原生dom上，一方面采用事务队列的方式调用putListener<br>将注册的事件存储起来，以供事件触发时回调。</p>
+<p>listenTo负责注册事件，解决了不同浏览器间捕获和冒泡不兼容的问题。调用trapCapturedEvent和trapBubbledEvent注册捕获和冒泡事件</p>
+<p>EventPluginHub负责事件存储，入口在putListener，事件存储在listenerBank对象中，按照事件名和React组件对象进行二维划分</p>
+<p>当事件触发时，document上addEventListener注册的callback会被触发，从前面事件注册部分发现，此时回调函数为ReactEventListener.dispatchEvent，<br>它是事件分发的入口</p>
+<p>handleTopLevelImpl是事件分发的核心，实现了一套冒泡机制，从触发事件的对象开始，向父元素回溯，依次调用它们注册的事件callback</p>
+<p>_handleTopLevel负责事件处理和调用，一方面利用浏览器回传的原生事件构造出react合成事件，另一方面用队列的方式处理events</p>
+<p>构造合成事件：EventPluginRegistry.plugins默认包括5种plugins，不同的plugin针对不同的事件有特殊的处理。</p>
+<p>从event对象池中取出合成事件对象，利用对象池思想，可以大大降低对象创建和销毁的时间，提高性能。</p>
+<p>对象创建好后，我们会将其添加到events队列之中，因为事件回调会用这个队列，用accumulate方法添加到events，将新创建的合成对象的引用添加到之前创建好的events队列即可</p>
+<p>批处理合成事件：react以队列的形式处理合成事件，方法入口为runEventQueueInBatch</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+<div>
+      
+</div>
+
+    
+
+    
+
+    
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-categories" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="zeuszhou.xyz/个人总结/写在快手实习结束/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -355,7 +537,7 @@
               
                 <span class="post-meta-item-text">Post modified&#58;</span>
               
-              <time title="Post modified" itemprop="dateModified" datetime="2020-07-02T11:25:13+08:00">
+              <time title="Post modified" itemprop="dateModified" datetime="2020-07-02T17:31:01+08:00">
                 2020-07-02
               </time>
             
@@ -430,7 +612,8 @@
 <li>代码抽象也做的不够，没有花时间对已完成的项目进行重构，切完这个项目又换下一个项目，最多时候手上三个项目切换着做</li>
 <li>没有特长，这一点是最致命的，什么都会一些，但都不够精</li>
 <li>相关的源码也没有花时间去细细钻研，只是在一个会用的阶段</li>
-<li>没有接触到前端工程化，可视化，监控，服务端渲染，前端基础建设等等领域，只是一直在写页面</li>
+<li>没有接触到前端工程化，可视化，监控，服务端渲染，前端基础建设，node等等领域，只是一直在写页面</li>
+<li>大厂边缘部门的缺点：业务没难点，项目不复杂，参与人数少，领域不特殊</li>
 </ol>
 <h3 id="总结的解决方法"><a href="#总结的解决方法" class="headerlink" title="总结的解决方法"></a>总结的解决方法</h3><ol>
 <li>加入一个前端大组，多review他人的code，多尝试新的实现思路</li>
@@ -1907,192 +2090,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-categories" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="zeuszhou.xyz/踩坑/开发踩坑记录/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="ZEUS ZHOU">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="ZEUS ZHOU">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/踩坑/开发踩坑记录/" itemprop="url">开发踩坑记录</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-06-12T15:13:17+08:00">
-                2020-06-12
-              </time>
-            
-
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Post modified&#58;</span>
-              
-              <time title="Post modified" itemprop="dateModified" datetime="2020-06-23T10:30:14+08:00">
-                2020-06-23
-              </time>
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/踩坑/" itemprop="url" rel="index">
-                    <span itemprop="name">踩坑</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>记录自己平时开发过程中的坑</p>
-<h3 id="2020年6月的坑"><a href="#2020年6月的坑" class="headerlink" title="2020年6月的坑"></a>2020年6月的坑</h3><ol>
-<li><p>chrome图片显示正常，safari和iphone看不到图片<br>原因：后台传的图片是webp，webp是谷歌开发的一种旨在加快图片加载速度的图片格式<br>图片压缩体积大约只有JPEG的2/3，说白了就是省空间。但safari不支持，转成png就ok了</p>
-</li>
-<li><p>微信网页登陆问题<br>扫码得到code，请求登陆接口报错，发现cookie没有带上，后面发现是因为前端后端的域名不是一样的，存在cookie跨域，后手动种cookie到测试环境，后又遇到参数错误问题，和中台同学沟通加上接口才得以解决。<br>启发：报错了就问，很多时候问题不是出在你身上，脸皮厚一点。cookie的domain，跨域机制需要理解</p>
-</li>
-<li><p>useEffect取消监听<br>feed下拉切换页面后仍然生效，发现监听位置写在了index，所以切换页面也不会销毁，写在组件里就可以了，注意useEffect取消监听，依赖不写</p>
-</li>
-<li><p>setState生效问题<br>set完state不会立刻生效，还是得用当前的值</p>
-</li>
-<li><p>前端传数组问题<br>数组需要用JSON.stringify，将数组对象转化成json字符串，否则会出现分开元素传递的奇怪现象</p>
-</li>
-<li><p>可替换参数问题<br>在hooks里，如果不需要render但参数需要替换，不要写在useState，直接写变量使用就可以</p>
-</li>
-<li><p>hooks用useState却不重新渲染组件问题<br>场景是用户发送评论，实时改变评论数和显示最新评论，评论是个对象，如果在更新函数里传入同一个对象时将无法触发更新。因为useState里数据务必为immutable（不可赋值的对象），解决思路就是通过slice() 返回一个新的对象去赋值。自加setCount(count + 1)</p>
-</li>
-<li><p>图片统一大小被拉伸问题<br>一句object-fit: cover解决问题，被替换的内容大小保持其宽高比，同时填充元素的整个内容框。 如果对象的宽高比与盒子的宽高比不匹配，该对象将被剪裁以适应。默认会是fill，表示拉伸以适应</p>
-</li>
-<li><p>微信内打开H5登陆报错误码10005<br>原因是微信内打开h5登陆微信的appid是微信公众号的，扫码登陆的appid是网页应用的</p>
-</li>
-<li><p>cookie跨域问题<br>cookie跨域的前提是根域得一样<br>cookie的domain表示可以访问此cookie的域名<br>假设2个域名为m.han.com 和han.com<br>在m.han.com设置cookie，不带domain属性，不会发送到han.com<br>在m.han.com设置cookie，带domain属性han.com，会发送到han.com，其他子域不可用<br>在m.han.com设置cookie，带domain属性.han.com，会发送到han.com，其他子域也可用<br>无论是客户端还是服务端，han.com都不能设置cookie到h.com</p>
-</li>
-</ol>
-<p><em>客户端只会带上与请求同域的cookie</em></p>
-<p>ajax同域请求默认会带cookie，但跨域默认不会带上cookie，客户端设置withCredentials为true才能跨域携带<br>fetch同域跨域都不会带，客户端设置credentials为include，跨域可以带，same-origin，同域可以带，omit任何请求都不带<br>Access-Control-Allow-Origin表示接受哪些域名的请求，发送cookie时，不能为*，必须指定域名<br>Access-Control-Allow-Credentials表示是否允许客户端发送cookie</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-<div>
-      
-</div>
-
-    
-
-    
-
-    
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2147,7 +2144,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">28</span>
+                  <span class="site-state-item-count">29</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>

@@ -75,7 +75,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="React," />
 
 
 
@@ -88,17 +88,18 @@
 
 
 
-<meta name="description" content="Keep Learning">
-<meta name="keywords" content="java web">
-<meta property="og:type" content="website">
-<meta property="og:title" content="ZEUS ZHOU">
-<meta property="og:url" content="zeuszhou.xyz/categories/模块化/index.html">
+<meta name="description" content="合成事件与原生事件的区别React并不是将click事件直接绑定在dom上面，而是采用事件冒泡的形式冒泡到document上面（不是react组件对应的dom），然后React将事件封装给正式的函数处理运行 中间层SyntheticEvent如果在dom上绑多了事件处理函数，页面的响应和内存占用会受到影响，React为了避免这类dom事件的滥用，同时屏蔽底层不同浏览器之间的事件系统差异，实现了一个">
+<meta name="keywords" content="React">
+<meta property="og:type" content="article">
+<meta property="og:title" content="React合成事件">
+<meta property="og:url" content="zeuszhou.xyz/React/React合成事件/index.html">
 <meta property="og:site_name" content="ZEUS ZHOU">
-<meta property="og:description" content="Keep Learning">
+<meta property="og:description" content="合成事件与原生事件的区别React并不是将click事件直接绑定在dom上面，而是采用事件冒泡的形式冒泡到document上面（不是react组件对应的dom），然后React将事件封装给正式的函数处理运行 中间层SyntheticEvent如果在dom上绑多了事件处理函数，页面的响应和内存占用会受到影响，React为了避免这类dom事件的滥用，同时屏蔽底层不同浏览器之间的事件系统差异，实现了一个">
 <meta property="og:locale" content="中文">
+<meta property="og:updated_time" content="2020-07-03T07:19:47.352Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="ZEUS ZHOU">
-<meta name="twitter:description" content="Keep Learning">
+<meta name="twitter:title" content="React合成事件">
+<meta name="twitter:description" content="合成事件与原生事件的区别React并不是将click事件直接绑定在dom上面，而是采用事件冒泡的形式冒泡到document上面（不是react组件对应的dom），然后React将事件封装给正式的函数处理运行 中间层SyntheticEvent如果在dom上绑多了事件处理函数，页面的响应和内存占用会受到影响，React为了避免这类dom事件的滥用，同时屏蔽底层不同浏览器之间的事件系统差异，实现了一个">
 
 
 
@@ -128,13 +129,13 @@
 
 
 
-  <link rel="canonical" href="zeuszhou.xyz/categories/模块化/"/>
+  <link rel="canonical" href="zeuszhou.xyz/React/React合成事件/"/>
 
 
 
 
 
-  <title>Category: 模块化 | ZEUS ZHOU</title>
+  <title>React合成事件 | ZEUS ZHOU</title>
   
 
 
@@ -153,7 +154,7 @@
     
   
 
-  <div class="container sidebar-position-left ">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
 <a href="https://github.com/zhousiyaoyao"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_orange_ff7600.png" alt="Fork me on GitHub"></a>
@@ -293,55 +294,273 @@
           <div id="content" class="content">
             
 
-  
-  
-  
-  <div class="post-block category">
+  <div id="posts" class="posts-expand">
+    
 
-    <div id="posts" class="posts-collapse">
-      <div class="collection-title">
-        <h1>模块化<small>Category</small>
-        </h1>
-      </div>
+  
 
-      
-        
+  
+  
+  
 
   <article class="post post-type-categories" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="zeuszhou.xyz/React/React合成事件/">
 
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/模块化/CommonJS和ES6Module的区别/" itemprop="url">
-              
-                <span itemprop="name">CommonJS和ES6 Module的区别</span>
-              
-            </a>
-        
-      </h2>
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ZEUS ZHOU">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2020-06-09T15:08:31+08:00"
-              content="2020-06-09" >
-          06-09
-        </time>
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ZEUS ZHOU">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">React合成事件</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-07-02T15:04:39+08:00">
+                2020-07-02
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Post modified&#58;</span>
+              
+              <time title="Post modified" itemprop="dateModified" datetime="2020-07-03T15:19:47+08:00">
+                2020-07-03
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/React/" itemprop="url" rel="index">
+                    <span itemprop="name">React</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>  阅读数
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="合成事件与原生事件的区别"><a href="#合成事件与原生事件的区别" class="headerlink" title="合成事件与原生事件的区别"></a>合成事件与原生事件的区别</h3><p>React并不是将click事件直接绑定在dom上面，而是采用事件冒泡的形式冒泡到document上面（不是react组件对应的dom），然后React将事件封装给正式的函数处理运行</p>
+<h3 id="中间层SyntheticEvent"><a href="#中间层SyntheticEvent" class="headerlink" title="中间层SyntheticEvent"></a>中间层SyntheticEvent</h3><p>如果在dom上绑多了事件处理函数，页面的响应和内存占用会受到影响，React为了避免这类dom事件的滥用，同时屏蔽底层不同浏览器之间的事件系统差异，实现了一个中间层Synthetic</p>
+<ol>
+<li>当用户为onclick添加函数时，react并没有将click事件绑定到dom上</li>
+<li>而是在document处监听所有支持的事件，当事件发生并冒泡至document处时，React将事件封装交给中间层Synrthetic</li>
+<li>当事件触发时，用使用统一的分发函数dispatchEvent将指定函数执行</li>
+<li>React通过队列的形式，从触发的组件向父组件回溯，然后调用jsx中定义的callback</li>
+<li>React通过对象池的形式管理合成事件对象的创建和销毁，减少了垃圾的生成和新对象内存的分配，提高了性能</li>
+</ol>
+<p>当同时绑定原生和合成事件，原生绑定会快于合成事件</p>
+<h3 id="源码分析"><a href="#源码分析" class="headerlink" title="源码分析"></a>源码分析</h3><p>mountComponent和updateComponent：组件的创建与更新，都会调用_updateDOMProperties方法，对jsx中声明的组件属性进行处理</p>
+<p>enqueuePutListener：负责注册JSX中声明的事件，一方面将事件注册到document这个原生dom上，一方面采用事务队列的方式调用putListener<br>将注册的事件存储起来，以供事件触发时回调。</p>
+<p>listenTo负责注册事件，解决了不同浏览器间捕获和冒泡不兼容的问题。调用trapCapturedEvent和trapBubbledEvent注册捕获和冒泡事件</p>
+<p>EventPluginHub负责事件存储，入口在putListener，事件存储在listenerBank对象中，按照事件名和React组件对象进行二维划分</p>
+<p>当事件触发时，document上addEventListener注册的callback会被触发，从前面事件注册部分发现，此时回调函数为ReactEventListener.dispatchEvent，<br>它是事件分发的入口</p>
+<p>handleTopLevelImpl是事件分发的核心，实现了一套冒泡机制，从触发事件的对象开始，向父元素回溯，依次调用它们注册的事件callback</p>
+<p>_handleTopLevel负责事件处理和调用，一方面利用浏览器回传的原生事件构造出react合成事件，另一方面用队列的方式处理events</p>
+<p>构造合成事件：EventPluginRegistry.plugins默认包括5种plugins，不同的plugin针对不同的事件有特殊的处理。</p>
+<p>从event对象池中取出合成事件对象，利用对象池思想，可以大大降低对象创建和销毁的时间，提高性能。</p>
+<p>对象创建好后，我们会将其添加到events队列之中，因为事件回调会用这个队列，用accumulate方法添加到events，将新创建的合成对象的引用添加到之前创建好的events队列即可</p>
+<p>批处理合成事件：react以队列的形式处理合成事件，方法入口为runEventQueueInBatch</p>
+
+      
+    </div>
+    
+    
+    
+
+<div>
+      
+        
+<div class="my_post_copyright">
+  <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+  
+  <!-- JS库 sweetalert 可修改路径 -->
+  <script type="text/javascript" src="http://jslibs.wuxubj.cn/sweetalert_mini/jquery-1.7.1.min.js"></script>
+  <script src="http://jslibs.wuxubj.cn/sweetalert_mini/sweetalert.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="http://jslibs.wuxubj.cn/sweetalert_mini/sweetalert.mini.css">
+
+  <p><span>本文标题:</span>React合成事件</a></p>
+  <p><span>文章作者:</span>ZEUS ZHOU</a></p>
+  <p><span>发布时间:</span>2020年07月02日 - 15:04:39</p>
+  <p><span>最后更新:</span>2020年07月03日 - 15:19:47</p>
+  <p><span>原始链接:</span>
+    <span class="copy-path"  title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="zeuszhou.xyz/React/React合成事件/"  aria-label="复制成功！"></i></span>
+  </p>
+  <p><span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">署名-非商业性使用-禁止演绎 4.0 国际</a> 转载请保留原文链接及作者。</p>  
+</div>
+<script> 
+    var clipboard = new Clipboard('.fa-clipboard');
+    clipboard.on('success', $(function(){
+      $(".fa-clipboard").click(function(){
+        swal({   
+          title: "",   
+          text: '复制成功',   
+          html: false,
+          timer: 500,   
+          showConfirmButton: false
+        });
+      });
+    }));  
+</script>
+
+      
+</div>
+
+    
+
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>Post author:</strong>
+    ZEUS ZHOU
+  </li>
+  <li class="post-copyright-link">
+    <strong>Post link:</strong>
+    <a href="zeuszhou.xyz/React/React合成事件/" title="React合成事件">zeuszhou.xyz/React/React合成事件/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>Copyright Notice: </strong>
+    All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 4.0</a> unless stating additionally.
+  </li>
+</ul>
+
       </div>
+    
 
-    </header>
-  </article>
-
+    <div>
+      
+        <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束-------------</div>
+    
+</div>
 
       
     </div>
 
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/React/" rel="tag"><i class="fa fa-tag"></i> React</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/个人总结/写在快手实习结束/" rel="next" title="写在快手实习结束">
+                <i class="fa fa-chevron-left"></i> 写在快手实习结束
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
 
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -349,6 +568,10 @@
 
 
           
+
+  
+
+
 
         </div>
         
@@ -369,8 +592,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -481,6 +713,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#合成事件与原生事件的区别"><span class="nav-number">1.</span> <span class="nav-text">合成事件与原生事件的区别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#中间层SyntheticEvent"><span class="nav-number">2.</span> <span class="nav-text">中间层SyntheticEvent</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#源码分析"><span class="nav-number">3.</span> <span class="nav-text">源码分析</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -634,6 +882,10 @@
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 
