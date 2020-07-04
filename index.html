@@ -355,8 +355,8 @@
               
                 <span class="post-meta-item-text">Post modified&#58;</span>
               
-              <time title="Post modified" itemprop="dateModified" datetime="2020-07-03T21:02:42+08:00">
-                2020-07-03
+              <time title="Post modified" itemprop="dateModified" datetime="2020-07-04T14:50:08+08:00">
+                2020-07-04
               </time>
             
           </span>
@@ -413,7 +413,7 @@
       
         
           
-            <p>编译指的是从模版到render函数这一过程</p>
+            <p>编译指的是从template到render函数这一过程</p>
 <p>vue.js 提供 Runtime + Complier （运行时编译）和 Runtime Only（不包括编译代码，用webpack的vue-loader预先完成编译）两个版本的选择</p>
 <h3 id="mount-platforms-web-entry-runtime-with-compiler"><a href="#mount-platforms-web-entry-runtime-with-compiler" class="headerlink" title="$mount platforms/web/entry-runtime-with-compiler"></a>$mount platforms/web/entry-runtime-with-compiler</h3><p>挂载vm</p>
 <ol>
@@ -440,8 +440,19 @@
 <li>优化语法树</li>
 <li>生成代码</li>
 </ol>
-<h3 id="编译入口如此负责的原因"><a href="#编译入口如此负责的原因" class="headerlink" title="编译入口如此负责的原因"></a>编译入口如此负责的原因</h3><p>vue在不同平台都会有编译的过程，不同平台配置baseOptions会有所不同，但同一平台每次编译的配置都一样，为了不让这些配置在每次编译过程都通过参数传入，vue利用函数柯里化实现了baseOptions的参数保留，同时把基础的编译过程函数抽出来，把真正的编译过程和其他逻辑比如对编译配置处理，缓存处理等剥离出来</p>
-<h3 id="parse-compiler-parser-index"><a href="#parse-compiler-parser-index" class="headerlink" title="parse compiler/parser/index"></a>parse compiler/parser/index</h3>
+<h3 id="编译入口如此复杂的原因"><a href="#编译入口如此复杂的原因" class="headerlink" title="编译入口如此复杂的原因"></a>编译入口如此复杂的原因</h3><p>vue在不同平台都会有编译的过程，不同平台配置baseOptions会有所不同，但同一平台每次编译的配置都一样，为了不让这些配置在每次编译过程都通过参数传入，vue利用函数柯里化实现了baseOptions的参数保留，同时把基础的编译过程函数抽出来，把真正的编译过程和其他逻辑比如对编译配置处理，缓存处理等剥离出来</p>
+<h3 id="parse-compiler-parser-index"><a href="#parse-compiler-parser-index" class="headerlink" title="parse compiler/parser/index"></a>parse compiler/parser/index</h3><p>parse的目的是把template模版字符串转换为AST树，使用js对象来描述整个模版，利用正则表达式顺序解析模版，当解析到开始标签，闭合标签，文本的时候都会分别执行对应的回调函数，来达到构造AST树的目的</p>
+<p>AST元素节点包括3种类型，type 1为普通元素，2为表达式，3为纯文本</p>
+<p>parse的输入是template和options，输出是ast的根节点</p>
+<h3 id="parseHTML-compiler-parser-html-parser"><a href="#parseHTML-compiler-parser-html-parser" class="headerlink" title="parseHTML compiler/parser/html-parser"></a>parseHTML compiler/parser/html-parser</h3><p>循环解析template，用正则做各种匹配，对不同的情况做不同处理，直到整个template被解析完毕，匹配过程使用advance函数不断前进整个模版字符串，直到字符串末尾</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">advance</span>(<span class="params">n</span>) </span>&#123;</span><br><span class="line">    index += n</span><br><span class="line">    html = html.substring(n)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ol>
+<li>对于注释和条件注释条件，前进至末尾位置</li>
+<li>对于文档类型节点，前进它自身长度的距离</li>
+<li>对于开始标签，需要匹配标签的属性，首先通过正则匹配到开始标签，然后定义match对象，接着循环匹配属性并加到match.attrs数组中，直到遇到开始标签的闭合符，如果匹配到闭合符，获取一元斜线符，并把当前索引值赋给match.end。然后判断开始标签是否是一元标签，接着对match.attrs进行遍历处理，如果不是一元标签，往stack里push一个对象，并把tagName赋值给lastTag</li>
+<li>对于闭合标签，先匹配到，然后前进，然后执行parseEndTag对闭合标签做解析</li>
+</ol>
+
           
         
       
