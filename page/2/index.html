@@ -308,6 +308,200 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="zeuszhou.xyz/状态管理/Redux初探/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ZEUS ZHOU">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ZEUS ZHOU">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/状态管理/Redux初探/" itemprop="url">Redux初探</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-06-13T09:48:48+08:00">
+                2020-06-13
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Post modified&#58;</span>
+              
+              <time title="Post modified" itemprop="dateModified" datetime="2020-06-13T12:39:15+08:00">
+                2020-06-13
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/状态管理/" itemprop="url" rel="index">
+                    <span itemprop="name">状态管理</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="背景概念学习"><a href="#背景概念学习" class="headerlink" title="背景概念学习"></a>背景概念学习</h3><p>Redux是flux架构的实现，受Elm启发，核心思想单向数据流<br>Redux is a predictable state container for JavaScript apps，可预测是因为reducer是一个纯函数<br>Flux概念：核心思想单项数据流，action -&gt; dispatcher -&gt; callback -&gt; store -&gt; react view -&gt; action<br>Elm概念：使用Model构建应用，也就是说Model是应用的核心。构建一个应用就是构建Model，构建更新Model的方式，以及如何构建Model到view的映射。</p>
+<h3 id="三个基本概念"><a href="#三个基本概念" class="headerlink" title="三个基本概念"></a>三个基本概念</h3><ol>
+<li>store<br>UI唯一的数据来源，react的state，store信息的变化会引起视图更新</li>
+<li>action<br>用来表述发生了什么，必须拥有type属性，可选择携带数据</li>
+<li>reducer<br>纯函数，根据action.type来作出反应，生成新的state来改变store</li>
+</ol>
+<h3 id="数据流"><a href="#数据流" class="headerlink" title="数据流"></a>数据流</h3><p>UI发生变化，比如点击按钮 -&gt; action，描述点击了按钮 -&gt; reducer处理事件，得到新的state -&gt; store被更新 -&gt; UI响应store更新<br>state通过闭包的形式存放在store中，是只读的，如果要更改state，必须通过发送action进行，action是一个普通对象，react订阅store变化，并re-render视图</p>
+<h3 id="API"><a href="#API" class="headerlink" title="API"></a>API</h3><p>store.dispatch(action) 来触发reducer<br>store.getState() 获取当前state<br>store.subscribe(listener) store更新后回调listener，回调函数里面可以调用store.getStore()来获得更新后的state<br>store.subscribe(listener) 再调用一次，取消listener</p>
+<h3 id="简化版redux实现"><a href="#简化版redux实现" class="headerlink" title="简化版redux实现"></a>简化版redux实现</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> createStore = <span class="function">(<span class="params">reducer, initialState</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> store = &#123;&#125;</span><br><span class="line">    store.state = initialState</span><br><span class="line">    store.listeners = []</span><br><span class="line">    store.subscribe = <span class="function">(<span class="params">listener</span>) =&gt;</span> &#123;</span><br><span class="line">        store.listeners.push(listener)</span><br><span class="line">    &#125;</span><br><span class="line">    store.dispatch = <span class="function">(<span class="params">store</span>) =&gt;</span> &#123;</span><br><span class="line">        store.state = reducer(store.state, action)</span><br><span class="line">        store.listeners.forEach(<span class="function"><span class="params">listener</span> =&gt;</span> listener())</span><br><span class="line">    &#125;</span><br><span class="line">    store.getState = <span class="function"><span class="params">()</span> =&gt;</span> store.state</span><br><span class="line">    <span class="keyword">return</span> store</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="Middleware"><a href="#Middleware" class="headerlink" title="Middleware"></a>Middleware</h3><p>为什么出现？<br>因为redux只能针对同步且没有副作用的操作，如果存在副作用，比如ajax请求，就需要middleware的帮助</p>
+<p>有无middleware的流程对比：<br>UI -&gt; action(plain) -&gt; reducer -&gt; state -&gt; UI<br>UI -&gt; action(side effect) -&gt; middleware -&gt; action(plain) -&gt; reducer -&gt; state -&gt; UI</p>
+<p>middleware的作用：转换异步操作，生成原始的action，这样reducer函数可以处理相应的action，从而改变state，更新UI</p>
+<h4 id="redux-thunk"><a href="#redux-thunk" class="headerlink" title="redux-thunk"></a>redux-thunk</h4><p>redux作者给出的中间件<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">createThunkMiddleware</span>(<span class="params">extraArgument</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="function">(<span class="params">&#123; dispatch, getState &#125;</span>) =&gt;</span> next =&gt; <span class="function"><span class="params">action</span> =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (<span class="keyword">typeof</span> action === <span class="string">'function'</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> action(dispatch, getState, extraArgument)</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> next(action)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> thunk = <span class="keyword">new</span> createThunkMiddleware()</span><br><span class="line">thunk.withExtraArgument = createThunkMiddleware</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> thunk</span><br></pre></td></tr></table></figure></p>
+<p>缺点：如果这个副作用action内部很复杂，需要给每个异步操作定义action，不易维护<br>流程：action(side effect) -&gt; redux-thunk监听 -&gt; 执行副作用函数 -&gt; action2(plain)</p>
+<h4 id="redux-saga"><a href="#redux-saga" class="headerlink" title="redux-saga"></a>redux-saga</h4><p>redux-saga是控制执行的generator，在redux-saga中action是原始的js对象，把所有的异步副作用操作放在了saga函数里面<br>这样既统一了action的形式，又使得异步操作集中可以被集中处理</p>
+<p>优点：action统一，可以集中处理异步操作，使用声明式的Effect，提供了更加细腻的控制流<br>流程：action1(plain) -&gt; redux-saga监听 -&gt; 执行相应的Effect方法 -&gt; 返回描述对象 -&gt; 恢复执行副作用函数 -&gt; action2(plain)<br>对比thunk，saga监听到action，不会立刻执行副作用，而是effect方法将其转换为一个描述对象，再将描述对象作为标识，再恢复执行副作用。<br>通过effect函数，可以方便测试，不需要effect函数的返回结果，只需要比较其返回的描述对象，与我们的期望描述对象是否相同</p>
+<p>基础api：</p>
+<ol>
+<li>take，监听action，返回的是监听到的action对象</li>
+<li>call，类似call，但是func可以是generator</li>
+<li>put，类似于redux原始的dispatch</li>
+<li>select，类似于redux的getState</li>
+</ol>
+<h3 id="Dva"><a href="#Dva" class="headerlink" title="Dva"></a>Dva</h3><p>是什么：<br>轻量封装，基于redux和redux-saga，内置react-react和fetch，内置loading，支持HMR</p>
+<p>解决了什么问题：<br>redux书写麻烦，概念太多，文件分离，编辑成本高，不便于组织业务模型</p>
+<h4 id="配合UMI"><a href="#配合UMI" class="headerlink" title="配合UMI"></a>配合UMI</h4><p>api：</p>
+<ol>
+<li>connect 绑定数据到组件</li>
+<li>getDvaApp 获取dva实例</li>
+<li>useDispatch 获取dispatch</li>
+<li>useSelector 获取部分数据</li>
+<li>useStore 获取store</li>
+</ol>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+<div>
+      
+</div>
+
+    
+
+    
+
+    
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-categories" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="zeuszhou.xyz/前端广度/前端精读周刊/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1902,304 +2096,11 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-categories" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="zeuszhou.xyz/JS基础/Object方法总结/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="ZEUS ZHOU">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="ZEUS ZHOU">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/JS基础/Object方法总结/" itemprop="url">JS对象方法总结</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-05-31T16:30:54+08:00">
-                2020-05-31
-              </time>
-            
-
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Post modified&#58;</span>
-              
-              <time title="Post modified" itemprop="dateModified" datetime="2020-05-31T22:30:48+08:00">
-                2020-05-31
-              </time>
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/JS基础/" itemprop="url" rel="index">
-                    <span itemprop="name">JS基础</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h3 id="Object方法"><a href="#Object方法" class="headerlink" title="Object方法"></a>Object方法</h3><ol>
-<li><p>Object.assign<br>对象合并，浅拷贝，只拷贝自身属性，prototype不拷贝，视数组为对象进行处理，[1,2,3] + [4,5] = [4,5,3]</p>
-</li>
-<li><p>Object.create<br>使用指定的原型对象及其属性去创建一个新的对象</p>
-</li>
-<li><p>Object.defineProperties<br>直接在一个对象上修改一个或多个属性或者加属性（指的是内部属性）</p>
-</li>
-<li><p>Object.defineProperty<br>同上，单复数的区别</p>
-</li>
-</ol>
-<p>数据描述符｜数据属性</p>
-<ul>
-<li>Configurable：表示能否通过delete删除此属性，能否修改内部属性值</li>
-<li>Enumerable：表示该属性是否可枚举，是否可以通过for in或Object.keys()返回属性</li>
-<li>Writable：表示能否修改属性的值</li>
-<li>Value：表示该属性对应的值</li>
-</ul>
-<p>存取描述符｜访问器属性</p>
-<ul>
-<li>Configurable</li>
-<li>Enumerable</li>
-<li>get：访问对象属性时调用的函数</li>
-<li>set：改变对象属性时调用的函数<br>使用defineProperty或者defineProperties时，属性默认为false或者undefined<br>用var定义的任何变量，该属性都是false<br>字面量定义的对象，该对象内部的属性的数据描述符属性都为true<br>当writable为true，configurable为false时，修改writable和value，不会报错<br>当writable为false，configurable为true时，value可以通过defineProperty修改，但不能直接赋值修改</li>
-</ul>
-<ol start="5">
-<li>Object.getOwnPropertyDescriptor</li>
-<li><p>Object.getOwnPropertyDescriptors<br>返回指定对象上一个自有属性对应的属性描述符</p>
-</li>
-<li><p>Object.entries<br>返回键值对数组</p>
-</li>
-<li><p>obj.hasOwnProperty<br>对象自身属性是否有指定的属性</p>
-</li>
-<li><p>Object.keys<br>for in会枚举原型链上的属性，这个不会<br>不可枚举属性也不会打印</p>
-</li>
-<li><p>Object.values<br>会过滤属性名为 Symbol 值的属性</p>
-</li>
-<li><p>Object.getOwnPropertyNames<br>返回所有的属性，包括不可以枚举属性，但不包括属性名为 Symbol 值的属性</p>
-</li>
-<li><p>Object.getOwnPropertySymbols<br>返回所有Symbol属性的数组</p>
-</li>
-<li><p>Object.getPropertyOf<br>返回对象的原型</p>
-</li>
-<li><p>obj.isPrototypeOf<br>判断一个对象是否在另一个对象的原型链上</p>
-</li>
-<li><p>Object.setPrototypeOf<br>设置对象的原型对象</p>
-</li>
-<li><p>Object.is<br>判断两个值是否相等</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Object</span>.is([], []); <span class="comment">// false</span></span><br><span class="line"><span class="built_in">Object</span>.is(<span class="literal">NaN</span>, <span class="number">0</span>/<span class="number">0</span>); <span class="comment">// true</span></span><br><span class="line"><span class="built_in">Object</span>.is(<span class="number">0</span>, <span class="number">-0</span>); <span class="comment">// false</span></span><br><span class="line"><span class="built_in">Object</span>.is(<span class="number">-0</span>, <span class="number">-0</span>); <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>Object.freeze<br>冻结一个对象，对象永远不可变</p>
-</li>
-<li><p>Object.isFrozen<br>判断是否冻结</p>
-</li>
-<li><p>Object.preventExtensions<br>对象不能添加新属性，可修改删除，不能添加</p>
-</li>
-<li><p>Object.isExtensible<br>判断对象是否可扩展，seal，freeze，preventExtensions都会使其不可扩展</p>
-</li>
-<li><p>Object.seal<br>密封对象，不能添加属性，不能配置，不可删除，但可以修改属性的值</p>
-</li>
-<li><p>Object.isSealed<br>判断对象是否被密封</p>
-</li>
-</ol>
-<p>扩展（不能加属性） -&gt; 密封（不能配置，但可改值） -&gt; 冻结（不能修改值，所以啥都不能）</p>
-<h3 id="Array方法"><a href="#Array方法" class="headerlink" title="Array方法"></a>Array方法</h3><ol>
-<li>isArray 判断是否数组</li>
-<li>toString 数组转字符串</li>
-<li>valueof 返回对象原始值</li>
-<li>join 数组转字符串</li>
-<li>push </li>
-<li>pop</li>
-<li>unshift 添加头</li>
-<li>shift 删除头</li>
-<li>reverse</li>
-<li>sort</li>
-<li>concat</li>
-<li>slice</li>
-<li>splice</li>
-<li>indexOf</li>
-<li>every</li>
-<li>filter</li>
-<li>forEach</li>
-<li>map</li>
-<li>some</li>
-<li>reduce</li>
-<li>reduceRight</li>
-<li>copyWithin 从数组的指定位置拷贝元素到数组的另一个指定位置中</li>
-<li>entries</li>
-<li>fill</li>
-<li>find 返回符合传入测试（函数）条件的数组元素</li>
-<li>findIndex 返回符合传入测试（函数）条件的数组元素索引</li>
-<li>from 通过给定的对象中创建一个数组，比如set</li>
-<li>includes 判断一个数组是否包含一个指定的值</li>
-<li>keys</li>
-<li>lastIndexOf</li>
-</ol>
-<h3 id="String方法"><a href="#String方法" class="headerlink" title="String方法"></a>String方法</h3><ol>
-<li>charAt</li>
-<li>charCodeAt</li>
-<li>concat</li>
-<li>slice</li>
-<li>substr</li>
-<li>substring</li>
-<li>indexOf</li>
-<li>lastIndexOf</li>
-<li>toLowerCase</li>
-<li>toUpperCase</li>
-<li>match</li>
-<li>search</li>
-<li>replace</li>
-<li>split</li>
-<li>trim 去除字符串两边的空白</li>
-<li>localeCompare 比较两个字符串的字符顺序</li>
-<li>formCharCode</li>
-<li>valueOf</li>
-<li>includes</li>
-<li>startsWith</li>
-<li>endsWith</li>
-<li>repeat</li>
-<li>padStart 在头部补全字符串</li>
-<li>padEnd 在尾部补全字符串</li>
-</ol>
-<h3 id="Math方法"><a href="#Math方法" class="headerlink" title="Math方法"></a>Math方法</h3><ol>
-<li>Math.abs</li>
-<li>Math.ceil</li>
-<li>Math.floor</li>
-<li>Math.max</li>
-<li>Math.min</li>
-<li>Math.pow(x,y) x的y次方</li>
-<li>Math.random</li>
-<li>Math.round</li>
-<li>Math.sqrt</li>
-</ol>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-<div>
-      
-</div>
-
-    
-
-    
-
-    
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -2249,7 +2150,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">30</span>
+                  <span class="site-state-item-count">31</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>

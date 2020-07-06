@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="zeuszhou.xyz/"/>
-  <updated>2020-07-05T02:09:08.539Z</updated>
+  <updated>2020-07-05T02:33:54.998Z</updated>
   <id>zeuszhou.xyz/</id>
   
   <author>
@@ -15,6 +15,24 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Vue2.0源码之Vuex</title>
+    <link href="zeuszhou.xyz/%E6%BA%90%E7%A0%81/Vue2-0%E6%BA%90%E7%A0%81%E4%B9%8BVuex/"/>
+    <id>zeuszhou.xyz/源码/Vue2-0源码之Vuex/</id>
+    <published>2020-07-05T02:33:40.000Z</published>
+    <updated>2020-07-05T02:33:54.998Z</updated>
+    
+    <summary type="html">
+    
+    </summary>
+    
+      <category term="源码" scheme="zeuszhou.xyz/categories/%E6%BA%90%E7%A0%81/"/>
+    
+    
+      <category term="源码" scheme="zeuszhou.xyz/tags/%E6%BA%90%E7%A0%81/"/>
+    
+  </entry>
   
   <entry>
     <title>Vue2.0源码之编译</title>
@@ -45,10 +63,10 @@
   
   <entry>
     <title>React合成事件</title>
-    <link href="zeuszhou.xyz/React/React%E5%90%88%E6%88%90%E4%BA%8B%E4%BB%B6/"/>
-    <id>zeuszhou.xyz/React/React合成事件/</id>
+    <link href="zeuszhou.xyz/%E6%BA%90%E7%A0%81/React%E5%90%88%E6%88%90%E4%BA%8B%E4%BB%B6/"/>
+    <id>zeuszhou.xyz/源码/React合成事件/</id>
     <published>2020-07-02T07:04:39.000Z</published>
-    <updated>2020-07-03T07:19:47.352Z</updated>
+    <updated>2020-07-06T04:01:47.562Z</updated>
     
     <content type="html"><![CDATA[<h3 id="合成事件与原生事件的区别"><a href="#合成事件与原生事件的区别" class="headerlink" title="合成事件与原生事件的区别"></a>合成事件与原生事件的区别</h3><p>React并不是将click事件直接绑定在dom上面，而是采用事件冒泡的形式冒泡到document上面（不是react组件对应的dom），然后React将事件封装给正式的函数处理运行</p><h3 id="中间层SyntheticEvent"><a href="#中间层SyntheticEvent" class="headerlink" title="中间层SyntheticEvent"></a>中间层SyntheticEvent</h3><p>如果在dom上绑多了事件处理函数，页面的响应和内存占用会受到影响，React为了避免这类dom事件的滥用，同时屏蔽底层不同浏览器之间的事件系统差异，实现了一个中间层Synthetic</p><ol><li>当用户为onclick添加函数时，react并没有将click事件绑定到dom上</li><li>而是在document处监听所有支持的事件，当事件发生并冒泡至document处时，React将事件封装交给中间层Synrthetic</li><li>当事件触发时，用使用统一的分发函数dispatchEvent将指定函数执行</li><li>React通过队列的形式，从触发的组件向父组件回溯，然后调用jsx中定义的callback</li><li>React通过对象池的形式管理合成事件对象的创建和销毁，减少了垃圾的生成和新对象内存的分配，提高了性能</li></ol><p>当同时绑定原生和合成事件，原生绑定会快于合成事件</p><h3 id="源码分析"><a href="#源码分析" class="headerlink" title="源码分析"></a>源码分析</h3><p>mountComponent和updateComponent：组件的创建与更新，都会调用_updateDOMProperties方法，对jsx中声明的组件属性进行处理</p><p>enqueuePutListener：负责注册JSX中声明的事件，一方面将事件注册到document这个原生dom上，一方面采用事务队列的方式调用putListener<br>将注册的事件存储起来，以供事件触发时回调。</p><p>listenTo负责注册事件，解决了不同浏览器间捕获和冒泡不兼容的问题。调用trapCapturedEvent和trapBubbledEvent注册捕获和冒泡事件</p><p>EventPluginHub负责事件存储，入口在putListener，事件存储在listenerBank对象中，按照事件名和React组件对象进行二维划分</p><p>当事件触发时，document上addEventListener注册的callback会被触发，从前面事件注册部分发现，此时回调函数为ReactEventListener.dispatchEvent，<br>它是事件分发的入口</p><p>handleTopLevelImpl是事件分发的核心，实现了一套冒泡机制，从触发事件的对象开始，向父元素回溯，依次调用它们注册的事件callback</p><p>_handleTopLevel负责事件处理和调用，一方面利用浏览器回传的原生事件构造出react合成事件，另一方面用队列的方式处理events</p><p>构造合成事件：EventPluginRegistry.plugins默认包括5种plugins，不同的plugin针对不同的事件有特殊的处理。</p><p>从event对象池中取出合成事件对象，利用对象池思想，可以大大降低对象创建和销毁的时间，提高性能。</p><p>对象创建好后，我们会将其添加到events队列之中，因为事件回调会用这个队列，用accumulate方法添加到events，将新创建的合成对象的引用添加到之前创建好的events队列即可</p><p>批处理合成事件：react以队列的形式处理合成事件，方法入口为runEventQueueInBatch</p>]]></content>
     
@@ -61,10 +79,10 @@
     
     </summary>
     
-      <category term="React" scheme="zeuszhou.xyz/categories/React/"/>
+      <category term="源码" scheme="zeuszhou.xyz/categories/%E6%BA%90%E7%A0%81/"/>
     
     
-      <category term="React" scheme="zeuszhou.xyz/tags/React/"/>
+      <category term="源码" scheme="zeuszhou.xyz/tags/%E6%BA%90%E7%A0%81/"/>
     
   </entry>
   
@@ -232,12 +250,12 @@
   
   <entry>
     <title>hox原理解析加源码分析</title>
-    <link href="zeuszhou.xyz/%E6%BA%90%E7%A0%81/hox%E5%8E%9F%E7%90%86%E8%A7%A3%E6%9E%90%E5%8A%A0%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/"/>
-    <id>zeuszhou.xyz/源码/hox原理解析加源码分析/</id>
+    <link href="zeuszhou.xyz/React/hox%E5%8E%9F%E7%90%86%E8%A7%A3%E6%9E%90%E5%8A%A0%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/"/>
+    <id>zeuszhou.xyz/React/hox原理解析加源码分析/</id>
     <published>2020-06-23T07:17:41.000Z</published>
-    <updated>2020-06-23T07:28:13.335Z</updated>
+    <updated>2020-07-06T04:02:04.818Z</updated>
     
-    <content type="html"><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>项目中用到了hox做状态管理，深入学习一下</p><h3 id="作用"><a href="#作用" class="headerlink" title="作用"></a>作用</h3><p>众所周知，自定义hook无法进行数据共享，hox的出现正是为了解决这个问题。<br>hox只有一个api：createModel，包住自定义hook，可以实现全局model，数据共享。</p><h3 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h3><p>假设有一个自定义hook userInfo。createModel会创建一个Executor组件的实例，在其中执行userInfo，并把userInfo的结果缓存起来，最后返回一个新的hook：userInfoModel</p><p>userInfoModel订阅了Executor组件的数据，所以在多个组件中调用userInfoModel，拿到的数据都是同一份，也就是Executor中的state</p><p>流程：A组件触发事件，Executor组件的state发生改变，对Executor组件进行重渲染，然后通知A，B，C等组件拿到最新的数据进行渲染</p><p>本质就是一个单例模式，创建一个全局的Executor实例进行全局数据管理</p><h3 id="源码"><a href="#源码" class="headerlink" title="源码"></a>源码</h3>]]></content>
+    <content type="html"><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>项目中用到了hox做状态管理，深入学习一下</p><h3 id="作用"><a href="#作用" class="headerlink" title="作用"></a>作用</h3><p>众所周知，自定义hook无法进行数据共享，hox的出现正是为了解决这个问题。<br>hox只有一个api：createModel，包住自定义hook，可以实现全局model，数据共享。</p><h3 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h3><p>假设有一个自定义hook userInfo。createModel会创建一个Executor组件的实例，在其中执行userInfo，并把userInfo的结果缓存起来，最后返回一个新的hook：userInfoModel</p><p>userInfoModel订阅了Executor组件的数据，所以在多个组件中调用userInfoModel，拿到的数据都是同一份，也就是Executor中的state</p><p>流程：A组件触发事件，Executor组件的state发生改变，对Executor组件进行重渲染，然后通知A，B，C等组件拿到最新的数据进行渲染</p><p>本质就是一个单例模式，创建一个全局的Executor实例进行全局数据管理</p>]]></content>
     
     <summary type="html">
     
@@ -249,10 +267,10 @@
     
     </summary>
     
-      <category term="源码" scheme="zeuszhou.xyz/categories/%E6%BA%90%E7%A0%81/"/>
+      <category term="React" scheme="zeuszhou.xyz/categories/React/"/>
     
     
-      <category term="源码" scheme="zeuszhou.xyz/tags/%E6%BA%90%E7%A0%81/"/>
+      <category term="React" scheme="zeuszhou.xyz/tags/React/"/>
     
   </entry>
   
@@ -508,32 +526,6 @@
     
     
       <category term="CSS" scheme="zeuszhou.xyz/tags/CSS/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>JS对象方法总结</title>
-    <link href="zeuszhou.xyz/JS%E5%9F%BA%E7%A1%80/Object%E6%96%B9%E6%B3%95%E6%80%BB%E7%BB%93/"/>
-    <id>zeuszhou.xyz/JS基础/Object方法总结/</id>
-    <published>2020-05-31T08:30:54.000Z</published>
-    <updated>2020-05-31T14:30:48.612Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="Object方法"><a href="#Object方法" class="headerlink" title="Object方法"></a>Object方法</h3><ol><li><p>Object.assign<br>对象合并，浅拷贝，只拷贝自身属性，prototype不拷贝，视数组为对象进行处理，[1,2,3] + [4,5] = [4,5,3]</p></li><li><p>Object.create<br>使用指定的原型对象及其属性去创建一个新的对象</p></li><li><p>Object.defineProperties<br>直接在一个对象上修改一个或多个属性或者加属性（指的是内部属性）</p></li><li><p>Object.defineProperty<br>同上，单复数的区别</p></li></ol><p>数据描述符｜数据属性</p><ul><li>Configurable：表示能否通过delete删除此属性，能否修改内部属性值</li><li>Enumerable：表示该属性是否可枚举，是否可以通过for in或Object.keys()返回属性</li><li>Writable：表示能否修改属性的值</li><li>Value：表示该属性对应的值</li></ul><p>存取描述符｜访问器属性</p><ul><li>Configurable</li><li>Enumerable</li><li>get：访问对象属性时调用的函数</li><li>set：改变对象属性时调用的函数<br>使用defineProperty或者defineProperties时，属性默认为false或者undefined<br>用var定义的任何变量，该属性都是false<br>字面量定义的对象，该对象内部的属性的数据描述符属性都为true<br>当writable为true，configurable为false时，修改writable和value，不会报错<br>当writable为false，configurable为true时，value可以通过defineProperty修改，但不能直接赋值修改</li></ul><ol start="5"><li>Object.getOwnPropertyDescriptor</li><li><p>Object.getOwnPropertyDescriptors<br>返回指定对象上一个自有属性对应的属性描述符</p></li><li><p>Object.entries<br>返回键值对数组</p></li><li><p>obj.hasOwnProperty<br>对象自身属性是否有指定的属性</p></li><li><p>Object.keys<br>for in会枚举原型链上的属性，这个不会<br>不可枚举属性也不会打印</p></li><li><p>Object.values<br>会过滤属性名为 Symbol 值的属性</p></li><li><p>Object.getOwnPropertyNames<br>返回所有的属性，包括不可以枚举属性，但不包括属性名为 Symbol 值的属性</p></li><li><p>Object.getOwnPropertySymbols<br>返回所有Symbol属性的数组</p></li><li><p>Object.getPropertyOf<br>返回对象的原型</p></li><li><p>obj.isPrototypeOf<br>判断一个对象是否在另一个对象的原型链上</p></li><li><p>Object.setPrototypeOf<br>设置对象的原型对象</p></li><li><p>Object.is<br>判断两个值是否相等</p><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Object</span>.is([], []); <span class="comment">// false</span></span><br><span class="line"><span class="built_in">Object</span>.is(<span class="literal">NaN</span>, <span class="number">0</span>/<span class="number">0</span>); <span class="comment">// true</span></span><br><span class="line"><span class="built_in">Object</span>.is(<span class="number">0</span>, <span class="number">-0</span>); <span class="comment">// false</span></span><br><span class="line"><span class="built_in">Object</span>.is(<span class="number">-0</span>, <span class="number">-0</span>); <span class="comment">// true</span></span><br></pre></td></tr></table></figure></li><li><p>Object.freeze<br>冻结一个对象，对象永远不可变</p></li><li><p>Object.isFrozen<br>判断是否冻结</p></li><li><p>Object.preventExtensions<br>对象不能添加新属性，可修改删除，不能添加</p></li><li><p>Object.isExtensible<br>判断对象是否可扩展，seal，freeze，preventExtensions都会使其不可扩展</p></li><li><p>Object.seal<br>密封对象，不能添加属性，不能配置，不可删除，但可以修改属性的值</p></li><li><p>Object.isSealed<br>判断对象是否被密封</p></li></ol><p>扩展（不能加属性） -&gt; 密封（不能配置，但可改值） -&gt; 冻结（不能修改值，所以啥都不能）</p><h3 id="Array方法"><a href="#Array方法" class="headerlink" title="Array方法"></a>Array方法</h3><ol><li>isArray 判断是否数组</li><li>toString 数组转字符串</li><li>valueof 返回对象原始值</li><li>join 数组转字符串</li><li>push </li><li>pop</li><li>unshift 添加头</li><li>shift 删除头</li><li>reverse</li><li>sort</li><li>concat</li><li>slice</li><li>splice</li><li>indexOf</li><li>every</li><li>filter</li><li>forEach</li><li>map</li><li>some</li><li>reduce</li><li>reduceRight</li><li>copyWithin 从数组的指定位置拷贝元素到数组的另一个指定位置中</li><li>entries</li><li>fill</li><li>find 返回符合传入测试（函数）条件的数组元素</li><li>findIndex 返回符合传入测试（函数）条件的数组元素索引</li><li>from 通过给定的对象中创建一个数组，比如set</li><li>includes 判断一个数组是否包含一个指定的值</li><li>keys</li><li>lastIndexOf</li></ol><h3 id="String方法"><a href="#String方法" class="headerlink" title="String方法"></a>String方法</h3><ol><li>charAt</li><li>charCodeAt</li><li>concat</li><li>slice</li><li>substr</li><li>substring</li><li>indexOf</li><li>lastIndexOf</li><li>toLowerCase</li><li>toUpperCase</li><li>match</li><li>search</li><li>replace</li><li>split</li><li>trim 去除字符串两边的空白</li><li>localeCompare 比较两个字符串的字符顺序</li><li>formCharCode</li><li>valueOf</li><li>includes</li><li>startsWith</li><li>endsWith</li><li>repeat</li><li>padStart 在头部补全字符串</li><li>padEnd 在尾部补全字符串</li></ol><h3 id="Math方法"><a href="#Math方法" class="headerlink" title="Math方法"></a>Math方法</h3><ol><li>Math.abs</li><li>Math.ceil</li><li>Math.floor</li><li>Math.max</li><li>Math.min</li><li>Math.pow(x,y) x的y次方</li><li>Math.random</li><li>Math.round</li><li>Math.sqrt</li></ol>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;h3 id=&quot;Object方法&quot;&gt;&lt;a href=&quot;#Object方法&quot; class=&quot;headerlink&quot; title=&quot;Object方法&quot;&gt;&lt;/a&gt;Object方法&lt;/h3&gt;&lt;ol&gt;
-&lt;li&gt;&lt;p&gt;Object.assign&lt;br&gt;对象合并，浅拷贝，只拷贝自身属性，pro
-      
-    
-    </summary>
-    
-      <category term="JS基础" scheme="zeuszhou.xyz/categories/JS%E5%9F%BA%E7%A1%80/"/>
-    
-    
-      <category term="JS基础" scheme="zeuszhou.xyz/tags/JS%E5%9F%BA%E7%A1%80/"/>
     
   </entry>
   
