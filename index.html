@@ -308,7 +308,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="zeuszhou.xyz/源码/Vue2-0源码之Vuex/">
+    <link itemprop="mainEntityOfPage" href="zeuszhou.xyz/源码/React源码阅读笔记/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="ZEUS ZHOU">
@@ -327,7 +327,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/源码/Vue2-0源码之Vuex/" itemprop="url">Vue2.0源码之Vuex</a></h1>
+                <a class="post-title-link" href="/源码/React源码阅读笔记/" itemprop="url">React16+源码阅读笔记</a></h1>
         
 
         <div class="post-meta">
@@ -339,8 +339,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-07-05T10:33:40+08:00">
-                2020-07-05
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-07-07T11:56:35+08:00">
+                2020-07-07
               </time>
             
 
@@ -355,8 +355,8 @@
               
                 <span class="post-meta-item-text">Post modified&#58;</span>
               
-              <time title="Post modified" itemprop="dateModified" datetime="2020-07-05T10:33:54+08:00">
-                2020-07-05
+              <time title="Post modified" itemprop="dateModified" datetime="2020-07-07T17:43:50+08:00">
+                2020-07-07
               </time>
             
           </span>
@@ -413,7 +413,31 @@
       
         
           
-            
+            <h3 id="React数据结构"><a href="#React数据结构" class="headerlink" title="React数据结构"></a>React数据结构</h3><ol>
+<li><p>FiberRoot</p>
+</li>
+<li><p>Fiber</p>
+</li>
+<li><p>effectTags</p>
+</li>
+<li><p>ReactWorkTag</p>
+</li>
+<li><p>sideEffects</p>
+</li>
+<li><p>Update &amp; UpdateQueue</p>
+</li>
+</ol>
+<h3 id="ReactDOM-render"><a href="#ReactDOM-render" class="headerlink" title="ReactDOM.render"></a>ReactDOM.render</h3><ol>
+<li><p>parentComponent是写死的null。DOMRenderer.unbatchedUpdates制定不使用batchedUpdates，因为是初次渲染，需要尽快。</p>
+</li>
+<li><p>首先创建ReactDom对象，调用render方法，创建时会调用DOMRender.createContainer创建FiberRoot。</p>
+</li>
+<li><p>DOMRenderer是react-reconciler/src/ReactFiberReconciler，他的udateContainer计算了一个expirationTime，超时时间，然后调用updateContainerAtExpirationTime，在这个方法调用scheduleRootUpdate</p>
+</li>
+<li><p>首先生成一个update，react所有的更新都会创建一个update对象，并且会赋值给Fiber.updateQueue， 然后调用scheduleWork</p>
+</li>
+</ol>
+
           
         
       

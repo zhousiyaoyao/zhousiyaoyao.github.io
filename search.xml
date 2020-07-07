@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title><![CDATA[Vue2.0源码之Vuex]]></title>
-    <url>%2F%E6%BA%90%E7%A0%81%2FVue2-0%E6%BA%90%E7%A0%81%E4%B9%8BVuex%2F</url>
-    <content type="text"></content>
+    <title><![CDATA[React16+源码阅读笔记]]></title>
+    <url>%2F%E6%BA%90%E7%A0%81%2FReact%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0%2F</url>
+    <content type="text"><![CDATA[React数据结构 FiberRoot Fiber effectTags ReactWorkTag sideEffects Update &amp; UpdateQueue ReactDOM.render parentComponent是写死的null。DOMRenderer.unbatchedUpdates制定不使用batchedUpdates，因为是初次渲染，需要尽快。 首先创建ReactDom对象，调用render方法，创建时会调用DOMRender.createContainer创建FiberRoot。 DOMRenderer是react-reconciler/src/ReactFiberReconciler，他的udateContainer计算了一个expirationTime，超时时间，然后调用updateContainerAtExpirationTime，在这个方法调用scheduleRootUpdate 首先生成一个update，react所有的更新都会创建一个update对象，并且会赋值给Fiber.updateQueue， 然后调用scheduleWork]]></content>
       <categories>
         <category>源码</category>
       </categories>

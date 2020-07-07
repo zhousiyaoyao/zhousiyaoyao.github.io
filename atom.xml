@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="zeuszhou.xyz/"/>
-  <updated>2020-07-05T02:33:54.998Z</updated>
+  <updated>2020-07-07T09:43:50.234Z</updated>
   <id>zeuszhou.xyz/</id>
   
   <author>
@@ -17,13 +17,23 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>Vue2.0源码之Vuex</title>
-    <link href="zeuszhou.xyz/%E6%BA%90%E7%A0%81/Vue2-0%E6%BA%90%E7%A0%81%E4%B9%8BVuex/"/>
-    <id>zeuszhou.xyz/源码/Vue2-0源码之Vuex/</id>
-    <published>2020-07-05T02:33:40.000Z</published>
-    <updated>2020-07-05T02:33:54.998Z</updated>
+    <title>React16+源码阅读笔记</title>
+    <link href="zeuszhou.xyz/%E6%BA%90%E7%A0%81/React%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0/"/>
+    <id>zeuszhou.xyz/源码/React源码阅读笔记/</id>
+    <published>2020-07-07T03:56:35.000Z</published>
+    <updated>2020-07-07T09:43:50.234Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="React数据结构"><a href="#React数据结构" class="headerlink" title="React数据结构"></a>React数据结构</h3><ol><li><p>FiberRoot</p></li><li><p>Fiber</p></li><li><p>effectTags</p></li><li><p>ReactWorkTag</p></li><li><p>sideEffects</p></li><li><p>Update &amp; UpdateQueue</p></li></ol><h3 id="ReactDOM-render"><a href="#ReactDOM-render" class="headerlink" title="ReactDOM.render"></a>ReactDOM.render</h3><ol><li><p>parentComponent是写死的null。DOMRenderer.unbatchedUpdates制定不使用batchedUpdates，因为是初次渲染，需要尽快。</p></li><li><p>首先创建ReactDom对象，调用render方法，创建时会调用DOMRender.createContainer创建FiberRoot。</p></li><li><p>DOMRenderer是react-reconciler/src/ReactFiberReconciler，他的udateContainer计算了一个expirationTime，超时时间，然后调用updateContainerAtExpirationTime，在这个方法调用scheduleRootUpdate</p></li><li><p>首先生成一个update，react所有的更新都会创建一个update对象，并且会赋值给Fiber.updateQueue， 然后调用scheduleWork</p></li></ol>]]></content>
     
     <summary type="html">
+    
+      
+      
+        &lt;h3 id=&quot;React数据结构&quot;&gt;&lt;a href=&quot;#React数据结构&quot; class=&quot;headerlink&quot; title=&quot;React数据结构&quot;&gt;&lt;/a&gt;React数据结构&lt;/h3&gt;&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;FiberRoot&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Fiber&lt;
+      
     
     </summary>
     
