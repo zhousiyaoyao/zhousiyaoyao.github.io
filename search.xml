@@ -1,6 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[Vuex源码学习]]></title>
+    <url>%2F%E6%BA%90%E7%A0%81%2FVuex%E6%BA%90%E7%A0%81%E5%AD%A6%E4%B9%A0%2F</url>
+    <content type="text"></content>
+      <categories>
+        <category>源码</category>
+      </categories>
+      <tags>
+        <tag>状态管理</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[React调度系统]]></title>
     <url>%2FReact%2FReact%E8%B0%83%E5%BA%A6%E7%B3%BB%E7%BB%9F%2F</url>
     <content type="text"><![CDATA[调度机制目的：为了避免长时间的js运行对于UI渲染或界面交互的影响，对JS进行控制。 并行渲染（Concurrent）将同步的渲染拆分成多步的异步渲染，将超过16ms的渲染代码分几次执行。一个时间片后，要停下来，让页面完成交互和渲染。 调度（Scheduler）支持不同渲染优先级，对Concurrent进行调度，对低优先级会不断提高优先级。交互产生的变更要及时反馈给用户，所以优先级高，需要插队。 为保证不产生阻塞的感觉，调度系统会将所有待执行的回调函数存在一份清单中，在每次浏览器渲染时间分片间尽可能执行，并将没有执行完的内容hold住留到下一个分片处理。 一次render涉及很多子节点，Fiber架构在Render阶段可以暂停，一个一个节点执行，从而实现调度。 requestIdleCallback的缺点requestIdleCallback在layout和paint之后执行，所以适合做js计算，如果进行dom的变更，会重新触发layout和paint，帧的时间不可控，而且requestIdleCallback的兼容性也不好。 React的做法React内部采用requestAnimationFrame作为polyfill，通过帧率动态调整，计算timeRemaining，模拟requestIdleCallback，从而实现时间分片，一个时间片就是一个渲染帧内js能获得的最大执行时间。RequestAnimationFrame触发在layout和paint之前，方便做DOM变更 Fiber所有组件都会转换为React.createElement，再转化为Fiber节点 Fiber节点拥有父节点，子节点和兄弟节点的引用，组件和Fiber节点会建立唯一映射关系 setState发生了什么？找到组件对应的Fiber，在Fiber的updateQueue中插入一个update对象，updateQueue也是一个链表结构，会记录所属Fiber节点上收集到的更新。然后从触发setState的Fiber节点，不断向上回溯，通知沿途上的Fiber节点，从子孙节点到root节点都得到更新。 接着从root对Fiber树进行深度优先遍历，每个Fiber节点在遍历时，若自身存在变更，会根据Fiber类型对节点执行创建或者更新，其中包含了执行部分生命周期，给Fiber节点打上effectTag等操作。effectTag代表了Fiber节点做了怎样的变更，具有effectTag的Fiber会成为effect。 每个Fiber带有自身子节点的信息，来判断是否需要继续向下深度遍历，这个过程叫做beginWork。如果不需要向下遍历，Fiber节点会开始回溯，判断是否存在兄弟节点，如果没有，则回溯到父节点，并将自身及自身子树上的effect形成effect list向父节点传递，直到root，这个过程叫做completeUnitOfWork。 合在一起就是render过程，是纯js计算，没有任何副作用。 在render过程中，effect会随着completeUnitWork过程，不断向上收集，最终在root完成所有effect收集。之后进入commit阶段，把effect list变更到真实的宿主环境，比如DOM。 Concurrent运行机制Fiber树的更新流程分为render阶段和commit阶段。render阶段可以被拆解，每个时间片内分别运行一部分，直到完成。commit阶段因为带有DOM更新，只能一次性完成。 Concurrent模式下，render阶段遍历Fiber树的过程会在循环中进行，每结束一次循环就会进行一次时间片的检查，如果时间片到了，while循环将被break，相当于render过程暂时被中断，当前处理的节点会被保留，等下一个时间分片到来再处理。 优先级划分 给低优先级设置一个过期时间，当过期后，当成同步任务，立即执行，和requestIdleCallback中的didTimeout一个道理 expiration time越大，优先级越高（之前相反） 当前时间会和Fiber的expiration time比较，来决定是否需要更新于向下遍历，在Fiber节点回溯的过程中，expirationTime会更新，同时祖先节点的childExpirationTime也会更新 如果Fiber Props没有变化且Fiber.expirationTime &lt; currentExpirationTime，说明当前Fiber节点本身低优先级或没有变更，不需要执行更新的操作，比如打effectTag 如果Fiber.childExpirationTime &lt; currentExpirationTime，说明当前Fiber的子孙均为低优先级节点或没有变更，不需要向下继续遍历 同步优先级最高异步，同等时刻触发的InteractiveExpiration优先级大于AsyncExpiration。InteractiveExpiration一般指在InteractiveEvent中触发的更新，比如blur，click，focus等等 React对外暴露unstable_scheduleCallback和flushSync两个API，通过它们包裹的setState有不同的优先级。前者是异步低优先级AsyncExpiration，后者是同步最高优先级 高优先级任务在render，commit和间隙均有可能生成，一旦生成，低优先级任务会先跳出循环，变更全局currentExpirationTime，从HostRoot重新开始遍历。 Fiber节点变更会形成update对象，带有expirationTime，插入updateQueue中，这个队列所有update对象按照插入顺序排列，如果同时存在高优先级update和低优先级update，低优先级的update会采用跳过方式处理。 当完成高优先级任务之后，不能继续低优先级任务，之前收集的effect list会被重置为null（因为componentWillMount可能会调用多次，低优先级任务的render阶段可能被重复执行，而componentWillMount包含在render阶段） 意义Concurrent是革命性的，前端框架不但解决了工程效率问题，还做到了从框架层面去提升应用的体验。但是对于一般应用，是否Concurrent其实是一样，大多数情况，开启Concurrent不会带来体验上的提升，只有在某些场景下，比如带有大量长时间渲染并含有富交互的应用，可能可以挽救]]></content>
@@ -8,7 +19,7 @@
         <category>React</category>
       </categories>
       <tags>
-        <tag>React</tag>
+        <tag>React调度</tag>
       </tags>
   </entry>
   <entry>
@@ -19,7 +30,7 @@
         <category>源码</category>
       </categories>
       <tags>
-        <tag>源码</tag>
+        <tag>React</tag>
       </tags>
   </entry>
   <entry>
@@ -30,7 +41,7 @@
         <category>源码</category>
       </categories>
       <tags>
-        <tag>源码</tag>
+        <tag>编译</tag>
       </tags>
   </entry>
   <entry>
@@ -41,7 +52,7 @@
         <category>源码</category>
       </categories>
       <tags>
-        <tag>源码</tag>
+        <tag>React合成</tag>
       </tags>
   </entry>
   <entry>
@@ -52,7 +63,7 @@
         <category>个人总结</category>
       </categories>
       <tags>
-        <tag>个人总结</tag>
+        <tag>工作总结</tag>
       </tags>
   </entry>
   <entry>
@@ -63,7 +74,7 @@
         <category>面试</category>
       </categories>
       <tags>
-        <tag>面试</tag>
+        <tag>计算机网络</tag>
       </tags>
   </entry>
   <entry>
@@ -74,7 +85,7 @@
         <category>面试</category>
       </categories>
       <tags>
-        <tag>面试</tag>
+        <tag>算法</tag>
       </tags>
   </entry>
   <entry>
@@ -85,18 +96,7 @@
         <category>面试</category>
       </categories>
       <tags>
-        <tag>面试</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[React面经题总结（长期更新）]]></title>
-    <url>%2F%E9%9D%A2%E8%AF%95%2FReact%E9%9D%A2%E7%BB%8F%E9%A2%98%E6%80%BB%E7%BB%93%EF%BC%88%E9%95%BF%E6%9C%9F%E6%9B%B4%E6%96%B0%EF%BC%89%2F</url>
-    <content type="text"><![CDATA[setState的原理 react生命周期 虚拟dom diff算法]]></content>
-      <categories>
-        <category>面试</category>
-      </categories>
-      <tags>
-        <tag>面试</tag>
+        <tag>CSS</tag>
       </tags>
   </entry>
   <entry>
@@ -107,7 +107,7 @@
         <category>面试</category>
       </categories>
       <tags>
-        <tag>面试</tag>
+        <tag>JS基础</tag>
       </tags>
   </entry>
   <entry>
@@ -118,7 +118,7 @@
         <category>React</category>
       </categories>
       <tags>
-        <tag>React</tag>
+        <tag>状态管理</tag>
       </tags>
   </entry>
   <entry>
@@ -129,7 +129,7 @@
         <category>状态管理</category>
       </categories>
       <tags>
-        <tag>状态管理</tag>
+        <tag>Redux</tag>
       </tags>
   </entry>
   <entry>
@@ -179,7 +179,7 @@
   <entry>
     <title><![CDATA[函数式编程]]></title>
     <url>%2F%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B%2F%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B%2F</url>
-    <content type="text"><![CDATA[特点 函数是一等公民函数当成赋值给变量，当成参数传给函数或者当成返回值返回 只用表达式，不用语句，每一步都是纯运算，而且有返回值表达式是单纯的运算过程，总有返回值语句是执行某种操作，没有返回值 没有副作用副作用指的是函数内部与外部互动，比如修改全局变量的值，产生运算以外的其他结果 引用透明函数的运行不依赖于外部变量或状态，只要输入的参数相同，所得的返回值总是相同 好处 代码简洁，开发快速 接近自然语言，易于理解 代码管理方便，每个函数可以当成独立单元 易于并发编程，不存在锁的问题 代码的热升级 具体应用1.]]></content>
+    <content type="text"><![CDATA[特点 函数是一等公民函数当成赋值给变量，当成参数传给函数或者当成返回值返回 只用表达式，不用语句，每一步都是纯运算，而且有返回值表达式是单纯的运算过程，总有返回值语句是执行某种操作，没有返回值 没有副作用副作用指的是函数内部与外部互动，比如修改全局变量的值，产生运算以外的其他结果 引用透明函数的运行不依赖于外部变量或状态，只要输入的参数相同，所得的返回值总是相同 好处 代码简洁，开发快速 接近自然语言，易于理解 代码管理方便，每个函数可以当成独立单元 易于并发编程，不存在锁的问题 代码的热升级]]></content>
       <categories>
         <category>函数式编程</category>
       </categories>
@@ -195,7 +195,7 @@
         <category>React</category>
       </categories>
       <tags>
-        <tag>React</tag>
+        <tag>React Hooks</tag>
       </tags>
   </entry>
   <entry>
@@ -211,8 +211,14 @@
   </entry>
   <entry>
     <title><![CDATA[Proxy和Reflect初探]]></title>
-    <url>%2Funcategorized%2FProxy%E5%92%8CReflect%E5%88%9D%E6%8E%A2%2F</url>
+    <url>%2F%E4%BB%A3%E7%90%86%2FProxy%E5%92%8CReflect%E5%88%9D%E6%8E%A2%2F</url>
     <content type="text"><![CDATA[Proxy在访问对象之前建立一道拦截，任何访问该对象的操作都会通过这个拦截，执行proxy里的方法1let pro = new Proxy(target, handler) new proxy表示proxy实例，target表示要拦截的对象，handler表示拦截的方法 handler有13种： get(target, propKey, receiver) receiver可选 set(target, propKey, value, receiver) receiver可选 has apply ownKeys construct isExtensible deleteProperty defineProperty getPropertyOf setPropertyOf preventExtensions getOwnPropertyDescriptor 12345678910111213141516171819let obj = &#123; name: "siyao"&#125;let handler = &#123; get: (obj, name, ) =&gt; &#123; const name = "我喜欢" + obj.name return name &#125;, set: (obj, name, value, ) =&gt; &#123; console.log("还名字了") obj[name] = value return true &#125;&#125;let proxy = new Proxy(obj, handler)let newObj = Object.create(proxy) // 同上console.log(proxy.name)obj.name = "xiangchan"console.log(proxy.name) ReflectES6为操作对象而提供的API，用来调用对象的默认行为 拥有proxy所有13种代理方法，静态形式存在，基本和Object同名方法相同，返回bool，语义性更好 无论proxy怎么修改默认行为，总是可以用Reflect对应的方法获取默认行为 修改某些Object方法的返回结果，使其更合理，比如Object.defineProperty无法定义属性会报错，Reflect.defineProperty会返回false 把Object操作变成函数行为，比如name in obj， delete obj[name]变成Reflect.deleteProperty和Reflect.has]]></content>
+      <categories>
+        <category>代理</category>
+      </categories>
+      <tags>
+        <tag>代理</tag>
+      </tags>
   </entry>
   <entry>
     <title><![CDATA[CSS的知识点]]></title>
@@ -260,13 +266,13 @@
   </entry>
   <entry>
     <title><![CDATA[操作系统总结]]></title>
-    <url>%2FCS%E5%9F%BA%E7%A1%80%2F%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E6%80%BB%E7%BB%93%2F</url>
+    <url>%2F%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86%2F%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E6%80%BB%E7%BB%93%2F</url>
     <content type="text"><![CDATA[前言几次面试都是因为操作系统完全没看，非常尴尬，看到这些知识，想起了在武大的快乐时光，自己的操作系统课本都送人了，还是得总结一个 OS四大特征 并发：同时发生（并行：不同时，但连续，交替执行） 共享：分互斥共享和同时共享，一段时间内只允许一个进程访问的资源叫做独占资源或者临界资源 异步：类似js的异步 虚拟：空分复用技术（虚拟存储器），时分复用技术（虚拟处理器） 指令是CPU能识别和执行的最基本命令，分为特权指令和非特权指令，内核程序才能执行特权指令，普通程序执行非特权指令。CPU也有内核态和用户态两种状态。 进程定义： 进程是具有独立功能的程序在数据集合上运行的过程，分配资源的基本单位，内存地址空间相互独立 每个进程都有一个进程控制块PCB来描述进程的各种信息，包括PID，UID，状态，优先级，指针，寄存器值等等 进程的基本状态：运行（占有CPU，在CPU上运行），就绪（缺空闲CPU）和阻塞（等待某事件）进程的另外2种2状态：创建态（正在初始化PCB），终止态（撤销PCB，资源回收） 状态转换：运行进入阻塞是主动的（系统调用），阻塞进入就绪是被动的（其他都弄好了，就差CPU了），阻塞不能直接进入运行，就绪也不能直接进入阻塞（因为运行时才能主动请求） 原语：不可被中断的原子操作，使用关中断指令和开中断指令实现，先关再开 进程的通信： 共享存储：互斥的，内存画出一块共享区 管道：半双工，某一时间段只能实现单向传输，双向需要2个管道。字符流形式，管道写满时，write被阻塞，数据都读完时，read被阻塞。如果没写满，就不让读，没空就不让写。读进程只有一个。 消息传递：格式化的消息为单位，通过发送消息/接受消息两个原语进行通信，包括信息头和尾 间接通信：通过中介者信箱来进行通信 同步：某些进程的执行必须先于另一些进程互斥：当某个进程使用某种资源时，其他进程必须等待信号量：解决进程的同步和互斥，由剩余资源和阻塞队列的地址组成生成者消费者问题：生产者的作用是生成一定量数据到缓存区，消费者消耗这些数据，保证生产者不会在满时加入数据，消费者不会在空时消耗数据，用互斥信号量实现互斥访问，同步信号量表示还可以生成多少产品和消耗多少产品 线程定义：进程并发多个事件的能力，基本的CPU执行单位，程序执行流的最小单位，进程可以并发，进程的线程也可以并发，引入线程后，进程只作为除CPU外的系统资源分配单位。线程的切换比进程的切换开销小。 内存内存是计算机硬件与CPU沟通的桥梁，中转站，程序执行前要先放到内存中才能被CPU处理CPU通过内存的存储单元编址来找到执行程序的数据 连续分配：用户进程分配必须是一个连续的内存空间，包括动态分区分配，缺点是会产生内存碎片非连续分配动态分区分配：不会预先划分内存分区，而是动态的建立分区 空闲分区表：分区号，分区大小，起始地址，状态首次适应算法：每次从低地址开始查找，找到第一个满足大小的空闲分区最佳适应算法：从空闲分区表中找到最小的适合分配的分区块来满足需求基本分页存储：把内存空间分成一个个大小相等的分区，每个分区是一个页框，进程的页与内存的页有一一对应关系]]></content>
       <categories>
-        <category>CS基础</category>
+        <category>基础知识</category>
       </categories>
       <tags>
-        <tag>CS基础</tag>
+        <tag>操作系统</tag>
       </tags>
   </entry>
   <entry>
@@ -277,7 +283,7 @@
         <category>浏览器</category>
       </categories>
       <tags>
-        <tag>浏览器</tag>
+        <tag>BOM</tag>
       </tags>
   </entry>
   <entry>
@@ -288,7 +294,7 @@
         <category>浏览器</category>
       </categories>
       <tags>
-        <tag>浏览器</tag>
+        <tag>Chrome</tag>
       </tags>
   </entry>
   <entry>
@@ -321,7 +327,7 @@
         <category>React</category>
       </categories>
       <tags>
-        <tag>React架构</tag>
+        <tag>Fiber</tag>
       </tags>
   </entry>
   <entry>
@@ -343,7 +349,7 @@
         <category>个人总结</category>
       </categories>
       <tags>
-        <tag>个人总结</tag>
+        <tag>学业总结</tag>
       </tags>
   </entry>
 </search>
