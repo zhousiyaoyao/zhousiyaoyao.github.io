@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="zeuszhou.xyz/"/>
-  <updated>2020-07-07T09:43:50.234Z</updated>
+  <updated>2020-07-07T15:40:06.227Z</updated>
   <id>zeuszhou.xyz/</id>
   
   <author>
@@ -17,13 +17,40 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>React调度系统</title>
+    <link href="zeuszhou.xyz/React/React%E8%B0%83%E5%BA%A6%E7%B3%BB%E7%BB%9F/"/>
+    <id>zeuszhou.xyz/React/React调度系统/</id>
+    <published>2020-07-07T10:42:53.000Z</published>
+    <updated>2020-07-07T15:40:06.227Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="调度机制"><a href="#调度机制" class="headerlink" title="调度机制"></a>调度机制</h3><p>目的：为了避免长时间的js运行对于UI渲染或界面交互的影响，对JS进行控制。</p><ol><li><p>并行渲染（Concurrent）<br>将同步的渲染拆分成多步的异步渲染，将超过16ms的渲染代码分几次执行。<br>一个时间片后，要停下来，让页面完成交互和渲染。</p></li><li><p>调度（Scheduler）<br>支持不同渲染优先级，对Concurrent进行调度，对低优先级会不断提高优先级。交互产生的变更要及时反馈给用户，所以优先级高，需要插队。</p></li></ol><p>为保证不产生阻塞的感觉，调度系统会将所有待执行的回调函数存在一份清单中，在每次浏览器渲染时间分片间尽可能执行，并将没有执行完的内容hold住留到下一个分片处理。</p><p>一次render涉及很多子节点，Fiber架构在Render阶段可以暂停，一个一个节点执行，从而实现调度。</p><ol start="3"><li><p>requestIdleCallback的缺点<br>requestIdleCallback在layout和paint之后执行，所以适合做js计算，如果进行dom的变更，会重新触发layout和paint，帧的时间不可控，而且requestIdleCallback的兼容性也不好。</p></li><li><p>React的做法<br>React内部采用requestAnimationFrame作为polyfill，通过帧率动态调整，计算timeRemaining，模拟requestIdleCallback，从而实现时间分片，一个时间片就是一个渲染帧内js能获得的最大执行时间。RequestAnimationFrame触发在layout和paint之前，方便做DOM变更</p></li></ol><h3 id="Fiber"><a href="#Fiber" class="headerlink" title="Fiber"></a>Fiber</h3><p>所有组件都会转换为React.createElement，再转化为Fiber节点</p><p>Fiber节点拥有父节点，子节点和兄弟节点的引用，组件和Fiber节点会建立唯一映射关系</p><p>setState发生了什么？<br>找到组件对应的Fiber，在Fiber的updateQueue中插入一个update对象，updateQueue也是一个链表结构，会记录所属Fiber节点上收集到的更新。然后从触发setState的Fiber节点，不断向上回溯，通知沿途上的Fiber节点，从子孙节点到root节点都得到更新。</p><p>接着从root对Fiber树进行深度优先遍历，每个Fiber节点在遍历时，若自身存在变更，会根据Fiber类型对节点执行创建或者更新，其中包含了执行部分生命周期，给Fiber节点打上effectTag等操作。effectTag代表了Fiber节点做了怎样的变更，具有effectTag的Fiber会成为effect。</p><p>每个Fiber带有自身子节点的信息，来判断是否需要继续向下深度遍历，这个过程叫做beginWork。如果不需要向下遍历，Fiber节点会开始回溯，判断是否存在兄弟节点，如果没有，则回溯到父节点，并将自身及自身子树上的effect形成effect list向父节点传递，直到root，这个过程叫做completeUnitOfWork。</p><p>合在一起就是render过程，是纯js计算，没有任何副作用。</p><p>在render过程中，effect会随着completeUnitWork过程，不断向上收集，最终在root完成所有effect收集。之后进入commit阶段，把effect list变更到真实的宿主环境，比如DOM。</p><h3 id="Concurrent运行机制"><a href="#Concurrent运行机制" class="headerlink" title="Concurrent运行机制"></a>Concurrent运行机制</h3><p>Fiber树的更新流程分为render阶段和commit阶段。<br>render阶段可以被拆解，每个时间片内分别运行一部分，直到完成。<br>commit阶段因为带有DOM更新，只能一次性完成。</p><p>Concurrent模式下，render阶段遍历Fiber树的过程会在循环中进行，每结束一次循环就会进行一次时间片的检查，如果时间片到了，while循环将被break，相当于render过程暂时被中断，当前处理的节点会被保留，等下一个时间分片到来再处理。</p><h3 id="优先级划分"><a href="#优先级划分" class="headerlink" title="优先级划分"></a>优先级划分</h3><ol><li>给低优先级设置一个过期时间，当过期后，当成同步任务，立即执行，和requestIdleCallback中的didTimeout一个道理</li><li>expiration time越大，优先级越高（之前相反）</li><li>当前时间会和Fiber的expiration time比较，来决定是否需要更新于向下遍历，在Fiber节点回溯的过程中，expirationTime会更新，同时祖先节点的childExpirationTime也会更新</li><li>如果Fiber Props没有变化且Fiber.expirationTime &lt; currentExpirationTime，说明当前Fiber节点本身低优先级或没有变更，不需要执行更新的操作，比如打effectTag</li><li>如果Fiber.childExpirationTime &lt; currentExpirationTime，说明当前Fiber的子孙均为低优先级节点或没有变更，不需要向下继续遍历</li></ol><p>同步优先级最高<br>异步，同等时刻触发的InteractiveExpiration优先级大于AsyncExpiration。InteractiveExpiration一般指在InteractiveEvent中触发的更新，比如blur，click，focus等等</p><p>React对外暴露unstable_scheduleCallback和flushSync两个API，通过它们包裹的setState有不同的优先级。前者是异步低优先级AsyncExpiration，后者是同步最高优先级</p><p>高优先级任务在render，commit和间隙均有可能生成，一旦生成，低优先级任务会先跳出循环，变更全局currentExpirationTime，从HostRoot重新开始遍历。</p><p>Fiber节点变更会形成update对象，带有expirationTime，插入updateQueue中，这个队列所有update对象按照插入顺序排列，如果同时存在高优先级update和低优先级update，低优先级的update会采用跳过方式处理。</p><p>当完成高优先级任务之后，不能继续低优先级任务，之前收集的effect list会被重置为null（因为componentWillMount可能会调用多次，低优先级任务的render阶段可能被重复执行，而componentWillMount包含在render阶段）</p><h3 id="意义"><a href="#意义" class="headerlink" title="意义"></a>意义</h3><p>Concurrent是革命性的，前端框架不但解决了工程效率问题，还做到了从框架层面去提升应用的体验。但是对于一般应用，是否Concurrent其实是一样，大多数情况，开启Concurrent不会带来体验上的提升，只有在某些场景下，比如带有大量长时间渲染并含有富交互的应用，可能可以挽救</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h3 id=&quot;调度机制&quot;&gt;&lt;a href=&quot;#调度机制&quot; class=&quot;headerlink&quot; title=&quot;调度机制&quot;&gt;&lt;/a&gt;调度机制&lt;/h3&gt;&lt;p&gt;目的：为了避免长时间的js运行对于UI渲染或界面交互的影响，对JS进行控制。&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;并行渲染（Co
+      
+    
+    </summary>
+    
+      <category term="React" scheme="zeuszhou.xyz/categories/React/"/>
+    
+    
+      <category term="React" scheme="zeuszhou.xyz/tags/React/"/>
+    
+  </entry>
+  
+  <entry>
     <title>React16+源码阅读笔记</title>
     <link href="zeuszhou.xyz/%E6%BA%90%E7%A0%81/React%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0/"/>
     <id>zeuszhou.xyz/源码/React源码阅读笔记/</id>
     <published>2020-07-07T03:56:35.000Z</published>
-    <updated>2020-07-07T09:43:50.234Z</updated>
+    <updated>2020-07-07T09:51:01.738Z</updated>
     
-    <content type="html"><![CDATA[<h3 id="React数据结构"><a href="#React数据结构" class="headerlink" title="React数据结构"></a>React数据结构</h3><ol><li><p>FiberRoot</p></li><li><p>Fiber</p></li><li><p>effectTags</p></li><li><p>ReactWorkTag</p></li><li><p>sideEffects</p></li><li><p>Update &amp; UpdateQueue</p></li></ol><h3 id="ReactDOM-render"><a href="#ReactDOM-render" class="headerlink" title="ReactDOM.render"></a>ReactDOM.render</h3><ol><li><p>parentComponent是写死的null。DOMRenderer.unbatchedUpdates制定不使用batchedUpdates，因为是初次渲染，需要尽快。</p></li><li><p>首先创建ReactDom对象，调用render方法，创建时会调用DOMRender.createContainer创建FiberRoot。</p></li><li><p>DOMRenderer是react-reconciler/src/ReactFiberReconciler，他的udateContainer计算了一个expirationTime，超时时间，然后调用updateContainerAtExpirationTime，在这个方法调用scheduleRootUpdate</p></li><li><p>首先生成一个update，react所有的更新都会创建一个update对象，并且会赋值给Fiber.updateQueue， 然后调用scheduleWork</p></li></ol>]]></content>
+    <content type="html"><![CDATA[<h3 id="React数据结构"><a href="#React数据结构" class="headerlink" title="React数据结构"></a>React数据结构</h3><ol><li><p>FiberRoot</p></li><li><p>Fiber</p></li><li><p>effectTags</p></li><li><p>ReactWorkTag</p></li><li><p>sideEffects</p></li><li><p>Update &amp; UpdateQueue</p></li></ol><h3 id="ReactDOM-render"><a href="#ReactDOM-render" class="headerlink" title="ReactDOM.render"></a>ReactDOM.render</h3><ol><li><p>parentComponent是写死的null。DOMRenderer.unbatchedUpdates制定不使用batchedUpdates，因为是初次渲染，需要尽快。</p></li><li><p>首先创建ReactDom对象，调用render方法，创建时会调用DOMRender.createContainer创建FiberRoot。</p></li><li><p>DOMRenderer是react-reconciler/src/ReactFiberReconciler，他的udateContainer计算了一个expirationTime，超时时间，然后调用updateContainerAtExpirationTime，在这个方法调用scheduleRootUpdate</p></li><li><p>首先生成一个update，react所有的更新都会创建一个update对象，并且会赋值给Fiber.updateQueue， 然后调用scheduleWork</p></li></ol><h3 id="setState"><a href="#setState" class="headerlink" title="setState"></a>setState</h3><p>setState调用updater.enqueueSetState，setState和forceUpdate的唯一区别是Update.log。在当前节点对应的Fiber对象上创建了Update之后，进入scheduleWork阶段</p>]]></content>
     
     <summary type="html">
     
@@ -510,32 +537,6 @@
     
     </summary>
     
-    
-  </entry>
-  
-  <entry>
-    <title>CSS的知识点</title>
-    <link href="zeuszhou.xyz/CSS/CSS%E7%9A%84%E7%9F%A5%E8%AF%86%E7%82%B9/"/>
-    <id>zeuszhou.xyz/CSS/CSS的知识点/</id>
-    <published>2020-06-01T14:33:39.000Z</published>
-    <updated>2020-06-09T13:35:23.491Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="伪类和伪元素"><a href="#伪类和伪元素" class="headerlink" title="伪类和伪元素"></a>伪类和伪元素</h3><p>都是为了格式化文档树以外的信息，修饰不在文档树中的部分</p><p>伪类，单冒号，a:hover 表示鼠标覆盖样式； li:nth-child 表示n个li;</p><p>伪元素，双冒号，::before 让插入的内容出现在之前; ::after 让插入的内容出现在之后，可以用来清除浮动（clear both加上BFC）</p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;h3 id=&quot;伪类和伪元素&quot;&gt;&lt;a href=&quot;#伪类和伪元素&quot; class=&quot;headerlink&quot; title=&quot;伪类和伪元素&quot;&gt;&lt;/a&gt;伪类和伪元素&lt;/h3&gt;&lt;p&gt;都是为了格式化文档树以外的信息，修饰不在文档树中的部分&lt;/p&gt;
-&lt;p&gt;伪类，单冒号，a:hover 表示鼠标
-      
-    
-    </summary>
-    
-      <category term="CSS" scheme="zeuszhou.xyz/categories/CSS/"/>
-    
-    
-      <category term="CSS" scheme="zeuszhou.xyz/tags/CSS/"/>
     
   </entry>
   

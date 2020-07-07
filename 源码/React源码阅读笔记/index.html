@@ -96,7 +96,7 @@
 <meta property="og:site_name" content="ZEUS ZHOU">
 <meta property="og:description" content="React数据结构 FiberRoot  Fiber  effectTags  ReactWorkTag  sideEffects  Update &amp;amp; UpdateQueue   ReactDOM.render parentComponent是写死的null。DOMRenderer.unbatchedUpdates制定不使用batchedUpdates，因为是初次渲染，需要尽快。  首先创">
 <meta property="og:locale" content="中文">
-<meta property="og:updated_time" content="2020-07-07T09:43:50.234Z">
+<meta property="og:updated_time" content="2020-07-07T09:51:01.738Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="React16+源码阅读笔记">
 <meta name="twitter:description" content="React数据结构 FiberRoot  Fiber  effectTags  ReactWorkTag  sideEffects  Update &amp;amp; UpdateQueue   ReactDOM.render parentComponent是写死的null。DOMRenderer.unbatchedUpdates制定不使用batchedUpdates，因为是初次渲染，需要尽快。  首先创">
@@ -353,7 +353,7 @@
               
                 <span class="post-meta-item-text">Post modified&#58;</span>
               
-              <time title="Post modified" itemprop="dateModified" datetime="2020-07-07T17:43:50+08:00">
+              <time title="Post modified" itemprop="dateModified" datetime="2020-07-07T17:51:01+08:00">
                 2020-07-07
               </time>
             
@@ -438,6 +438,7 @@
 <li><p>首先生成一个update，react所有的更新都会创建一个update对象，并且会赋值给Fiber.updateQueue， 然后调用scheduleWork</p>
 </li>
 </ol>
+<h3 id="setState"><a href="#setState" class="headerlink" title="setState"></a>setState</h3><p>setState调用updater.enqueueSetState，setState和forceUpdate的唯一区别是Update.log。在当前节点对应的Fiber对象上创建了Update之后，进入scheduleWork阶段</p>
 
       
     </div>
@@ -459,7 +460,7 @@
   <p><span>本文标题:</span>React16+源码阅读笔记</a></p>
   <p><span>文章作者:</span>ZEUS ZHOU</a></p>
   <p><span>发布时间:</span>2020年07月07日 - 11:56:35</p>
-  <p><span>最后更新:</span>2020年07月07日 - 17:43:50</p>
+  <p><span>最后更新:</span>2020年07月07日 - 17:51:01</p>
   <p><span>原始链接:</span>
     <span class="copy-path"  title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="zeuszhou.xyz/源码/React源码阅读笔记/"  aria-label="复制成功！"></i></span>
   </p>
@@ -545,6 +546,10 @@
 
           <div class="post-nav-prev post-nav-item">
             
+              <a href="/React/React调度系统/" rel="prev" title="React调度系统">
+                React调度系统 <i class="fa fa-chevron-right"></i>
+              </a>
+            
           </div>
         </div>
       
@@ -624,7 +629,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">31</span>
+                  <span class="site-state-item-count">32</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -726,7 +731,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#React数据结构"><span class="nav-number">1.</span> <span class="nav-text">React数据结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ReactDOM-render"><span class="nav-number">2.</span> <span class="nav-text">ReactDOM.render</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#React数据结构"><span class="nav-number">1.</span> <span class="nav-text">React数据结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ReactDOM-render"><span class="nav-number">2.</span> <span class="nav-text">ReactDOM.render</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#setState"><span class="nav-number">3.</span> <span class="nav-text">setState</span></a></li></ol></div>
             
 
           </div>

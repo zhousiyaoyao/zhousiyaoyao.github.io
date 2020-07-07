@@ -308,6 +308,187 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="zeuszhou.xyz/React/React-Hooks入门/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ZEUS ZHOU">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ZEUS ZHOU">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/React/React-Hooks入门/" itemprop="url">useEffect小试</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-05-10T15:33:00+08:00">
+                2020-05-10
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Post modified&#58;</span>
+              
+              <time title="Post modified" itemprop="dateModified" datetime="2020-05-10T23:10:30+08:00">
+                2020-05-10
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/React/" itemprop="url" rel="index">
+                    <span itemprop="name">React</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="前序"><a href="#前序" class="headerlink" title="前序"></a>前序</h2><p>实习了3天，感受到了互联网公司的快节奏<br>React hooks，TS，Sass是基础，而自己又不太熟，需要补补课<br>React hooks之前看了一下官方文档，感觉非常清晰，然鹅做起项目来，还是有点不大理解，需要捋一捋</p>
+<h2 id="useEffect"><a href="#useEffect" class="headerlink" title="useEffect"></a>useEffect</h2><p>react只会在浏览器绘制之后运行effects<br>useEffect函数在每一次渲染中都不同，对应的state值也只属于当前那次渲染。<br>一个function对应多次渲染，每一次渲染中useEffect和state都是不同且独立的，每个effect函数看到的props和state都是来自他属于的那次渲染</p>
+<h4 id="一次完整的渲染过程，以官网count为例子"><a href="#一次完整的渲染过程，以官网count为例子" class="headerlink" title="一次完整的渲染过程，以官网count为例子"></a>一次完整的渲染过程，以官网count为例子</h4><ol>
+<li>组件给react需要渲染的内容，此时count为0，并告诉react渲染之后调用effect函数</li>
+<li>react拿到组件渲染内容，更新UI，告诉DOM进行修改</li>
+<li>浏览器绘制后告诉react，react运行effect</li>
+<li>然后count为1，组件给react count为1时的渲染内容，重复进行</li>
+</ol>
+<p>和componentDidUpdate相比，componentDidUpdate的state会指向最新的state，而hooks会指向某次特定渲染的值，这也是闭包的一个应用。<br>如果想在effec的回调中拿到最新的值而不是每次渲染的值，可以用refs</p>
+<h4 id="effect清理"><a href="#effect清理" class="headerlink" title="effect清理"></a>effect清理</h4><ol>
+<li>react渲染id为1的UI</li>
+<li>浏览器绘制，我们看到id为1的UI</li>
+<li>react清除id为0的effect</li>
+<li>react运行id为1的effect，id变成2<br>上一次的effect会在重新渲染后，被清除，effect的清除并不会读取到最新的props。所以react能做到在绘制后立即处理effect</li>
+</ol>
+<h4 id="依赖数组deps"><a href="#依赖数组deps" class="headerlink" title="依赖数组deps"></a>依赖数组deps</h4><p>因为react无法区分effects之间的不同，只能依靠deps<br>如果两次渲染，deps一样，react会跳过这次effect，也就是只有deps改变，effect才会生效<br>如果deps为空，表示只有第一次渲染会执行effect</p>
+<h4 id="依赖撒谎"><a href="#依赖撒谎" class="headerlink" title="依赖撒谎"></a>依赖撒谎</h4><p>依赖是我们给react的暗示，告诉它effect里需要使用的渲染的值，如果effect使用了count，但依赖数组里没有，会出大问题。<br>比如设置定时器，定时器调用了state但没有在deps里面标明，这样effect不会重复调用，每一次setCount里count都是常数<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Counter</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> [count, setCount] = useState(<span class="number">0</span>);</span><br><span class="line"></span><br><span class="line">  useEffect(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> id = setInterval(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">      setCount(count + <span class="number">1</span>);</span><br><span class="line">      <span class="comment">// setCount(c =&gt; c + 1); 正确的姿势</span></span><br><span class="line">    &#125;, <span class="number">1000</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="function"><span class="params">()</span> =&gt;</span> clearInterval(id);</span><br><span class="line">  &#125;, []);</span><br><span class="line">  <span class="keyword">return</span> <span class="xml"><span class="tag">&lt;<span class="name">h1</span>&gt;</span>&#123;count&#125;<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h4 id="useEffect发请求"><a href="#useEffect发请求" class="headerlink" title="useEffect发请求"></a>useEffect发请求</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">useEffect(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">async</span> <span class="function"><span class="keyword">function</span> <span class="title">fetchData</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        <span class="keyword">const</span> result = <span class="keyword">await</span> axios()</span><br><span class="line">    &#125;</span><br><span class="line">    fetchData()</span><br><span class="line">&#125;, [])</span><br><span class="line"></span><br><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">function</span> <span class="title">fetchData</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">const</span> result = <span class="keyword">await</span> axios()</span><br><span class="line">&#125;</span><br><span class="line">useEffect(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    fetchData()</span><br><span class="line">&#125;, [])</span><br></pre></td></tr></table></figure>
+<p>请求函数写在useEffect里面容易出现问题，比如如果async函数里面有一个state，UserID，我们需要在deps里面加入，但由于代码量比较大，我们非常可能忘记加上这个deps，然而如果我们把async函数写在useEffect里面，就很直观，程序员可以意识到要加这个间接依赖</p>
+<p>如果几个effect调用了同一个函数，可以把函数放在整个组件外面，或者用callback钩子<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">getFetchUrl</span>(<span class="params">query</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="string">'https://hn.algolia.com/api/v1/search?query='</span> + query;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">SearchResults</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  useEffect(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> url = getFetchUrl(<span class="string">'react'</span>);</span><br><span class="line">  &#125;, []);</span><br><span class="line">  useEffect(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> url = getFetchUrl(<span class="string">'redux'</span>);</span><br><span class="line">  &#125;, []);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">SearchResults</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> getFetchUrl = useCallback(<span class="function">(<span class="params">query</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="string">'https://hn.algolia.com/api/v1/search?query='</span> + query;</span><br><span class="line">  &#125;, []); </span><br><span class="line"></span><br><span class="line">  useEffect(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> url = getFetchUrl(<span class="string">'react'</span>);</span><br><span class="line">  &#125;, [getFetchUrl]);</span><br><span class="line"></span><br><span class="line">  useEffect(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> url = getFetchUrl(<span class="string">'redux'</span>);</span><br><span class="line">  &#125;, [getFetchUrl]); </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+<div>
+      
+</div>
+
+    
+
+    
+
+    
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-categories" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="zeuszhou.xyz/个人总结/写在NTU毕业前夕/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -544,7 +725,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">31</span>
+                  <span class="site-state-item-count">32</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
