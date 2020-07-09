@@ -355,7 +355,7 @@
               
                 <span class="post-meta-item-text">Post modified&#58;</span>
               
-              <time title="Post modified" itemprop="dateModified" datetime="2020-07-09T11:23:13+08:00">
+              <time title="Post modified" itemprop="dateModified" datetime="2020-07-09T15:30:58+08:00">
                 2020-07-09
               </time>
             
@@ -413,7 +413,8 @@
       
         
           
-            <h3 id="思想"><a href="#思想" class="headerlink" title="思想"></a>思想</h3><p>Vuex全局维护一个对象，使用单例模式。在这个对象中，所有的属性都是响应式的，任何属性发生改变都会造成使用该属性的组件进行更新，并且只能通过commit的方式改变状态，实现单向数据流模式。</p>
+            <h3 id="思想"><a href="#思想" class="headerlink" title="思想"></a>思想</h3><p>通过定义和隔离状态管理中的各种概念并通过强制规则维持视图和状态间的独立性，代码会变得更加结构化且易维护。<br>Vuex全局维护一个对象，使用单例模式。在这个对象中，所有的属性都是响应式的，任何属性发生改变都会造成使用该属性的组件进行更新，并且只能通过commit的方式改变状态，实现单向数据流模式。<br>每一个vuex应用的核心就是store，存储响应式的state，只能通过commit mutation来改变store的状态。</p>
+<h3 id="时间穿梭般的调试体验"><a href="#时间穿梭般的调试体验" class="headerlink" title="时间穿梭般的调试体验"></a>时间穿梭般的调试体验</h3><p>通过提交mutation的方式而不是直接改变state，因为这样可以更明确的追踪到状态的变化，这是一种约定，可以让你的意图变得更加明显，这样阅读代码时可以更加容易的解读应用内部的状态的改变。此外，也可以有机会去实现一些能记录每次状态改变，保存状态快照的调试工具。</p>
 <h3 id="Vuex安装-install"><a href="#Vuex安装-install" class="headerlink" title="Vuex安装-install"></a>Vuex安装-install</h3><p>Vue.use(Vuex)会调用install函数<br>该函数确保Vuex只安装一次<br>Vue.mixin混入beforeCreate钩子函数，可以在组件使用this.$store</p>
 <h3 id="Vuex初始化"><a href="#Vuex初始化" class="headerlink" title="Vuex初始化"></a>Vuex初始化</h3><p>由于使用单一状态树，应用的所有状态会集中到一个比较大的对象，当应用变得复杂时，store对象就有可能变得非常臃肿，为了解决这个问题，Vuex允许我们将store分割成mudule，整个modules是一个树型结构。每个mudule拥有自己的state，mutation，action和getter，甚至是嵌套子模块。为了让module具有更高的封装度和复用性，定义了namespaces的概念。最后定义了一个vue实例，来建立state到getters的联系，并且可以在严格模式下监测state的变化是不是来自外部，确保改变state的唯一途径就是显示地提交mutation。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> moduleA = &#123;</span><br><span class="line">    state: &#123;&#125;,</span><br><span class="line">    mutations: &#123;&#125;,</span><br><span class="line">    actions: &#123;&#125;,</span><br><span class="line">    getters: &#123;&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">const</span> store = <span class="keyword">new</span> Vuex.Store(&#123;</span><br><span class="line">    modules: &#123;</span><br><span class="line">        a: moduleA,</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br><span class="line">store.state.a <span class="comment">// 得到muduleA的状态</span></span><br></pre></td></tr></table></figure></p>
 <p>ModuleCollection：构造状态树的入口。第一次执行时，会初始化一个rootModule，然后判断root中是否存在modules属性，然后递归注册module。对于child，会获取到他所属的parent，然后在parent中添加module。</p>
@@ -430,7 +431,11 @@
 <p>dispatch：如果需要异步改变状态，需要通过dispatch实现，dispatch调用的commit函数是重写过的，会找到模块内的mutation函数。在注册action的时候，会将函数返回值处理成promise，当promise全部resolve后，就会执行promise.all里的函数</p>
 <h3 id="只能commite修改state的设计"><a href="#只能commite修改state的设计" class="headerlink" title="只能commite修改state的设计"></a>只能commite修改state的设计</h3><p>strict mode：严格模式下，store._vm会添加一个watcher观测this._data.$$state的变化，当store.state被修改时，store._committing必须为true，否则会报警告。而只有在commit的时候才会为true。</p>
 <h3 id="为什么要有action"><a href="#为什么要有action" class="headerlink" title="为什么要有action"></a>为什么要有action</h3><p>dispatch action，commit mutation，action包含mutation且是异步。<br>action比我们自己写一个函数执行异步操作再commit mutation的好处在于，它可以在参数中获取到当前模块的一些方法和状态。</p>
-<h3 id="mapXXX语法糖"><a href="#mapXXX语法糖" class="headerlink" title="mapXXX语法糖"></a>mapXXX语法糖</h3>
+<h3 id="mapXXX语法糖"><a href="#mapXXX语法糖" class="headerlink" title="mapXXX语法糖"></a>mapXXX语法糖</h3><p>当一个组件需要获取多个状态时，将这些状态都声明为计算属性会有些重复和冗余，同样getter，mutation和action也有这个问题。Vuex提供一系列mapXXX辅助函数实现方便的注入store的属性和方法。</p>
+<p>mapState最终是要构造一个对象，每个对象的元素都是一个方法，因为这个对象是要扩展到组件的computed计算属性中的。函数首先执行normalizeMap方法，把这个states变成一个数组，数组的每个元素都是{key, val}的形式。接着遍历这个数组，以key作为对象的key，值为一个mappedState的函数，在这个函数内部，获取到$store.getters和$store.state，然后再判断数组的val，如果是一个函数，执行，传入state和getters，否则直接访问state[val]，支持namespace</p>
+<p>mapGetters将store中的getter映射到局部计算属性，支持namespace</p>
+<p>mapMutations支持传入一个数组或者一个对象，目标是把组件中对应的methods映射为store.commit的调用，支持namespace。mapAction和mapMutations基本一样，只是把commit换成dispatch</p>
+
           
         
       
