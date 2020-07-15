@@ -355,7 +355,7 @@
               
                 <span class="post-meta-item-text">Post modified&#58;</span>
               
-              <time title="Post modified" itemprop="dateModified" datetime="2020-07-15T14:32:09+08:00">
+              <time title="Post modified" itemprop="dateModified" datetime="2020-07-15T22:31:08+08:00">
                 2020-07-15
               </time>
             
@@ -405,7 +405,21 @@
 <li>Object的问题<br>getter/setter只能追踪一个数据是否被修改，不能追踪新属性和删除属性，解决方法是vm.$set和vm.$delete</li>
 <li>总结<br>Data通过Observer变成setter/getter来追踪变化；<br>当外界通过watcher读取数据时，会触发getter从而将watcher添加到依赖中；<br>当数据发生变化，触发setter，从而向dep中的watcher发出通知；<br>watcher收到通知，向外界发出通知，触发视图更新或者某个回调函数；</li>
 </ol>
-<h3 id="第三章-Array的变化侦测"><a href="#第三章-Array的变化侦测" class="headerlink" title="第三章 Array的变化侦测"></a>第三章 Array的变化侦测</h3>
+<h3 id="第三章-Array的变化侦测"><a href="#第三章-Array的变化侦测" class="headerlink" title="第三章 Array的变化侦测"></a>第三章 Array的变化侦测</h3><ol>
+<li>如何追踪变化<br>Array通过创建拦截器去覆盖数组原型的方式来追踪变化</li>
+<li>拦截器是什么<br>拦截器是和Array.prototype一样的Object，里面包含的属性一模一样，只不过这个object中某些可以改变数组自身内容的方法是我们处理过的，分别是push，pop，shift，unshift，splice，sort和reverse</li>
+<li>使用拦截器覆盖Array原型<br>拦截器只覆盖那些响应式数组的原型，在Observer中，把拦截器赋值给value.<strong>proto</strong></li>
+<li>将拦截器方法挂载到数组的属性上<br>如果浏览器不支持<strong>proto</strong>，直接将arrayMethods身上的方法设置到被侦测的数组上</li>
+<li>如何收集依赖<br>和Object一样，在getter中收集依赖，不同的是，在拦截器中触发依赖。新增observe函数，如果已经是响应式，不需要再次创建Observer实例</li>
+<li>依赖列表存在哪里<br>存在Observer中，因为必须getter和拦截器都能访问到</li>
+<li>如何在拦截器获取Observer实例<br>拦截器是对原型的封装，所以this可以访问到数组，而dep保存在Observer中，所以需要在this上读到Observer的实例。<br>value通过<strong>ob</strong>属性拿到Observer实例，就可以获取到dep了，<strong>ob</strong>还可以标记当前value是否已经被Observer转换成了响应式数据。</li>
+<li>侦测数组中的元素<br>observeArray循环Array执行observer函数侦测变化，递归的过程。<br>对于push，unshift和splice的新元素，从args中取出元素，暂存在inserted中，再observeArray处理</li>
+<li>Array的问题<br>list[0] = 2 和 list.length = 0是拦截不到的</li>
+</ol>
+<h3 id="第三章-变化侦测相关的API实现原理"><a href="#第三章-变化侦测相关的API实现原理" class="headerlink" title="第三章 变化侦测相关的API实现原理"></a>第三章 变化侦测相关的API实现原理</h3><ol>
+<li>vm.$watch</li>
+</ol>
+
           
         
       
