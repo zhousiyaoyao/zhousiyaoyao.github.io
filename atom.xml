@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="zeuszhou.xyz/"/>
-  <updated>2020-07-09T07:30:58.890Z</updated>
+  <updated>2020-07-15T06:32:09.153Z</updated>
   <id>zeuszhou.xyz/</id>
   
   <author>
@@ -15,6 +15,29 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title></title>
+    <link href="zeuszhou.xyz/uncategorized/%E9%9A%94%E7%A6%BB%E4%BF%AE%E7%82%BC%E4%B9%8B%E6%B7%B1%E5%85%A5%E6%B5%85%E5%87%BAVue-js/"/>
+    <id>zeuszhou.xyz/uncategorized/隔离修炼之深入浅出Vue-js/</id>
+    <published>2020-07-15T05:56:25.041Z</published>
+    <updated>2020-07-15T06:32:09.153Z</updated>
+    
+    <content type="html"><![CDATA[<hr><p>title: 隔离修炼之深入浅出Vue.js<br>type: categories<br>copyright: true<br>date: 2020-07-15 13:56:25<br>tags: 源码</p><h2 id="categories-源码"><a href="#categories-源码" class="headerlink" title="categories: 源码"></a>categories: 源码</h2><h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>今天是重庆隔离的第三天，昨天JD买了一本《深入浅出Vue.Js》，刚刚送到，立哥flag，11天把这本书看完</p><h3 id="第二章-Object的变化侦测"><a href="#第二章-Object的变化侦测" class="headerlink" title="第二章 Object的变化侦测"></a>第二章 Object的变化侦测</h3><ol><li>变化侦测<br>侦测数据的变化，当数据发生改变，要能侦测到并发出通知</li><li>追踪变化<br>Object.defineProperty侦测对象的变化</li><li>收集依赖<br>把用到数据的地方收集起来，然后等属性发生变化时，把之前收集好的依赖循环触发，在getter里收集依赖，在setter里触发依赖</li><li>依赖收集到哪里<br>Dep类帮我们管理依赖，这个类可以收集依赖，删除依赖或者向依赖发送通知</li><li>依赖是谁<br>Watcher，我们要通知用到数据的地方有很多，而且类型还不一样，有可能是模版，有可能是watch，这时候需要抽象一个watcher类来处理。只收集这个类的实例，通知也只通知它一个，接着再让它负责通知其他地方</li><li>什么是watcher<br>Watcher是一个中介，当数据发送变化时通知它，然后它再通知其他地方。原理是把自己设置到全局唯一的指定位置，然后读取数据，触发getter，getter从全局唯一的那个位置读取当前正在读取数据的watcher，并把这个watcher收集到Dep中去。这样可以主动订阅任意一个数据的变化。</li><li>递归侦测所有key<br>封装一个Observer类，将一个data内所有的属性都转换成getter/setter的形式，然后追踪它们的变化</li><li>Object的问题<br>getter/setter只能追踪一个数据是否被修改，不能追踪新属性和删除属性，解决方法是vm.$set和vm.$delete</li><li>总结<br>Data通过Observer变成setter/getter来追踪变化；<br>当外界通过watcher读取数据时，会触发getter从而将watcher添加到依赖中；<br>当数据发生变化，触发setter，从而向dep中的watcher发出通知；<br>watcher收到通知，向外界发出通知，触发视图更新或者某个回调函数；</li></ol><h3 id="第三章-Array的变化侦测"><a href="#第三章-Array的变化侦测" class="headerlink" title="第三章 Array的变化侦测"></a>第三章 Array的变化侦测</h3>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;hr&gt;
+&lt;p&gt;title: 隔离修炼之深入浅出Vue.js&lt;br&gt;type: categories&lt;br&gt;copyright: true&lt;br&gt;date: 2020-07-15 13:56:25&lt;br&gt;tags: 源码&lt;/p&gt;
+&lt;h2 id=&quot;categories-源码&quot;&gt;&lt;a
+      
+    
+    </summary>
+    
+    
+  </entry>
   
   <entry>
     <title>Vuex源码学习</title>
@@ -509,31 +532,6 @@
     
     
       <category term="promise" scheme="zeuszhou.xyz/tags/promise/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Proxy和Reflect初探</title>
-    <link href="zeuszhou.xyz/%E4%BB%A3%E7%90%86/Proxy%E5%92%8CReflect%E5%88%9D%E6%8E%A2/"/>
-    <id>zeuszhou.xyz/代理/Proxy和Reflect初探/</id>
-    <published>2020-06-02T01:44:51.000Z</published>
-    <updated>2020-07-07T15:59:04.743Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="Proxy"><a href="#Proxy" class="headerlink" title="Proxy"></a>Proxy</h3><p>在访问对象之前建立一道拦截，任何访问该对象的操作都会通过这个拦截，执行proxy里的方法<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> pro = <span class="keyword">new</span> <span class="built_in">Proxy</span>(target, handler)</span><br></pre></td></tr></table></figure></p><p>new proxy表示proxy实例，target表示要拦截的对象，handler表示拦截的方法</p><p>handler有13种：</p><ol><li>get(target, propKey, receiver) receiver可选</li><li>set(target, propKey, value, receiver) receiver可选</li><li>has</li><li>apply</li><li>ownKeys</li><li>construct</li><li>isExtensible</li><li>deleteProperty</li><li>defineProperty</li><li>getPropertyOf</li><li>setPropertyOf</li><li>preventExtensions</li><li>getOwnPropertyDescriptor</li></ol><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> obj = &#123;</span><br><span class="line">    name: <span class="string">"siyao"</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">let</span> handler = &#123;</span><br><span class="line">    get: <span class="function">(<span class="params">obj, name, </span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">const</span> name = <span class="string">"我喜欢"</span> + obj.name</span><br><span class="line">        <span class="keyword">return</span> name</span><br><span class="line">    &#125;,</span><br><span class="line">    set: <span class="function">(<span class="params">obj, name, value, </span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">"还名字了"</span>)</span><br><span class="line">        obj[name] = value</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">let</span> proxy = <span class="keyword">new</span> <span class="built_in">Proxy</span>(obj, handler)</span><br><span class="line"><span class="keyword">let</span> newObj = <span class="built_in">Object</span>.create(proxy) <span class="comment">// 同上</span></span><br><span class="line"><span class="built_in">console</span>.log(proxy.name)</span><br><span class="line">obj.name = <span class="string">"xiangchan"</span></span><br><span class="line"><span class="built_in">console</span>.log(proxy.name)</span><br></pre></td></tr></table></figure><h3 id="Reflect"><a href="#Reflect" class="headerlink" title="Reflect"></a>Reflect</h3><p>ES6为操作对象而提供的API，用来调用对象的默认行为</p><ol><li>拥有proxy所有13种代理方法，静态形式存在，基本和Object同名方法相同，返回bool，语义性更好</li><li>无论proxy怎么修改默认行为，总是可以用Reflect对应的方法获取默认行为</li><li>修改某些Object方法的返回结果，使其更合理，比如Object.defineProperty无法定义属性会报错，Reflect.defineProperty会返回false</li><li>把Object操作变成函数行为，比如name in obj， delete obj[name]变成Reflect.deleteProperty和Reflect.has</li></ol>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;h3 id=&quot;Proxy&quot;&gt;&lt;a href=&quot;#Proxy&quot; class=&quot;headerlink&quot; title=&quot;Proxy&quot;&gt;&lt;/a&gt;Proxy&lt;/h3&gt;&lt;p&gt;在访问对象之前建立一道拦截，任何访问该对象的操作都会通过这个拦截，执行proxy里的方法&lt;br&gt;&lt;figure cl
-      
-    
-    </summary>
-    
-      <category term="代理" scheme="zeuszhou.xyz/categories/%E4%BB%A3%E7%90%86/"/>
-    
-    
-      <category term="代理" scheme="zeuszhou.xyz/tags/%E4%BB%A3%E7%90%86/"/>
     
   </entry>
   
